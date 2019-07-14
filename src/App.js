@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View  } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet  } from 'react-native';
 
-export default class FetchExample extends React.Component {
+export default class App extends React.Component {
 
   constructor(props){
     super(props);
@@ -9,7 +9,7 @@ export default class FetchExample extends React.Component {
   }
 
   componentDidMount(){
-    return fetch('https://flocals.herokuapp.com/home/Food') 
+    return fetch('https://flocals.herokuapp.com/home') 
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -39,13 +39,30 @@ export default class FetchExample extends React.Component {
     }
 
     return(
-      <View style={{flex: 1, paddingTop:20}}>
+      <View style={{flex: 1, paddingTop:20, justifyContent:"center", backgroundColor:"#fff", alignItems:"center"}}>
         <FlatList
           data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.name}, {item.act_type}, Awesome!!!</Text>}
-          keyExtractor={({activity_id}, index) => activity_id.toString()}
+          renderItem={({item}) => <View style={{height:150,backgroundColor:"red",padding:60,margin:20,fontSize:32, alignItems:"center"}  } >
+            <Text style={styles.One} onPress={ ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
+            </View>}
+          keyExtractor={({id}, index) => id.toString()}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  One: {
+    // Define font size here in Pixels
+    fontSize : 24    
+  },
+  Two: {
+    // Define font size here in Pixels
+    fontSize : 25
+  },
+  Three:{
+    // Define font size here in Pixels
+    fontSize : 30
+  }
+});
