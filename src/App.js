@@ -1,6 +1,8 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import { GiftedChat } from 'react-native-gifted-chat'
+
 import helper from '../utils/helper.js';
 
 
@@ -55,6 +57,7 @@ class DetailsScreen extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
             <Text style={styles.textElement} onPress={ ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
+            <Text style={styles.textElement} onPress={ ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
             <Text style={styles.textElement}> {item.loc_short}</Text>
             </View>}
           keyExtractor={({activity_id}, index) => activity_id.toString()}
@@ -67,6 +70,49 @@ class DetailsScreen extends React.Component {
     );
   }
 }
+
+class Chatscreen extends React.Component {
+  state = {
+    messages: [],
+  }
+
+  componentWillMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
+        },
+      ],
+    })
+  }
+
+  onSend(messages = []) {
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }))
+  }
+
+  render() {
+    return (
+      <GiftedChat
+        messages={this.state.messages}
+        onSend={messages => this.onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+      />
+    )
+  }
+}
+
+
 
 const styles = StyleSheet.create({
   itemElement: {
@@ -96,6 +142,7 @@ const styles = StyleSheet.create({
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Details: {screen: DetailsScreen},
+  Chat: {screen: Chatscreen}, 
 }, 
 { initialRouteName: 'Home'}
 );
