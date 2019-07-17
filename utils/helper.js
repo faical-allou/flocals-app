@@ -16,7 +16,29 @@ const helper = {
       .catch((error) =>{
         console.error(error);
       });
-    }
+    },
+
+    postForm : (compo, path_toCall, messageBody) => {
+      let data = {
+        method: 'POST',
+        body: JSON.stringify({
+            name: messageBody.name,
+            job: messageBody.loc_short
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+      }  
+        
+      fetch(path_toCall, data) 
+      .then((response) => response.json())
+      .then((responseJson) => {0})
+      .catch((error) =>{
+        console.error(error);
+      });
+    },
+
   }
 
 export default helper;

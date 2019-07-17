@@ -55,11 +55,16 @@ class DetailsScreen extends React.Component {
       <View style={styles.listElements}>
         <FlatList
           data={this.state.dataSource}
-          renderItem={({item}) => <View style={styles.itemElement} >
-            <Text style={styles.textElement} onPress={ ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
-            <Text style={styles.textElement} onPress={ ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
-            <Text style={styles.textElement}> {item.loc_short}</Text>
-            </View>}
+          renderItem={({item}) => <View><View style={styles.itemElement} >
+              <Text style={styles.textElement} onPress={ ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
+              <Text style={styles.textElement} onPress={ ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
+              <Text style={styles.textElement}> {item.loc_short}</Text>
+              </View>
+              <View style={styles.itemElements}>
+                <Text style={styles.textElement} onPress={ ()=> helper.postForm(this, 'https://flocals.herokuapp.com/home/newactivity', this.state.dataSource[0])}> ... Add Stuff ..</Text>
+              </View>
+            </View>
+            }
           keyExtractor={({activity_id}, index) => activity_id.toString()}
         />
         <Button
