@@ -61,7 +61,7 @@ class DetailsScreen extends React.Component {
               <Text style={styles.textElement}> {item.loc_short}</Text>
               </View>
               <View style={styles.itemElements}>
-                <Text style={styles.textElement} onPress={ ()=> helper.postForm(this, 'https://flocals.herokuapp.com/home/newactivity', this.state.dataSource[0])}> ... Add Stuff ..</Text>
+                <Text style={styles.textElement} onPress={ ()=> helper.postForm(this, variables.endpoint+'/api/v1/home/newactivity', this.state.dataSource[0])}> ... Add Stuff ..</Text>
               </View>
             </View>
             }

@@ -1,9 +1,11 @@
+import variables from '../config/config.js';
+
 const helper = {
     getFormattedDatetime: (datetime) => {
       return moment.utc(datetime).local().format('MMM Do, YYYY, h:mm a');
     },
 
-    getData : (compo,path_toCall) => {fetch('https://flocals.herokuapp.com/'+path_toCall) 
+    getData : (compo,path_toCall) => {fetch(variables.endpoint+'/api/v1/'+path_toCall) 
       .then((response) => response.json())
       .then((responseJson) => {
 
