@@ -7,4 +7,4 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 
-./config/config.js
+config/config.js

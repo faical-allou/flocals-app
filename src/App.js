@@ -40,7 +40,17 @@ class HomeScreen extends React.Component {
 class DetailsScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ isLoading: true,username:'', photoUrl:'', signedIn:false };    
+    this.state ={ 
+      isLoading: false, 
+      username: 'Default_User', 
+      photoUrl: variables.default_pic, 
+      signedIn: variables.islogged };    
+  }
+  
+  componentDidMount(){
+    const { navigation } = this.props;
+    const current_location = navigation.getParam('destination', 'home/Food');
+    return helper.getData(this,current_location);
   }
 
   signIn = async () => {
@@ -48,7 +58,8 @@ class DetailsScreen extends React.Component {
       const result = await Google.logInAsync({
         expoClientId: '746916049107-0un5svk32nv9o90c6vccek36tcfsiud0.apps.googleusercontent.com',
         iosClientId: '746916049107-6p47litmq08pgf8bbbmfh00vjt79qct1.apps.googleusercontent.com',
-        scopes: ["profile", "email"]
+        androidClientId: '746916049107-fh6t7pc004v5m5sovp5gluou85g7t85p.apps.googleusercontent.com',
+        scopes: ["profile", "email"] 
       })
 
       if (result.type === "success") {
@@ -63,12 +74,6 @@ class DetailsScreen extends React.Component {
     } catch (e) {
       console.log("error", e)
     }
-  }
-
-  componentDidMount(){
-    const { navigation } = this.props;
-    const current_location = navigation.getParam('destination', '');
-    return helper.getData(this,current_location);
   }
 
   render(){
@@ -96,7 +101,7 @@ class DetailsScreen extends React.Component {
           <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
           <Button
           title="Add Stuff"
-          onPress={() => this.props.navigation.navigate('Form')}
+          onPress={() => this.props.navigation.navigate('Form',{username: this.state.username})}
           /></View>
         ) : (
           <LoginBar signIn={this.signIn} />
@@ -114,25 +119,37 @@ class DetailsScreen extends React.Component {
 class FormScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, name: '', description:'' , dataSource:''};
+    this.state ={ 
+      isLoading: true, 
+      name: '', 
+      description:'' ,
+      place_id:'default',  
+      placeDetails: '',
+      autoSuggest:'', 
+      username: this.props.navigation.getParam('username', 'Username_default')};
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
   }
-  
+    
   componentDidMount(){
     return helper.getData(this,"home");
   }
   handleNameChange(name) {
     this.setState({ name });
-    helper.getAutosuggest(this,"name");
+    name.length > 3 ? helper.getAutosuggest(this,name) : '';
   }
-  handleDescriptionChange(description) {
-    this.setState({ description });
+  handleUserDescriptionChange(userDescription) {
+    this.setState({ userDescription });
   }
-  handleSubmit() {
-    saveSettings(this.state);
+  handleSelectSuggest(itemSelected) {
+    this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  });
+
   }
+  handleSubmit() { 
+    helper.getPlaceDetails_Send(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity');
+    this.props.navigation.goBack()
+  }
+
   render(){
     if(this.state.isLoading){
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
@@ -149,9 +166,9 @@ class FormScreen extends React.Component {
           onChangeText={this.handleNameChange}
         />
         <FlatList
-          data={this.state.dataSource.predictions}
-          renderItem={({item}) => <View style={styles.itemElement} >
-              <Text style={styles.textElement} >{item.description}</Text>
+          data={this.state.autoSuggest.predictions}
+          renderItem={({item}) => <View style={styles.textSuggest} >
+              <Text style={styles.textElement} onPress={() => this.handleSelectSuggest(item) }>{item.description}</Text>
               </View>           
             }
           keyExtractor={({id}, index) => id.toString()}
@@ -161,12 +178,12 @@ class FormScreen extends React.Component {
           placeholder="Description"
           maxLength={180}
           onBlur={Keyboard.dismiss}
-          value={this.state.description}
-          onChangeText={this.handleDescriptionChange}
+          value={this.state.userDescription}
+          onChangeText={this.handleUserDescriptionChange}
         />
         <Button
           title="Submit"
-          onPress={() => helper.postForm(this, variables.endpoint+'/api/v1/home/newactivity',{name: this.state.name, description: this.state.description})}
+          onPress={() => this.handleSubmit()}
         />
         <Button
           title="Go back"
@@ -193,7 +210,7 @@ class Chatscreen extends React.Component {
           user: {
             _id: 2,
             name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
+            avatar: variables.default_pic,
           },
         },
       ],
@@ -218,7 +235,6 @@ class Chatscreen extends React.Component {
     )
   }
 }
-
 
 const LoginBar = props => {
   return (
@@ -269,7 +285,17 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     margin: 5
-  }
+  },
+  textSuggest: {
+    borderColor: '#CCCCCC',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    height: 50,
+    fontSize: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    margin: 5
+  },
 })
 
 const AppNavigator = createStackNavigator({

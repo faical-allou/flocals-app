@@ -20,34 +20,54 @@ const helper = {
       });
     },
 
-    postForm : (compo, path_toCall, messageBody) => {
+    getAutosuggest : (compo,input_text) => {
+      url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key='+variables.G_Places_API+'&input='+input_text ;
+    console.log(url);
+      fetch(url) 
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      compo.setState({
+        isLoading: false,
+        autoSuggest: responseJson,
+      }, function(){
+      });
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+  },
+    getPlaceDetails_Send : (compo,place_id_check,path_toSendto) => {
+      url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
+    console.log(url);
+      fetch(url) 
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      compo.setState({
+        isLoading: false,
+        placeDetails: responseJson,
+      }, function(){
+      });
       let data = {
         method: 'POST',
         body: JSON.stringify({
-            name: messageBody.name,
-            description: messageBody.description
+            name: compo.state.name,
+            userDescription: compo.state.userDescription,
+            place_id: compo.state.place_id,
+            recommender: compo.state.username,
+            details : compo.state.placeDetails 
         }),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
       }     
-      fetch(path_toCall, data) 
+      fetch(path_toSendto, data) 
       .then((response) => response.json())
       .then((responseJson) => {0})
       .catch((error) =>{
         console.error(error);
-      });
-    },
-
-    getAutosuggest : (compo,input_text) => {fetch('https://maps.googleapis.com/maps/api/place/autocomplete/xml?key='+G_Places_API+'&input='+ input_text) 
-    .then((response) => response.json())
-    .then((responseJson) => {
-
-      compo.setState({
-        isLoading: false,
-        dataSource: responseJson,
-      }, function(){
       });
     })
     .catch((error) =>{
