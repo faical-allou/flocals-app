@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button, Image } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button, Image,TextInput, Keyboard } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { GiftedChat } from 'react-native-gifted-chat'
 import { Google } from 'expo';
@@ -96,7 +96,7 @@ class DetailsScreen extends React.Component {
           <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
           <Button
           title="Add Stuff"
-          onPress={() => helper.postForm(this, variables.endpoint+'/api/v1/home/newactivity',this.dataSource[0])}
+          onPress={() => this.props.navigation.navigate('Form')}
           /></View>
         ) : (
           <LoginBar signIn={this.signIn} />
@@ -110,6 +110,73 @@ class DetailsScreen extends React.Component {
     );
   }
 }
+
+class FormScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true, name: '', description:'' , dataSource:''};
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  componentDidMount(){
+    return helper.getData(this,"home");
+  }
+  handleNameChange(name) {
+    this.setState({ name });
+    helper.getAutosuggest(this,"name");
+  }
+  handleDescriptionChange(description) {
+    this.setState({ description });
+  }
+  handleSubmit() {
+    saveSettings(this.state);
+  }
+  render(){
+    if(this.state.isLoading){
+      return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+    }
+    
+    return(
+      <View >
+        <TextInput
+          style={styles.textInput}
+          placeholder="Activity"
+          maxLength={20}
+          onBlur={Keyboard.dismiss}
+          value={this.state.name}
+          onChangeText={this.handleNameChange}
+        />
+        <FlatList
+          data={this.state.dataSource.predictions}
+          renderItem={({item}) => <View style={styles.itemElement} >
+              <Text style={styles.textElement} >{item.description}</Text>
+              </View>           
+            }
+          keyExtractor={({id}, index) => id.toString()}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Description"
+          maxLength={180}
+          onBlur={Keyboard.dismiss}
+          value={this.state.description}
+          onChangeText={this.handleDescriptionChange}
+        />
+        <Button
+          title="Submit"
+          onPress={() => helper.postForm(this, variables.endpoint+'/api/v1/home/newactivity',{name: this.state.name, description: this.state.description})}
+        />
+        <Button
+          title="Go back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+      </View>
+    );
+  }
+}
+
 
 class Chatscreen extends React.Component {
   state = {
@@ -192,15 +259,27 @@ const styles = StyleSheet.create({
     justifyContent:"center", 
     backgroundColor:"#fff", 
     alignItems:"center"
+  },
+  textInput: {
+    borderColor: '#CCCCCC',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    height: 50,
+    fontSize: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    margin: 5
   }
 })
 
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Details: {screen: DetailsScreen},
+  Form: {screen: FormScreen},
   Chat: {screen: Chatscreen}
+
 }, 
-{ initialRouteName: 'Home'}
+{ initialRouteName: 'Form'}
 );
 
 export default createAppContainer(AppNavigator);
