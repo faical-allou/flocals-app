@@ -8,7 +8,6 @@ const helper = {
     getData : (compo,path_toCall) => {fetch(variables.endpoint+'/api/v1/'+path_toCall) 
       .then((response) => response.json())
       .then((responseJson) => {
-
         compo.setState({
           isLoading: false,
           dataSource: responseJson,
@@ -26,7 +25,6 @@ const helper = {
       fetch(url) 
     .then((response) => response.json())
     .then((responseJson) => {
-
       compo.setState({
         isLoading: false,
         autoSuggest: responseJson,
@@ -75,5 +73,20 @@ const helper = {
       console.error(error);
     });
   },
+
+  getAirportData : (compo,airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
+  .then((response) => response.json())
+  .then((responseJson) => {
+    compo.setState({
+      isLoading: false,
+      airportData: responseJson,
+    }, function(){
+    });
+  })
+  .catch((error) =>{
+    console.error(error);
+  });
+},
+
 }
 export default helper;

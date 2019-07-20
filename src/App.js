@@ -15,7 +15,8 @@ class HomeScreen extends React.Component {
   }
   
   componentDidMount(){
-    return helper.getData(this,"home");
+    this.setState({airport: helper.getAirportData(this,variables.destination)})
+    helper.getData(this,"home"); 
   }
 
   render(){
@@ -28,7 +29,7 @@ class HomeScreen extends React.Component {
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {destination: item.name})}>{item.name}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.name})}>{item.name}</Text>
             </View>}
           keyExtractor={({id}, index) => id.toString()}
         />
@@ -51,10 +52,10 @@ class DetailsScreen extends React.Component {
   
   componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('destination', 'Food')}, ()=>{
+    this.setState({currentType : navigation.getParam('nextScreen', 'Food')}, ()=>{
     console.log(this.state);
     });
-    return helper.getData(this,'home/'+navigation.getParam('destination', 'Food'));
+    return helper.getData(this,'home/'+navigation.getParam('nextScreen', 'Food'));
   }
 
   signIn = async () => {
