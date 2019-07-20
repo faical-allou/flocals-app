@@ -44,13 +44,16 @@ class DetailsScreen extends React.Component {
       isLoading: false, 
       username: 'Default_User', 
       photoUrl: variables.default_pic, 
-      signedIn: variables.islogged
+      signedIn: variables.islogged,
+      currentType: ''
     };    
   }
   
   componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('destination', 'Food')});
+    this.setState({currentType : navigation.getParam('destination', 'Food')}, ()=>{
+    console.log(this.state);
+    });
     return helper.getData(this,'home/'+navigation.getParam('destination', 'Food'));
   }
 
@@ -87,8 +90,10 @@ class DetailsScreen extends React.Component {
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
-              <Text style={styles.textElement} onPress={ ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
-              <Text style={styles.textElement} onPress={ ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
+              <Text style={styles.textElement} onPress={ 
+                ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
+              <Text style={styles.textElement} onPress={ 
+                ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
               <Text style={styles.textElement}> {item.loc_short}</Text>
               </View>
             
@@ -102,7 +107,9 @@ class DetailsScreen extends React.Component {
           <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
           <Button
           title="Add Stuff"
-          onPress={() => this.props.navigation.navigate('Form',{username: this.state.username})}
+          onPress={() => this.props.navigation.navigate('Form',{
+            username: this.state.username, 
+            act_type: this.state.currentType})}
           /></View>
         ) : (
           <LoginBar signIn={this.signIn} />
@@ -126,14 +133,23 @@ class FormScreen extends React.Component {
       description:'' ,
       place_id:'default',  
       placeDetails: '',
-      autoSuggest:'', 
-      username: this.props.navigation.getParam('username', 'Username_default')};
+      autoSuggest:'',
+      username:'',
+      act_type:''
+    }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
   }
     
   componentDidMount(){
-    return helper.getData(this,"home");
+    this.setState({isLoading:false});
+    const { navigation } = this.props;
+    this.setState({
+      username: navigation.getParam('username', 'Username_default'),
+      act_type: navigation.getParam('act_type', 'default_type')}, () => {
+        console.log(this.state)
+      }
+    );
   }
   handleNameChange(name) {
     this.setState({ name });
@@ -144,7 +160,6 @@ class FormScreen extends React.Component {
   }
   handleSelectSuggest(itemSelected) {
     this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  });
-
   }
   handleSubmit() { 
     helper.getPlaceDetails_Send(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity');
@@ -166,9 +181,9 @@ class FormScreen extends React.Component {
           value={this.state.name}
           onChangeText={this.handleNameChange}
         />
-        <FlatList
+        <FlatList 
           data={this.state.autoSuggest.predictions}
-          renderItem={({item}) => <View style={styles.textSuggest} >
+          renderItem={({item}) => <View style={styles.suggestElement} >
               <Text style={styles.textSuggest} onPress={() => this.handleSelectSuggest(item) }>{item.description}</Text>
               </View>           
             }
@@ -288,13 +303,17 @@ const styles = StyleSheet.create({
     margin: 5
   },
   textSuggest: {
+    height: 50,
+    fontSize: 18,
+    margin: 5
+  },
+  suggestElement: {
     borderColor: '#CCCCCC',
     borderTopWidth: 1,
     borderBottomWidth: 1,
+    backgroundColor:"white",
     height: 50,
     fontSize: 18,
-    paddingLeft: 20,
-    paddingRight: 20,
     margin: 5
   },
 })

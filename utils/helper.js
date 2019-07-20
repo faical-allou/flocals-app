@@ -36,7 +36,8 @@ const helper = {
     .catch((error) =>{
       console.error(error);
     });
-  },
+    },
+
     getPlaceDetails_Send : (compo,place_id_check,path_toSendto) => {
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
     console.log(url);
@@ -53,6 +54,7 @@ const helper = {
         method: 'POST',
         body: JSON.stringify({
             name: compo.state.name,
+            type: compo.state.act_type,
             userDescription: compo.state.userDescription,
             place_id: compo.state.place_id,
             recommender: compo.state.username,
@@ -64,8 +66,7 @@ const helper = {
         }
       }     
       fetch(path_toSendto, data) 
-      .then((response) => response.json())
-      .then((responseJson) => {0})
+      .then(console.log(data))
       .catch((error) =>{
         console.error(error);
       });
