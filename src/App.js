@@ -28,7 +28,7 @@ class HomeScreen extends React.Component {
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {destination: 'home/'+item.name})}>{item.name}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {destination: item.name})}>{item.name}</Text>
             </View>}
           keyExtractor={({id}, index) => id.toString()}
         />
@@ -44,13 +44,14 @@ class DetailsScreen extends React.Component {
       isLoading: false, 
       username: 'Default_User', 
       photoUrl: variables.default_pic, 
-      signedIn: variables.islogged };    
+      signedIn: variables.islogged
+    };    
   }
   
   componentDidMount(){
     const { navigation } = this.props;
-    const current_location = navigation.getParam('destination', 'home/Food');
-    return helper.getData(this,current_location);
+    this.setState({currentType : navigation.getParam('destination', 'Food')});
+    return helper.getData(this,'home/'+navigation.getParam('destination', 'Food'));
   }
 
   signIn = async () => {
@@ -168,7 +169,7 @@ class FormScreen extends React.Component {
         <FlatList
           data={this.state.autoSuggest.predictions}
           renderItem={({item}) => <View style={styles.textSuggest} >
-              <Text style={styles.textElement} onPress={() => this.handleSelectSuggest(item) }>{item.description}</Text>
+              <Text style={styles.textSuggest} onPress={() => this.handleSelectSuggest(item) }>{item.description}</Text>
               </View>           
             }
           keyExtractor={({id}, index) => id.toString()}
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     height: 50,
-    fontSize: 25,
+    fontSize: 18,
     paddingLeft: 20,
     paddingRight: 20,
     margin: 5
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     height: 50,
-    fontSize: 25,
+    fontSize: 18,
     paddingLeft: 20,
     paddingRight: 20,
     margin: 5
@@ -303,9 +304,8 @@ const AppNavigator = createStackNavigator({
   Details: {screen: DetailsScreen},
   Form: {screen: FormScreen},
   Chat: {screen: Chatscreen}
-
 }, 
-{ initialRouteName: 'Form'}
+{ initialRouteName: variables.landingScreen}
 );
 
 export default createAppContainer(AppNavigator);
