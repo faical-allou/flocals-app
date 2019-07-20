@@ -5,6 +5,8 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import { Google } from 'expo';
 
 import helper from '../utils/helper.js';
+import dict from '../utils/dict.js';
+
 
 
 
@@ -12,10 +14,11 @@ class HomeScreen extends React.Component {
   constructor(props){
     super(props);
     this.state ={ isLoading: true}
+    global.airport_code = variables.airport_code;
+    helper.getAirportData(global.airport_code);
   }
   
   componentDidMount(){
-    this.setState({airport: helper.getAirportData(this,variables.destination)})
     helper.getData(this,"home"); 
   }
 
@@ -140,6 +143,8 @@ class FormScreen extends React.Component {
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
+    global.airport_code = variables.destination;
+    helper.getAirportData(global.airport_code);
   }
     
   componentDidMount(){
@@ -148,13 +153,12 @@ class FormScreen extends React.Component {
     this.setState({
       username: navigation.getParam('username', 'Username_default'),
       act_type: navigation.getParam('act_type', 'default_type')}, () => {
-        console.log(this.state)
       }
     );
   }
   handleNameChange(name) {
     this.setState({ name });
-    name.length > 3 ? helper.getAutosuggest(this,name) : '';
+    name.length > 3 ? helper.getAutosuggest(this,name,global.airport_details) : '';
   }
   handleUserDescriptionChange(userDescription) {
     this.setState({ userDescription });
