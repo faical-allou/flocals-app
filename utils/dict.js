@@ -1,7 +1,7 @@
 
 const dict = {
     us2g:{
-    default: ['point_of_interest', 'establishment'],
+    general: ['point_of_interest', 'establishment'],
     food: ['food', 'restaurant'],
     shopping: ['supermarket', 'shopping_mall', 'store'],
     nature: ['natural_feature'],
@@ -10,14 +10,14 @@ const dict = {
     artnhistory: ['museum', 'art_gallery']
 },
     g2us: {
-        point_of_interest: 'default',
-        establishment: 'default',
+        point_of_interest: 'general',
+        establishment: 'general',
         museum: 'artnhistory',
         shopping_mall: 'shopping',
         park: 'park',
         supermarket: 'shopping',
         grocery_or_supermarket: 'shopping',
-        //food: 'food',
+        food: 'food',
         store: 'shopping',
         natural_feature: 'nature',
         bar: 'nightlife',

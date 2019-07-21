@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button, Image,TextInput, Keyboard } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button, Image,TextInput, Keyboard, Alert } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { GiftedChat } from 'react-native-gifted-chat'
 import { Google } from 'expo';
@@ -14,14 +14,12 @@ class HomeScreen extends React.Component {
   constructor(props){
     super(props);
     this.state ={ isLoading: true};
-
-    global.airport_code = variables.airport_code;
-    global.sessionid = 0;
-    
-    helper.getAirportData(global.airport_code);
   }
   
   componentDidMount(){
+    global.airport_code = variables.airport_code;
+    global.sessionid = 0;
+    helper.getAirportData(global.airport_code);
     helper.getData(this,"home"); 
   }
 
@@ -35,9 +33,10 @@ class HomeScreen extends React.Component {
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.name})}>{item.name}</Text>
-            </View>}
-          keyExtractor={({id}, index) => id.toString()}
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{item.type_convert}</Text>
+            </View>
+            }
+          keyExtractor={(item, index) => index.toString()} 
         />
       </View>
     );
@@ -58,10 +57,9 @@ class DetailsScreen extends React.Component {
   
   componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('nextScreen', 'Food')}, ()=>{
-    console.log(this.state);
+    this.setState({currentType : navigation.getParam('nextScreen', 'food')}, ()=>{
     });
-    return helper.getData(this,'home/'+navigation.getParam('nextScreen', 'Food'));
+    return helper.getData(this,'home/'+navigation.getParam('nextScreen', 'food'));
   }
 
   signIn = async () => {
@@ -98,14 +96,13 @@ class DetailsScreen extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
               <Text style={styles.textElement} onPress={ 
-                ()=> Linking.openURL('https://google.com/search?q='+item.name) }>{item.name}</Text>
+                ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
               <Text style={styles.textElement} onPress={ 
-                ()=> this.props.navigation.navigate('Chat', {destination: 'home/'+item.city})}>{item.city}</Text>
+                ()=> this.props.navigation.navigate('Chat', {recommendation: 'home/'+item.rec_name})}>upvote: {item.nb_rec}</Text>
               <Text style={styles.textElement}> {item.loc_short}</Text>
-              </View>
-            
+              </View>          
             }
-          keyExtractor={({activity_id}, index) => activity_id.toString()}
+            keyExtractor={(item, index) => index.toString()} 
         />
 
         <View style={styles.container}>
@@ -162,7 +159,6 @@ class FormScreen extends React.Component {
   }
   handleNameChange(name) {
     this.setState({ name });
-    //console.log(global.airport_code, global.airport_details);
     name.length > 4 ? helper.getAutosuggest(this,name,global.airport_details) : '';
   }
   handleUserDescriptionChange(userDescription) {
@@ -172,10 +168,26 @@ class FormScreen extends React.Component {
     this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  });
   }
   handleSubmit() { 
-    helper.getPlaceDetails_Send(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity');
-    this.props.navigation.goBack()
+      helper.getPlaceDetails(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity/');
   }
-
+    
+  componentDidUpdate(prevState) {
+    if (this.state.conversion != prevState.conversion && this.state.conversion != '') {
+      Alert.alert(
+        'Thank you for your recommendation',
+        'We added your recommendation to the category: '+ this.state.conversion,
+        [
+          {text: 'OK', onPress: () => {
+            fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer)
+            this.props.navigation.goBack()
+          }
+        },
+          {text: 'Cancel', onPress: () => ''},
+        ],
+        {cancelable: false},
+      )     
+  }
+}
   render(){
     if(this.state.isLoading){
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
@@ -282,8 +294,7 @@ const LoggedinBar = props => {
 const styles = StyleSheet.create({
   itemElement: {
     // Define font size here in Pixels
-    fontSize : 28,
-    height:150,
+    //height:150,
     width: 280,
     backgroundColor:"red",
     padding:30,
@@ -293,7 +304,7 @@ const styles = StyleSheet.create({
   },
   textElement: {
     // Define font size here in Pixels
-    fontSize : 28
+    fontSize : 20
   },
   listElements: {
     flex: 1, 

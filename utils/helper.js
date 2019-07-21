@@ -1,5 +1,6 @@
 import variables from '../config/config.js';
 import dict from '../utils/dict.js';
+import { Alert } from 'react-native';
 
 const helper = {
     getFormattedDatetime: (datetime) => {
@@ -40,15 +41,14 @@ const helper = {
     });
     },
 
-    getPlaceDetails_Send : (compo,place_id_check,path_toSendto) => {
+    getPlaceDetails : (compo,place_id_check) => {
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
       fetch(url) 
     .then((response) => response.json())
     .then((responseJson) => {
       compo.setState({ conversion : getInternalType(responseJson.result.types)}, function() {
         compo.setState({
-          isLoading: false,
-          data : {
+          datatransfer : {
                 method: 'POST',
                 body: JSON.stringify({
                   sessionid: global.sessionid,
@@ -69,12 +69,8 @@ const helper = {
                 }
               }     
             })
-          }) 
+          })
         })
-        .then(() => {
-              console.log(compo.state.data);
-              fetch(path_toSendto, compo.state.data)
-            })
         .catch((error) =>{
           console.error(error);
         })
@@ -105,11 +101,13 @@ const getInternalType = (google_type) => {
     countDict[ourType[i]] =0
   };
   for (let i = 0; i < ourType.length; i++) {
-    if (ourType[i] != 'default' &&  ourType[i] != undefined) { countDict[ourType[i]]++ }
+    if (ourType[i] != 'general' &&  ourType[i] != undefined) { countDict[ourType[i]]++ }
   };
   let max = 0;
+  let max_id = '';
   for (const [key, value] of Object.entries(countDict)) {
       value > max ? max_id = key : ''
   };
-  return ourType
+  if (max_id == 'general' ||  max_id == undefined) { max_id = 'general' }
+  return max_id
 };
