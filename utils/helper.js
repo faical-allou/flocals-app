@@ -25,9 +25,7 @@ const helper = {
       url_radius = '&radius=100000';
       url_input = '&input='+input_text ;
       url_type = '&types=establishment'
-      console.log(url_location,url_radius);
       url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key='+variables.G_Places_API+url_location+url_radius+url_type+url_input;
-    console.log(url);
       fetch(url) 
     .then((response) => response.json())
     .then((responseJson) => {
@@ -44,41 +42,44 @@ const helper = {
 
     getPlaceDetails_Send : (compo,place_id_check,path_toSendto) => {
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
-    console.log(url);
       fetch(url) 
     .then((response) => response.json())
     .then((responseJson) => {
-
-      compo.setState({
-        isLoading: false,
-        placeDetails: responseJson,
-      }, function(){
-      });
-      let data = {
-        method: 'POST',
-        body: JSON.stringify({
-            name: compo.state.name,
-            type: compo.state.act_type,
-            userDescription: compo.state.userDescription,
-            place_id: compo.state.place_id,
-            recommender: compo.state.username,
-            details : compo.state.placeDetails 
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
-      }     
-      fetch(path_toSendto, data) 
-      .then(console.log(data))
-      .catch((error) =>{
-        console.error(error);
-      });
-    })
-    .catch((error) =>{
-      console.error(error);
-    });
+      compo.setState({ conversion : getInternalType(responseJson.result.types)}, function() {
+        compo.setState({
+          isLoading: false,
+          data : {
+                method: 'POST',
+                body: JSON.stringify({
+                  sessionid: global.sessionid,
+                  airport : global.airport_code,
+                  name: compo.state.name,
+                  type_user: compo.state.act_type,
+                  googletype: responseJson.result.types,
+                  type_convert: compo.state.conversion,
+                  userDescription: compo.state.userDescription ? compo.state.userDescription : '',
+                  place_id: compo.state.place_id,
+                  recommender: compo.state.username,
+                  address: responseJson.result.formatted_address,
+                  details : responseJson 
+                }),
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+              }     
+            })
+          }) 
+        })
+        .then(() => {
+              console.log(compo.state.data);
+              fetch(path_toSendto, compo.state.data)
+            })
+        .catch((error) =>{
+          console.error(error);
+        })
   },
+
 
   getAirportData : (airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())
@@ -89,6 +90,26 @@ const helper = {
     console.error(error);
   });
 },
-
 }
 export default helper;
+
+// this needs to be outside to be able to be called
+const getInternalType = (google_type) => {
+  let ourType = [];
+  for (let i = 0; i < google_type.length; i++) {
+    ourType[i] = dict.g2us[google_type[i]];
+  };
+  let countDict = {};
+  for (let i = 0; i < ourType.length; i++) {
+    // had to initialize otherwise can't increment
+    countDict[ourType[i]] =0
+  };
+  for (let i = 0; i < ourType.length; i++) {
+    if (ourType[i] != 'default' &&  ourType[i] != undefined) { countDict[ourType[i]]++ }
+  };
+  let max = 0;
+  for (const [key, value] of Object.entries(countDict)) {
+      value > max ? max_id = key : ''
+  };
+  return ourType
+};

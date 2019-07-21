@@ -13,8 +13,11 @@ import dict from '../utils/dict.js';
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    this.state ={ isLoading: true};
+
     global.airport_code = variables.airport_code;
+    global.sessionid = 0;
+    
     helper.getAirportData(global.airport_code);
   }
   
@@ -143,8 +146,6 @@ class FormScreen extends React.Component {
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
-    global.airport_code = variables.destination;
-    helper.getAirportData(global.airport_code);
   }
     
   componentDidMount(){
@@ -155,10 +156,14 @@ class FormScreen extends React.Component {
       act_type: navigation.getParam('act_type', 'default_type')}, () => {
       }
     );
+    global.airport_code = variables.destination;
+    helper.getAirportData(global.airport_code);
+    global.sessionid = 0;
   }
   handleNameChange(name) {
     this.setState({ name });
-    name.length > 3 ? helper.getAutosuggest(this,name,global.airport_details) : '';
+    //console.log(global.airport_code, global.airport_details);
+    name.length > 4 ? helper.getAutosuggest(this,name,global.airport_details) : '';
   }
   handleUserDescriptionChange(userDescription) {
     this.setState({ userDescription });

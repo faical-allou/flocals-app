@@ -17,7 +17,7 @@ const dict = {
         park: 'park',
         supermarket: 'shopping',
         grocery_or_supermarket: 'shopping',
-        food: 'food',
+        //food: 'food',
         store: 'shopping',
         natural_feature: 'nature',
         bar: 'nightlife',
