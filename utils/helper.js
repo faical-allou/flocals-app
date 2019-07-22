@@ -17,6 +17,14 @@ const helper = {
       });
     },
 
+    getRandomName : (compo) => {fetch('https://randomuser.me/api') 
+    .then((response) => response.json())
+    .then((responseJson) => {compo.setState({username: responseJson.results[0].login.username})})
+    .catch((error) =>{
+      console.error(error);
+    });
+  },
+
     getAutosuggest : (compo,input_text, destination_airport) => {
       url_location = '&location='+destination_airport.latitude+','+destination_airport.longitude;
       url_radius = '&radius=100000';

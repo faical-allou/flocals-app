@@ -62,6 +62,7 @@ class DetailsScreen extends React.Component {
   }
 
   signIn = async () => {
+    helper.getRandomName(this);
     try {
       const result = await Google.logInAsync({
         expoClientId: '746916049107-0un5svk32nv9o90c6vccek36tcfsiud0.apps.googleusercontent.com',
@@ -70,10 +71,9 @@ class DetailsScreen extends React.Component {
         scopes: ["profile", "email"] 
       })
 
-      if (result.type === "success") {
+      if (result.type === "success") {   
         this.setState({
           signedIn: true,
-          username: result.user.name,
           photoUrl: result.user.photoUrl
         })
       } else {
