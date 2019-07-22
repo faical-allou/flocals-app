@@ -1,11 +1,7 @@
 import variables from '../config/config.js';
 import dict from '../utils/dict.js';
-import { Alert } from 'react-native';
 
 const helper = {
-    getFormattedDatetime: (datetime) => {
-      return moment.utc(datetime).local().format('MMM Do, YYYY, h:mm a');
-    },
 
     getData : (compo,path_toCall) => {fetch(variables.endpoint+'/api/v1/'+path_toCall) 
       .then((response) => response.json())
@@ -45,9 +41,9 @@ const helper = {
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
       fetch(url) 
     .then((response) => response.json())
-    .then((responseJson) => { 
-      compo.setState({ conversion : getInternalType(responseJson.result.types)}, function() {
+    .then((responseJson) => {
         compo.setState({
+          type_convert: helper.getInternalType(responseJson.result.types),
           datatransfer : {
                 method: 'POST',
                 body: JSON.stringify({
@@ -56,41 +52,24 @@ const helper = {
                   name: compo.state.name,
                   type_user: compo.state.act_type,
                   googletype: responseJson.result.types,
-                  type_convert: compo.state.conversion,
+                  type_convert: helper.getInternalType(responseJson.result.types),
                   userDescription: compo.state.userDescription ? compo.state.userDescription : '',
                   place_id: compo.state.place_id,
                   recommender: compo.state.username,
                   address: responseJson.result.formatted_address,
-                  details : responseJson 
+                  //details : responseJson 
                 }),
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
                 }
-              }     
-            }, function() { 
-              console.log(compo.state);
-              Alert.alert(
-                'Thank you for your recommendation',
-                'We added your recommendation to the category: '+ getInternalType(responseJson.result.types),
-                [
-                  {text: 'OK', onPress: () => {
-                    fetch(variables.endpoint+'/api/v1/home/newactivity/', compo.state.datatransfer)
-                    compo.props.navigation.goBack()
-                  }
-                },
-                  {text: 'Cancel', onPress: () => ''},
-                ],
-                {cancelable: false},
-              )     
-          })
-        })
-      })   
+              }}, () => {console.log(responseJson.result.types)}
+            )
+          })  
     .catch((error) =>{
       console.error(error);
     })
   },
-
 
   getAirportData : (airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())
@@ -100,29 +79,29 @@ const helper = {
   .catch((error) =>{
     console.error(error);
   });
-},
-}
+  },
+
+  getInternalType : (googletype) => {
+    let ourType = [];
+    for (let i = 0; i < googletype.length; i++) {
+      ourType[i] = dict.g2us[googletype[i]];
+    };
+    let countDict = {};
+    for (let i = 0; i < ourType.length; i++) {
+      // had to initialize otherwise can't increment
+      countDict[ourType[i]] =0
+    };
+    for (let i = 0; i < ourType.length; i++) {
+      if (ourType[i] !== 'general' &&  ourType[i] !== undefined) { countDict[ourType[i]]++ }
+    };
+    let max = 0;
+    let max_id = 'general';
+    for (const [key, value] of Object.entries(countDict)) {
+        value > max ? max_id = key : ''
+    };
+    if (max_id === 'general' ||  max_id === undefined) { max_id = 'general' }
+    return max_id
+    },
+  }
 export default helper;
 
-// this needs to be outside to be able to be called
-const getInternalType = (google_type) => {
-  let ourType = [];
-  for (let i = 0; i < google_type.length; i++) {
-    ourType[i] = dict.g2us[google_type[i]];
-  };
-  let countDict = {};
-  for (let i = 0; i < ourType.length; i++) {
-    // had to initialize otherwise can't increment
-    countDict[ourType[i]] =0
-  };
-  for (let i = 0; i < ourType.length; i++) {
-    if (ourType[i] != 'general' &&  ourType[i] != undefined) { countDict[ourType[i]]++ }
-  };
-  let max = 0;
-  let max_id = '';
-  for (const [key, value] of Object.entries(countDict)) {
-      value > max ? max_id = key : ''
-  };
-  if (max_id == 'general' ||  max_id == undefined) { max_id = 'general' }
-  return max_id
-};

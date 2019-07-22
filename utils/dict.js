@@ -1,7 +1,7 @@
 
 const dict = {
     us2g:{
-    general: ['point_of_interest', 'establishment'],
+    general: ['point_of_interest', 'establishment','premise'],
     food: ['food', 'restaurant'],
     shopping: ['supermarket', 'shopping_mall', 'store'],
     nature: ['natural_feature'],
@@ -22,7 +22,17 @@ const dict = {
         natural_feature: 'nature',
         bar: 'nightlife',
         restaurant: 'food',
-        night_club: 'nightlife'
+        night_club: 'nightlife',
+        premise: 'general'
+    },
+    int2ext: {
+        general: 'Must See and Do',
+        food: 'Food',
+        shopping: 'Shopping',
+        nature: 'Nature',
+        nightlife: 'Nightlife',
+        park: 'Park',
+        artnhistory: 'Culture'
     }
 }
 export default dict;

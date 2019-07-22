@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{item.type_convert}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert]}</Text>
             </View>
             }
           keyExtractor={(item, index) => index.toString()} 
@@ -163,10 +163,26 @@ class FormScreen extends React.Component {
     this.setState({ userDescription });
   }
   handleSelectSuggest(itemSelected) {
-    this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  });
+    this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  },
+    () => {
+      helper.getPlaceDetails(this, this.state.place_id);
+      }
+    );
   }
-  handleSubmit() { 
-      helper.getPlaceDetails(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity/');
+  handleSubmit() {       
+      Alert.alert(
+        'Thank you for your recommendation',
+        'We added your recommendation to the category: '+ dict.int2ext[this.state.type_convert],
+        [
+          {text: 'OK', onPress: () => {
+            fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer)
+            this.props.navigation.goBack()
+          }
+        },
+          {text: 'Cancel', onPress: () => ''},
+        ],
+        {cancelable: false},
+      )   
   }
     
   render(){
