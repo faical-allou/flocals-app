@@ -1,12 +1,12 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, StyleSheet, Button, Image,TextInput, Keyboard, Alert } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking, Button, Image,TextInput, Keyboard, Alert } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { GiftedChat } from 'react-native-gifted-chat'
 import { Google } from 'expo';
 
 import helper from '../utils/helper.js';
 import dict from '../utils/dict.js';
-
+import styles from '../styles/styles.js';
 
 
 
@@ -325,53 +325,7 @@ const LoggedinBar = props => {
   )
 }
 
-const styles = StyleSheet.create({
-  itemElement: {
-    // Define font size here in Pixels
-    //height:150,
-    width: 280,
-    backgroundColor:"red",
-    padding:30,
-    margin:20,
-    alignItems:"center",
-    borderRadius: 10   
-  },
-  textElement: {
-    // Define font size here in Pixels
-    fontSize : 20
-  },
-  listElements: {
-    flex: 1, 
-    paddingTop:20, 
-    justifyContent:"center", 
-    backgroundColor:"#fff", 
-    alignItems:"center"
-  },
-  textInput: {
-    borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: 50,
-    fontSize: 18,
-    paddingLeft: 20,
-    paddingRight: 20,
-    margin: 5
-  },
-  textSuggest: {
-    height: 50,
-    fontSize: 18,
-    margin: 5
-  },
-  suggestElement: {
-    borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    backgroundColor:"white",
-    height: 50,
-    fontSize: 18,
-    margin: 5
-  },
-})
+
 
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
