@@ -57,8 +57,7 @@ class DetailsScreen extends React.Component {
   
   componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('nextScreen', 'food')}, ()=>{
-    });
+    this.setState({currentType : navigation.getParam('nextScreen', 'food')})
     return helper.getData(this,'home/'+navigation.getParam('nextScreen', 'food'));
   }
 
@@ -98,8 +97,7 @@ class DetailsScreen extends React.Component {
               <Text style={styles.textElement} onPress={ 
                 ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
               <Text style={styles.textElement} onPress={ 
-                ()=> this.props.navigation.navigate('Chat', {recommendation: 'home/'+item.rec_name})}>upvote: {item.nb_rec}</Text>
-              <Text style={styles.textElement}> {item.loc_short}</Text>
+                ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
               </View>          
             }
             keyExtractor={(item, index) => index.toString()} 
@@ -215,6 +213,43 @@ class FormScreen extends React.Component {
   }
 }
 
+class RecoScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true};
+  }
+  
+  componentDidMount(){
+    const { navigation } = this.props;
+    this.setState({currentPlace : navigation.getParam('nextScreen', '123')});
+    return helper.getData(this,'home/recommendations/'+navigation.getParam('nextScreen', '123'))   
+  }
+  
+
+  render(){
+    if(this.state.isLoading){
+      return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+    }
+ 
+    return(
+      <View style={styles.listElements}>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => <View style={styles.itemElement} >
+            <Text style={styles.textElement} >{item.userdescription}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Chat', {recommender: item.recommender})}>{item.recommender}</Text>
+            </View>
+            }
+          keyExtractor={(item, index) => index.toString()} 
+        />
+        <Button
+          title="Go back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+      </View>
+    );
+  }
+}
 
 class Chatscreen extends React.Component {
   state = {
@@ -326,7 +361,8 @@ const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Details: {screen: DetailsScreen},
   Form: {screen: FormScreen},
-  Chat: {screen: Chatscreen}
+  Chat: {screen: Chatscreen},
+  Recom: {screen: RecoScreen}
 }, 
 { initialRouteName: variables.landingScreen}
 );
