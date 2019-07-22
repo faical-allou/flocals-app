@@ -65,7 +65,7 @@ const helper = {
                   place_id: compo.state.place_id,
                   recommender: compo.state.username,
                   address: responseJson.result.formatted_address,
-                  //details : responseJson 
+                  details : responseJson 
                 }),
                 headers: {
                   'Accept': 'application/json',
