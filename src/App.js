@@ -171,23 +171,6 @@ class FormScreen extends React.Component {
       helper.getPlaceDetails(this, this.state.place_id, variables.endpoint+'/api/v1/home/newactivity/');
   }
     
-  componentDidUpdate(prevState) {
-    if (this.state.conversion != prevState.conversion && this.state.conversion != '') {
-      Alert.alert(
-        'Thank you for your recommendation',
-        'We added your recommendation to the category: '+ this.state.conversion,
-        [
-          {text: 'OK', onPress: () => {
-            fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer)
-            this.props.navigation.goBack()
-          }
-        },
-          {text: 'Cancel', onPress: () => ''},
-        ],
-        {cancelable: false},
-      )     
-  }
-}
   render(){
     if(this.state.isLoading){
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)

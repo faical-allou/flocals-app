@@ -45,7 +45,7 @@ const helper = {
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
       fetch(url) 
     .then((response) => response.json())
-    .then((responseJson) => {
+    .then((responseJson) => { 
       compo.setState({ conversion : getInternalType(responseJson.result.types)}, function() {
         compo.setState({
           datatransfer : {
@@ -68,12 +68,27 @@ const helper = {
                   'Content-Type': 'application/json',
                 }
               }     
-            })
+            }, function() { 
+              console.log(compo.state);
+              Alert.alert(
+                'Thank you for your recommendation',
+                'We added your recommendation to the category: '+ getInternalType(responseJson.result.types),
+                [
+                  {text: 'OK', onPress: () => {
+                    fetch(variables.endpoint+'/api/v1/home/newactivity/', compo.state.datatransfer)
+                    compo.props.navigation.goBack()
+                  }
+                },
+                  {text: 'Cancel', onPress: () => ''},
+                ],
+                {cancelable: false},
+              )     
           })
         })
-        .catch((error) =>{
-          console.error(error);
-        })
+      })   
+    .catch((error) =>{
+      console.error(error);
+    })
   },
 
 
