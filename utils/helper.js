@@ -27,7 +27,7 @@ const helper = {
 
     getAutosuggest : (compo,input_text, destination_airport) => {
       url_location = '&location='+destination_airport.latitude+','+destination_airport.longitude;
-      url_radius = '&radius=100000';
+      url_radius = '&radius=100000&strictbounds';
       url_input = '&input='+input_text ;
       url_type = '&types=establishment'
       url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key='+variables.G_Places_API+url_location+url_radius+url_type+url_input;

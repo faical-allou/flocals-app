@@ -17,10 +17,34 @@ class HomeScreen extends React.Component {
   }
   
   componentDidMount(){
-    global.airport_code = variables.airport_code;
+    global.airport_code = variables.destination;
     global.sessionid = 0;
     helper.getAirportData(global.airport_code);
-    helper.getData(this,"home"); 
+    this.setState({isLoading: false});
+  }
+
+  render(){
+    if(this.state.isLoading){
+      return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+    }
+ 
+    return(
+      <View style={styles.listElements}>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Your Flying to: {global.airport_code}</Text>
+            </View>
+      );
+  }
+}
+
+class TypeScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true};
+  }
+  
+  componentDidMount(){
+    helper.getData(this,"home/"+global.airport_code)
   }
 
   render(){
@@ -58,7 +82,7 @@ class DetailsScreen extends React.Component {
   componentDidMount(){
     const { navigation } = this.props;
     this.setState({currentType : navigation.getParam('nextScreen', 'food')})
-    return helper.getData(this,'home/'+navigation.getParam('nextScreen', 'food'));
+    return helper.getData(this,'home/'+global.airport_code+'/'+navigation.getParam('nextScreen', 'food'));
   }
 
   signIn = async () => {
@@ -329,10 +353,12 @@ const LoggedinBar = props => {
 
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
+  Types: {screen: TypeScreen},
   Details: {screen: DetailsScreen},
   Form: {screen: FormScreen},
   Chat: {screen: Chatscreen},
-  Recom: {screen: RecoScreen}
+  Recom: {screen: RecoScreen},
+
 }, 
 { initialRouteName: variables.landingScreen}
 );
