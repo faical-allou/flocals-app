@@ -81,31 +81,8 @@ class DetailsScreen extends React.Component {
   
   componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('nextScreen', 'food')})
-    return helper.getData(this,'home/'+global.airport_code+'/'+navigation.getParam('nextScreen', 'food'));
-  }
-
-  signIn = async () => {
-    helper.getRandomName(this);
-    try {
-      const result = await Google.logInAsync({
-        expoClientId: '746916049107-0un5svk32nv9o90c6vccek36tcfsiud0.apps.googleusercontent.com',
-        iosClientId: '746916049107-6p47litmq08pgf8bbbmfh00vjt79qct1.apps.googleusercontent.com',
-        androidClientId: '746916049107-fh6t7pc004v5m5sovp5gluou85g7t85p.apps.googleusercontent.com',
-        scopes: ["profile", "email"] 
-      })
-
-      if (result.type === "success") {   
-        this.setState({
-          signedIn: true,
-          photoUrl: result.user.photoUrl
-        })
-      } else {
-        console.log("cancelled")
-      }
-    } catch (e) {
-      console.log("error", e)
-    }
+    this.setState({currentType : navigation.getParam('nextScreen', 'general')})
+    return helper.getData(this,'home/'+global.airport_code+'/'+navigation.getParam('nextScreen', 'general'));
   }
 
   render(){
@@ -113,7 +90,7 @@ class DetailsScreen extends React.Component {
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
     }
 
-    return(
+    return (
       <View style={styles.listElements}>
         <FlatList
           data={this.state.dataSource}
@@ -126,27 +103,13 @@ class DetailsScreen extends React.Component {
             }
             keyExtractor={(item, index) => index.toString()} 
         />
-
-        <View style={styles.container}>
-        {this.state.signedIn ? (
-          <View>
-          <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
-          <Button
-          title="Add Stuff"
-          onPress={() => this.props.navigation.navigate('Form',{
-            username: this.state.username, 
-            act_type: this.state.currentType})}
-          /></View>
-        ) : (
-          <LoginBar signIn={this.signIn} />
-        )}
-      </View>
+        <BottomBar />
         <Button
           title="Go back"
           onPress={() => this.props.navigation.goBack()}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -329,6 +292,59 @@ class Chatscreen extends React.Component {
         }}
       />
     )
+  }
+}
+
+class BottomBar extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={ 
+      username: 'Default_User', 
+      photoUrl: variables.default_pic, 
+      signedIn: variables.islogged
+    };    
+  }
+
+  signIn = async () => {
+    helper.getRandomName(this);
+    try {
+      const result = await Google.logInAsync({
+        expoClientId: '746916049107-0un5svk32nv9o90c6vccek36tcfsiud0.apps.googleusercontent.com',
+        iosClientId: '746916049107-6p47litmq08pgf8bbbmfh00vjt79qct1.apps.googleusercontent.com',
+        androidClientId: '746916049107-fh6t7pc004v5m5sovp5gluou85g7t85p.apps.googleusercontent.com',
+        scopes: ["profile", "email"] 
+      })
+      if (result.type === "success") {   
+        this.setState({
+          signedIn: true,
+          photoUrl: result.user.photoUrl
+        })
+      } else {
+        console.log("cancelled")
+      }
+    } catch (e) {
+      console.log("error", e)
+    }
+  }
+
+  render(){
+
+    return(
+        <View >
+        {this.state.signedIn ? (
+          <View>
+          <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
+          <Button
+          title="Add Stuff"
+          onPress={() => this.props.navigation.navigate('Form',{
+            username: this.state.username, 
+            act_type: this.state.currentType})}
+          /></View>
+        ) : (
+          <LoginBar signIn={this.signIn} />
+        )}      
+      </View>
+    );
   }
 }
 

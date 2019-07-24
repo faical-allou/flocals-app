@@ -10,6 +10,7 @@ const helper = {
           isLoading: false,
           dataSource: responseJson,
         }, function(){
+          console.log(compo.dataSource, path_toCall);
         });
       })
       .catch((error) =>{
