@@ -1,19 +1,22 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, Button, Image,TextInput, Keyboard, Alert } from 'react-native';
+import { AsyncStorage,FlatList, ActivityIndicator, Text, View, Linking, Button, Image,TextInput, Keyboard, Alert } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { GiftedChat } from 'react-native-gifted-chat'
-import { Google } from 'expo';
 
 import helper from '../utils/helper.js';
 import dict from '../utils/dict.js';
 import styles from '../styles/styles.js';
-
+import BottomSignupBar from '../screens/BottomSignupBar.js'
 
 
 class HomeScreen extends React.Component {
   constructor(props){
+    helper._storeData('isLogged', variables.initialState);
     super(props);
-    this.state ={ isLoading: true};
+    this.state ={ 
+      isLoading: true,
+      isLogged: helper._retrieveData('isLogged'),
+    };
   }
   
   componentDidMount(){
@@ -40,7 +43,10 @@ class HomeScreen extends React.Component {
 class TypeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ isLoading: true};
+    this.state ={ 
+      isLoading: true,
+      isLogged: helper._retrieveData('isLogged'),
+    };
   }
   
   componentDidMount(){
@@ -74,7 +80,7 @@ class DetailsScreen extends React.Component {
       isLoading: false, 
       username: 'Default_User', 
       photoUrl: variables.default_pic, 
-      signedIn: variables.islogged,
+      isLogged: helper._retrieveData('isLogged'),
       currentType: ''
     };    
   }
@@ -103,7 +109,7 @@ class DetailsScreen extends React.Component {
             }
             keyExtractor={(item, index) => index.toString()} 
         />
-        <BottomBar />
+        <BottomSignupBar />
         <Button
           title="Go back"
           onPress={() => this.props.navigation.goBack()}
@@ -124,7 +130,8 @@ class FormScreen extends React.Component {
       placeDetails: '',
       autoSuggest:'',
       username:'',
-      act_type:''
+      act_type:'',
+      isLogged: helper._retrieveData('isLogged'),
     }
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
@@ -219,8 +226,11 @@ class FormScreen extends React.Component {
 class RecoScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ isLoading: true};
+    this.state ={ 
+      isLoading: true,
+      isLogged: helper._retrieveData('isLogged'),
   }
+}
   
   componentDidMount(){
     const { navigation } = this.props;
@@ -253,6 +263,7 @@ class RecoScreen extends React.Component {
     );
   }
 }
+
 
 class Chatscreen extends React.Component {
   state = {
@@ -293,76 +304,6 @@ class Chatscreen extends React.Component {
       />
     )
   }
-}
-
-class BottomBar extends React.Component {
-  constructor(props){
-    super(props);
-    this.state ={ 
-      username: 'Default_User', 
-      photoUrl: variables.default_pic, 
-      signedIn: variables.islogged
-    };    
-  }
-
-  signIn = async () => {
-    helper.getRandomName(this);
-    try {
-      const result = await Google.logInAsync({
-        expoClientId: '746916049107-0un5svk32nv9o90c6vccek36tcfsiud0.apps.googleusercontent.com',
-        iosClientId: '746916049107-6p47litmq08pgf8bbbmfh00vjt79qct1.apps.googleusercontent.com',
-        androidClientId: '746916049107-fh6t7pc004v5m5sovp5gluou85g7t85p.apps.googleusercontent.com',
-        scopes: ["profile", "email"] 
-      })
-      if (result.type === "success") {   
-        this.setState({
-          signedIn: true,
-          photoUrl: result.user.photoUrl
-        })
-      } else {
-        console.log("cancelled")
-      }
-    } catch (e) {
-      console.log("error", e)
-    }
-  }
-
-  render(){
-
-    return(
-        <View >
-        {this.state.signedIn ? (
-          <View>
-          <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
-          <Button
-          title="Add Stuff"
-          onPress={() => this.props.navigation.navigate('Form',{
-            username: this.state.username, 
-            act_type: this.state.currentType})}
-          /></View>
-        ) : (
-          <LoginBar signIn={this.signIn} />
-        )}      
-      </View>
-    );
-  }
-}
-
-const LoginBar = props => {
-  return (
-    <View>
-      <Button title="Sign in with Google to add stuff " onPress={() => props.signIn()} />
-    </View>
-  )
-}
-
-const LoggedinBar = props => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Welcome: {props.username}</Text>
-      <Image style={styles.image} source={{ uri: props.photoUrl }} />
-    </View>
-  )
 }
 
 

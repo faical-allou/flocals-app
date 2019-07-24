@@ -1,0 +1,66 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\Faical\OneDrive\Documents\python37;C:\Users\Faical\OneDrive\Documents\python37\Scripts;C:\Program Files\nodejs\;C:\Users\Faical\OneDrive\Documents\python35;C:\Users\Faical\OneDrive\Documents\python35\Scripts;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Java\jdk-12.0.2\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Users\Faical\AppData\Local\Microsoft\WindowsApps;C:\Users\Faical\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Faical\OneDrive\Documents\python37;C:\Users\Faical\OneDrive\Documents\python37\Scripts;C:\Users\Faical\AppData\Roaming\npm;C:\Users\Faical\OneDrive\Documents\python35;C:\Users\Faical\OneDrive\Documents\python35\Scripts;C:\Users\Faical\AppData\Local\Yarn\bin;C:\Program Files\Java\jdk-12.0.2\bin;C:\Program Files\OpenSSL-Win64\bin;
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.15.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Faical\OneDrive\Documents\dev\flocals-app\node_modules\@babel\plugin-transform-react-jsx-self\lib'
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start-expo": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject"
+    },
+    "dependencies": {
+      "@react-native-community/async-storage": "^1.5.1",
+      "expo": "^33.0.0",
+      "expo-cli": "^3.0.4",
+      "react": "16.8.3",
+      "react-art": "^16.8.6",
+      "react-dom": "^16.8.6",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+      "react-native-gifted-chat": "^0.9.11",
+      "react-native-web": "^0.11.5",
+      "react-navigation": "^3.11.1",
+      "react-router-dom": "^5.0.1",
+      "react-router-native": "^5.0.1",
+      "react-scripts": "^3.0.1"
+    },
+    "devDependencies": {
+      "babel-preset-expo": "^5.1.1"
+    },
+    "private": true,
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,3 +1,5 @@
+import { AsyncStorage} from 'react-native';
+
 import variables from '../config/config.js';
 import dict from '../utils/dict.js';
 
@@ -10,7 +12,6 @@ const helper = {
           isLoading: false,
           dataSource: responseJson,
         }, function(){
-          console.log(compo.dataSource, path_toCall);
         });
       })
       .catch((error) =>{
@@ -111,6 +112,26 @@ const helper = {
     if (max_id === 'general' ||  max_id === undefined) { max_id = 'general' }
     return max_id
     },
-  }
+
+    _storeData : async (key, value) => {
+      try {
+       await AsyncStorage.setItem(key, value);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    _retrieveData : async  (key) => {
+      try {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+          return value
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    
+  };
 export default helper;
 
