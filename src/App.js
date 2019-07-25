@@ -12,18 +12,29 @@ import BottomSignupBar from '../screens/BottomSignupBar.js'
 class HomeScreen extends React.Component {
   constructor(props){
     helper._storeData('isLogged', variables.initialState);
+    helper._storeData("airport", variables.destination )
+    helper._storeData("sessionid", variables.sessionid )
     super(props);
     this.state ={ 
       isLoading: true,
       isLogged: helper._retrieveData('isLogged'),
+      airport: '',
+      sessionid: ''
     };
   }
   
-  componentDidMount(){
-    global.airport_code = variables.destination;
-    global.sessionid = 0;
-    helper.getAirportData(global.airport_code);
-    this.setState({isLoading: false});
+  async componentDidMount(){
+    const _airport = await helper._retrieveData("airport");
+    helper.getAirportData(_airport);
+    const _sessionid = await helper._retrieveData("sessionid");
+    const _airportname = await helper._retrieveData("airportname");
+
+    this.setState({
+      airport: _airport,
+      sessionid: _sessionid,
+      airportname: _airportname,
+      isLoading: false,
+    });
   }
 
   render(){
@@ -34,7 +45,8 @@ class HomeScreen extends React.Component {
     return(
       <View style={styles.listElements}>
             <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Your Flying to: {global.airport_code}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Your Flying to: {this.state.airport}</Text>
+            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}</Text>           
             </View>
       );
   }
@@ -49,8 +61,9 @@ class TypeScreen extends React.Component {
     };
   }
   
-  componentDidMount(){
-    helper.getData(this,"home/"+global.airport_code)
+  async componentDidMount(){
+    const _airport = await helper._retrieveData("airport")
+    helper.getData(this,"home/"+_airport)
   }
 
   render(){
@@ -67,6 +80,11 @@ class TypeScreen extends React.Component {
             </View>
             }
           keyExtractor={(item, index) => index.toString()} 
+        />
+      <BottomSignupBar />
+        <Button
+          title="Go back"
+          onPress={() => this.props.navigation.goBack()}
         />
       </View>
     );
@@ -85,10 +103,12 @@ class DetailsScreen extends React.Component {
     };    
   }
   
-  componentDidMount(){
+  async componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentType : navigation.getParam('nextScreen', 'general')})
-    return helper.getData(this,'home/'+global.airport_code+'/'+navigation.getParam('nextScreen', 'general'));
+    const _airport = await helper._retrieveData("airport");
+    const _currentType = await navigation.getParam('nextScreen', 'general');
+    this.setState({currentType : _currentType})
+    helper.getData(this,'home/'+_airport+'/'+_currentType);
   }
 
   render(){
@@ -137,46 +157,50 @@ class FormScreen extends React.Component {
     this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
   }
     
-  componentDidMount(){
-    this.setState({isLoading:false});
+  async componentDidMount(){
     const { navigation } = this.props;
+    const _airport = await helper._retrieveData("airport");
+    const _airportlat = await helper._retrieveData("airportlat");
+    const _airportlong = await helper._retrieveData("airportlong");
+
+
     this.setState({
       username: navigation.getParam('username', 'Username_default'),
-      act_type: navigation.getParam('act_type', 'default_type')}, () => {
-      }
+      act_type: navigation.getParam('act_type', 'default_type'),
+      airport : _airport,
+      airportlat : _airportlat,
+      airportlong : _airportlong,
+      isLoading: false,
+    }
     );
-    global.airport_code = variables.destination;
-    helper.getAirportData(global.airport_code);
-    global.sessionid = 0;
   }
   handleNameChange(name) {
     this.setState({ name });
-    name.length > 4 ? helper.getAutosuggest(this,name,global.airport_details) : '';
+    name.length > 4 ? helper.getAutosuggest(this,name,this.state.airportlat,this.state.airportlong) : '';
   }
-  handleUserDescriptionChange(userDescription) {
-    this.setState({ userDescription });
+  handleUserDescriptionChange(desc) {
+    this.setState({ userDescription: desc });
   }
   handleSelectSuggest(itemSelected) {
     this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  },
-    () => {
-      helper.getPlaceDetails(this, this.state.place_id);
-      }
-    );
+      () => helper.getPlaceDetails(this, this.state.place_id)
+    )
   }
-  handleSubmit() {       
-      Alert.alert(
-        'Thank you for your recommendation',
-        'We added your recommendation to the category: '+ dict.int2ext[this.state.type_convert],
-        [
-          {text: 'OK', onPress: () => {
-            fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer)
-            this.props.navigation.goBack()
-          }
-        },
-          {text: 'Cancel', onPress: () => ''},
-        ],
-        {cancelable: false},
-      )   
+  handleSubmit() {
+    helper.createPost(this, this.state.detailjson);
+    Alert.alert(
+      'Thank you for your recommendation',
+      'We added your recommendation to the category: '+ dict.int2ext[this.state.type_convert],
+      [
+        {text: 'OK', onPress: () => {
+          fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer);
+          this.props.navigation.navigate('Types') ;
+        }
+      },
+        {text: 'Cancel', onPress: () => ''},
+      ],
+      {cancelable: false},
+    )   
   }
     
   render(){
@@ -232,10 +256,11 @@ class RecoScreen extends React.Component {
   }
 }
   
-  componentDidMount(){
+  async componentDidMount(){
     const { navigation } = this.props;
-    this.setState({currentPlace : navigation.getParam('nextScreen', '123')});
-    return helper.getData(this,'home/recommendations/'+navigation.getParam('nextScreen', '123'))   
+    const _currentType = await navigation.getParam('nextScreen', '123');
+    this.setState({currentPlace : _currentType});
+    return helper.getData(this,'home/recommendations/'+_currentType)   
   }
   
 
@@ -306,16 +331,13 @@ class Chatscreen extends React.Component {
   }
 }
 
-
-
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Types: {screen: TypeScreen},
   Details: {screen: DetailsScreen},
   Form: {screen: FormScreen},
   Chat: {screen: Chatscreen},
-  Recom: {screen: RecoScreen},
-
+  Recom: {screen: RecoScreen}
 }, 
 { initialRouteName: variables.landingScreen}
 );

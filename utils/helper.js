@@ -27,8 +27,8 @@ const helper = {
     });
   },
 
-    getAutosuggest : (compo,input_text, destination_airport) => {
-      url_location = '&location='+destination_airport.latitude+','+destination_airport.longitude;
+    getAutosuggest : (compo,input_text, lat, long) => {
+      url_location = '&location='+lat+','+long;
       url_radius = '&radius=100000&strictbounds';
       url_input = '&input='+input_text ;
       url_type = '&types=establishment'
@@ -47,48 +47,58 @@ const helper = {
     });
     },
 
-    getPlaceDetails : (compo,place_id_check) => {
+    getPlaceDetails : (compo,place_id_check) => {     
       url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
+      console.log(url)
       fetch(url) 
-    .then((response) => response.json())
-    .then((responseJson) => {
-        compo.setState({
-          type_convert: helper.getInternalType(responseJson.result.types),
-          datatransfer : {
-                method: 'POST',
-                body: JSON.stringify({
-                  sessionid: global.sessionid,
-                  airport : global.airport_code,
-                  name: compo.state.name,
-                  type_user: compo.state.act_type,
-                  googletype: responseJson.result.types,
-                  type_convert: helper.getInternalType(responseJson.result.types),
-                  userDescription: compo.state.userDescription ? compo.state.userDescription : '',
-                  place_id: compo.state.place_id,
-                  recommender: compo.state.username,
-                  address: responseJson.result.formatted_address,
-                  details : responseJson 
-                }),
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                }
-              }}, () => {console.log(responseJson.result.types)}
-            )
-          })  
-    .catch((error) =>{
-      console.error(error);
-    })
+        .then((response) => response.json())
+        .then( (responseJson) => {
+          _type_convert = helper.getInternalType(responseJson.result.types);
+          compo.setState({detailjson: responseJson, type_convert : _type_convert})
+          }) 
+        .catch((error) =>{
+          console.error(error);
+        })
+      },
+
+  createPost : async (compo, data) => {
+      const _sessionid = await helper._retrieveData("sessionid");
+      const _airport = await helper._retrieveData("airport");
+              compo.setState({
+                  datatransfer : {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          sessionid: _sessionid,
+                          airport : _airport,
+                          name: compo.state.name,
+                          type_user: compo.state.act_type,
+                          googletype: data.result.types,
+                          type_convert: compo.state.type_convert,
+                          userDescription: compo.state.userDescription ? compo.state.userDescription : '',
+                          place_id: compo.state.place_id,
+                          recommender: compo.state.username,
+                          address: data.result.formatted_address,
+                          details : data 
+                        }),
+                        headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                        }
+                      }
+            })
+
   },
 
   getAirportData : (airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())
   .then((responseJson) => {
-    global.airport_details = responseJson
-  })
-  .catch((error) =>{
-    console.error(error);
-  });
+    helper._storeData('airportname', responseJson.name);
+    helper._storeData('airportlat', String(responseJson.latitude));
+    helper._storeData('airportlong', String(responseJson.longitude));
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
   },
 
   getInternalType : (googletype) => {
@@ -118,6 +128,7 @@ const helper = {
        await AsyncStorage.setItem(key, value);
       } catch (error) {
         console.log(error);
+        return
       }
     },
 

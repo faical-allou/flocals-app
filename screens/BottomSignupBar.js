@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Text, View, Button, Image} from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { Google } from 'expo';
 
@@ -19,8 +20,11 @@ class BottomSigninBar extends React.Component {
     }
     
     async componentDidMount(){
+      
       const _logged = await helper._retrieveData('isLogged')
       const _username = await helper._retrieveData('username')
+      const { navigation } = this.props;
+
        this.setState({
           isLoading: false,
           isLogged: _logged, 
@@ -88,4 +92,4 @@ class BottomSigninBar extends React.Component {
     )
   }
 
-export default BottomSigninBar;
+export default withNavigation(BottomSigninBar);
