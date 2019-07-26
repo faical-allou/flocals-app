@@ -89,12 +89,12 @@ const helper = {
 
   },
 
-  getAirportData : (airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
+  getAirportData : async (airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())
-  .then((responseJson) => {
-    helper._storeData('airportname', responseJson.name);
-    helper._storeData('airportlat', String(responseJson.latitude));
-    helper._storeData('airportlong', String(responseJson.longitude));
+  .then( async (responseJson) => {
+    await helper._storeData('airportname', responseJson.name);
+    await helper._storeData('airportlat', String(responseJson.latitude));
+    await helper._storeData('airportlong', String(responseJson.longitude));
     })
     .catch((error) =>{
       console.error(error);
