@@ -1,47 +1,56 @@
+// @flow
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, Button,TextInput, Keyboard, Alert } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat } from 'react-native-gifted-chat'; // 0.3.0
 
+import Fire from '../Fire';
+import helper from '../utils/helper';
 
+type Props = {
+  name?: string,
+};
 
-class ChatScreen extends React.Component {
+class ChatScreen extends React.Component<Props> {
+  constructor() {
+    super();
+    console.ignoredYellowBox = [
+    'Setting a timer'
+    ];
+    }
+
+  static navigationOptions = ({ navigation }) => ({
+    title: (navigation.state.params || {}).name || 'Chat!',
+  });
+
   state = {
     messages: [],
-  }
+  };
 
-  componentWillMount() {
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: variables.default_pic,
-          },
-        },
-      ],
-    })
-  }
-
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
+  get user() {
+    return {
+      name: helper._retrieveData('username'),
+      _id: Fire.shared.uid,
+    };
   }
 
   render() {
     return (
       <GiftedChat
         messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: 1,
-        }}
+        onSend={Fire.shared.send}
+        user={this.user}
       />
-    )
+    );
+  }
+
+  componentDidMount() {
+    Fire.shared.on(message =>
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }))
+    );
+  }
+  componentWillUnmount() {
+    Fire.shared.off();
   }
 }
 
