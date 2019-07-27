@@ -1,4 +1,5 @@
 import firebase from 'firebase'; // 4.8.1
+import variables from './config/config.js'
 
 class Fire {
   constructor() {
@@ -8,7 +9,7 @@ class Fire {
 
   init = () =>
     firebase.initializeApp({
-      apiKey: 'AIzaSyAswCBSr46mx_crkqM53Ly1lKpqrtD12Ao',
+      apiKey: variables.G_firebase_key,
       authDomain: 'flocals.firebaseapp.com',
       databaseURL: 'https://flocals.firebaseio.com',
       projectId: 'flocals',

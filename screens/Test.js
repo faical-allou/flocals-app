@@ -1,5 +1,12 @@
 import React from 'react';
-import MapView from 'react-native-maps';
+import { ActivityIndicator, View, Text} from 'react-native';
+
+
+import helper from '../utils/helper.js';
+
+
+
+
 
 class Test extends React.Component {
   constructor(props){
@@ -7,12 +14,24 @@ class Test extends React.Component {
     this.state ={ 
       isLoading: true,
       airport: '',
-      sessionid: ''
+      sessionid: '',
+      translated: 'waiting...',
+      gotdata: false,
     };
   }
+  
+  componentDidMount(){
+    helper.getTranslation(this, 'How are you', 'de')
+    this.setState({ isLoading: false})
+  }
+
+
   render() {
+    if(this.state.isLoading){
+      return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+    }
     return (
-      <MapView style={{flex: 1}} />
+      <Text>{this.state.translated}</Text>
     );
   }
 }

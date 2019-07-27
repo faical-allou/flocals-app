@@ -18,7 +18,7 @@ class RecoScreen extends React.Component {
   
   async componentDidMount(){
     const { navigation } = this.props;
-    const _currentType = await navigation.getParam('nextScreen', '123');
+    const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
     this.setState({currentPlace : _currentType});
     return helper.getData(this,'home/recommendations/'+_currentType)   
   }

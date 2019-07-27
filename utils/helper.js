@@ -19,6 +19,8 @@ const helper = {
       });
     },
 
+      
+
     getRandomName : (compo) => {fetch('https://randomuser.me/api') 
     .then((response) => response.json())
     .then((responseJson) => {compo.setState({username: responseJson.results[0].login.username})})
