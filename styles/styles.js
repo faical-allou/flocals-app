@@ -43,7 +43,9 @@ const styles = StyleSheet.create({
       fontSize: 18,
       margin: 5
     },
-
+    homeElement: {
+      flex: 1, 
+    },
 
   })
 

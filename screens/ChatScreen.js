@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
+import { View, Platform } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'; // 0.3.0
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import variables from '../config/config.js';
 
@@ -95,7 +96,8 @@ class ChatScreen extends React.Component {
   
 
   render() {
-    return  (        
+    return  ( 
+      <View>      
       <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
@@ -103,6 +105,8 @@ class ChatScreen extends React.Component {
           _id: CHATKIT_USER_NAME
         }}
       />
+      {Platform.OS === 'android' ? <KeyboardSpacer /> : null }
+      </View> 
     );
   }
 }
