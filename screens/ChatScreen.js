@@ -3,12 +3,11 @@ import React from 'react';
 import { View, Platform } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'; // 0.3.0
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import variables from '../config/config.js';
 
-const CHATKIT_TOKEN_PROVIDER_ENDPOINT = 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/53ef0d93-e949-4630-9f40-61f9d0390e06/token';
-const CHATKIT_INSTANCE_LOCATOR = 'v1:us1:53ef0d93-e949-4630-9f40-61f9d0390e06';
+const CHATKIT_TOKEN_PROVIDER_ENDPOINT = variables.CTPE;
+const CHATKIT_INSTANCE_LOCATOR = variables.CIL;
 const CHATKIT_ROOM_ID = '19455412';
 const CHATKIT_USER_NAME = 'Dave';
 
@@ -96,8 +95,7 @@ class ChatScreen extends React.Component {
   
 
   render() {
-    return  ( 
-      <View>      
+    return  (     
       <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
@@ -105,8 +103,6 @@ class ChatScreen extends React.Component {
           _id: CHATKIT_USER_NAME
         }}
       />
-      {Platform.OS === 'android' ? <KeyboardSpacer /> : null }
-      </View> 
     );
   }
 }
