@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, Button} from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking, Button, ImageBackground} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -9,7 +9,7 @@ import dict from '../utils/dict.js'
 class DetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-          title: dict.int2ext[navigation.getParam('nextScreen', 'Ops')],
+          title: dict.int2ext[navigation.getParam('nextScreen', 'Default')],
         };
       };
     constructor(props){
@@ -27,8 +27,11 @@ class DetailsScreen extends React.Component {
       const { navigation } = this.props;
       const _airport = await helper._retrieveData("airport");
       const _currentType = await navigation.getParam('nextScreen', 'general');
-      this.setState({currentType : _currentType})
       helper.getData(this,'home/'+_airport+'/'+_currentType);
+      this.setState({
+        currentType : _currentType,}
+          )
+
     }
 
     render(){
@@ -36,26 +39,224 @@ class DetailsScreen extends React.Component {
         return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
       }
 
-      return (
-        <View style={styles.listElements}>
-          <FlatList
-            data={this.state.dataSource}
-            renderItem={({item}) => <View style={styles.itemElement} >
-                <Text style={styles.textElement} onPress={
-                  ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
-                <Text style={styles.textElement} onPress={
-                  ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
-                </View>
-              }
-              keyExtractor={(item, index) => index.toString()}
-          />
-          <BottomSignupBar />
-          <Button
-            title="Go back"
-            onPress={() => this.props.navigation.goBack()}
-          />
-        </View>
-      )
+      switch (this.state.currentType) {
+        case 'general':
+        return (
+          <ImageBackground source={require('../assets/mustseendo.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        case 'food':
+        return (
+          <ImageBackground source={require('../assets/food.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        case 'shopping':
+        return (
+          <ImageBackground source={require('../assets/shopping.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        case 'nature':
+        return (
+          <ImageBackground source={require('../assets/nature.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        case 'nightlife':
+        return (
+          <ImageBackground source={require('../assets/nightlife.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        case 'park':
+          return (
+            <ImageBackground source={require('../assets/park.jpg')} style={{width: '100%', height: '100%'}}>
+              <View style={styles.listElements}>
+                <FlatList
+                  data={this.state.dataSource}
+                  renderItem={({item}) => <View>
+                  <View style={styles.itemElement} >
+                      <Text style={styles.textElement} onPress={
+                        ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                        </View>
+                      <View style={styles.recElement} >
+                      <Text style={styles.textElement} onPress={
+                        ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                      </View>
+                    </View>
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                />
+                <BottomSignupBar />
+                <Button
+                  title="Go back"
+                  onPress={() => this.props.navigation.goBack()}
+                />
+              </View>
+            </ImageBackground>
+          )
+        case 'artnhistory':
+        return (
+          <ImageBackground source={require('../assets/artnhistory.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+        default:
+        return (
+          <ImageBackground source={require('../assets/activities.jpg')} style={{width: '100%', height: '100%'}}>
+            <View style={styles.listElements}>
+              <FlatList
+                data={this.state.dataSource}
+                renderItem={({item}) => <View>
+                <View style={styles.itemElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
+                      </View>
+                    <View style={styles.recElement} >
+                    <Text style={styles.textElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                    </View>
+                  </View>
+                  }
+                  keyExtractor={(item, index) => index.toString()}
+              />
+              <BottomSignupBar />
+              <Button
+                title="Go back"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+          </ImageBackground>
+        )
+      }
     }
   }
 

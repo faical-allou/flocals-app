@@ -3,20 +3,36 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
     itemElement: {
       flex: 1,
-      backgroundColor:"lightblue",
+      backgroundColor: "rgba(169,169,169,0.95)",
       padding:30,
-      margin:20,
+      marginTop:20,
       alignItems:"center",
-      borderRadius: 10
+      borderRadius: 10,
+    },
+    recElement: {
+      flex: 1,
+      backgroundColor: "rgba(211,211,211,0.95)",
+      paddingVertical:25,
+      paddingHorizontal:15,
+      flexDirection:'row',
+      alignItems:"center",
+      justifyContent:'space-between',
+      borderBottomWidth:1,
+      borderBottomColor:'lightblue',
+      borderRadius: 0,
+      fontSize : 14,
+      opacity: 1,
+      fontWeight: 'bold'
     },
     textElement: {
-      fontSize : 20
+      fontSize : 20,
+      opacity: 1,
+      fontWeight: 'bold'
     },
     listElements: {
       flex: 1,
       paddingTop:20,
       justifyContent:"center",
-      backgroundColor:"#fff",
       alignItems:"center"
     },
     textInput: {

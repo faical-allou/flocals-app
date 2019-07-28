@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, Button, FlatList} from 'react-native';
+import { ActivityIndicator, Text, View, Button, FlatList, ImageBackground} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -32,14 +32,15 @@ class TypeScreen extends React.Component {
       }
 
       return(
+      <ImageBackground source={require('../assets/activities.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={styles.listElements}>
           <FlatList
             data={this.state.dataSource}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => <View style={styles.itemElement} >
               <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert]}</Text>
               </View>
               }
-            keyExtractor={(item, index) => index.toString()}
           />
         <BottomSignupBar />
           <Button
@@ -47,6 +48,7 @@ class TypeScreen extends React.Component {
             onPress={() => this.props.navigation.goBack()}
           />
         </View>
+      </ImageBackground>
       );
     }
   }
