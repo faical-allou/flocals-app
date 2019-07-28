@@ -7,15 +7,15 @@ const styles = StyleSheet.create({
       padding:30,
       margin:20,
       alignItems:"center",
-      borderRadius: 10   
+      borderRadius: 10
     },
     textElement: {
       fontSize : 20
     },
     listElements: {
-      flex: 1, 
-      paddingTop:20, 
-      justifyContent:"center", 
+      flex: 1,
+      paddingTop:20,
+      justifyContent:"center",
       backgroundColor:"#fff", 
       alignItems:"center"
     },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
       margin: 5
     },
     homeElement: {
-      flex: 1, 
+      flex: 1,
     },
 
   })

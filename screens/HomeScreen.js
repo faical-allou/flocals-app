@@ -8,7 +8,7 @@ import styles from '../styles/styles.js';
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-    this.state ={ 
+    this.state ={
       isLoading: true,
       isLogged: helper._retrieveData('isLogged'),
       airport: '',
@@ -16,7 +16,7 @@ class HomeScreen extends React.Component {
       sessionid: ''
     };
   }
-  
+
   async componentDidMount(){
     const _airport = await helper._retrieveData("airport");
     helper.getAirportData(this, _airport);
@@ -32,13 +32,13 @@ class HomeScreen extends React.Component {
     if(this.state.isLoading){
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
     }
- 
+
     return(
       <ImageBackground source={require('../assets/homepage.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={styles.homeElement}>
               <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
-              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>You're flying to: {this.state.airport}</Text>
-              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}</Text>           
+              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>You are flying to: {this.state.airport}</Text>
+              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}</Text>
         </View>
       </ImageBackground>
       );
