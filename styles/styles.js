@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
       padding:30,
       marginTop:20,
       alignItems:"center",
-      borderRadius: 10,
+      borderRadius: 100,
     },
     recElement: {
-      flex: 1,
+//      flex: 1,
       backgroundColor: "rgba(211,211,211,0.95)",
       paddingVertical:25,
       paddingHorizontal:15,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
       justifyContent:'space-between',
       borderBottomWidth:1,
       borderBottomColor:'lightblue',
-      borderRadius: 0,
+      borderRadius: 100,
       fontSize : 14,
       opacity: 1,
       fontWeight: 'bold'
@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
     },
     homeElement: {
       flex: 1,
+    },
+    bkgImage: {
+      width: '100%',
+      height: '100%',
+      opacity:0.75
     },
 
   })

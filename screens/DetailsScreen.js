@@ -42,7 +42,7 @@ class DetailsScreen extends React.Component {
       switch (this.state.currentType) {
         case 'general':
         return (
-          <ImageBackground source={require('../assets/mustseendo.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/mustseendo.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -69,7 +69,7 @@ class DetailsScreen extends React.Component {
         )
         case 'food':
         return (
-          <ImageBackground source={require('../assets/food.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/food.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -96,7 +96,7 @@ class DetailsScreen extends React.Component {
         )
         case 'shopping':
         return (
-          <ImageBackground source={require('../assets/shopping.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/shopping.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -123,7 +123,7 @@ class DetailsScreen extends React.Component {
         )
         case 'nature':
         return (
-          <ImageBackground source={require('../assets/nature.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/nature.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -150,7 +150,7 @@ class DetailsScreen extends React.Component {
         )
         case 'nightlife':
         return (
-          <ImageBackground source={require('../assets/nightlife.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/nightlife.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -177,7 +177,7 @@ class DetailsScreen extends React.Component {
         )
         case 'park':
           return (
-            <ImageBackground source={require('../assets/park.jpg')} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={require('../assets/park.jpg')} style={styles.bkgImage}>
               <View style={styles.listElements}>
                 <FlatList
                   data={this.state.dataSource}
@@ -204,7 +204,7 @@ class DetailsScreen extends React.Component {
           )
         case 'artnhistory':
         return (
-          <ImageBackground source={require('../assets/artnhistory.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/artnhistory.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
@@ -231,7 +231,7 @@ class DetailsScreen extends React.Component {
         )
         default:
         return (
-          <ImageBackground source={require('../assets/activities.jpg')} style={{width: '100%', height: '100%'}}>
+          <ImageBackground source={require('../assets/activities.jpg')} style={styles.bkgImage}>
             <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
