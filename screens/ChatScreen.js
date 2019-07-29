@@ -1,114 +1,52 @@
-// @flow
 import React from 'react';
-import { View, Platform } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'; 
-import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-import variables from '../config/config.js';
+import Fire from '../Fire';
 
-const CHATKIT_TOKEN_PROVIDER_ENDPOINT = variables.CTPE;
-const CHATKIT_INSTANCE_LOCATOR = variables.CIL;
-const CHATKIT_ROOM_ID = '19455412';
-const CHATKIT_USER_NAME = 'Dave';
 
 class ChatScreen extends React.Component {
+
+  static navigationOptions = () => ({
+    title: 'Chat!',
+  });
+
   state = {
-    messages: []
+    messages: [],
   };
 
-  componentDidMount() {
-    const tokenProvider = new TokenProvider({
-      url: CHATKIT_TOKEN_PROVIDER_ENDPOINT,
-    });
-
-    const chatManager = new ChatManager({
-      instanceLocator: CHATKIT_INSTANCE_LOCATOR,
-      userId: CHATKIT_USER_NAME,
-      tokenProvider: tokenProvider,
-    });
-
-    chatManager
-      .connect()
-      .then(currentUser => {
-        this.currentUser = currentUser;
-        this.currentUser.subscribeToRoom({
-          roomId: CHATKIT_ROOM_ID,
-          hooks: {
-            onMessage: this.onReceive,
-          },
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  onReceive = data => {
-    const { id, senderId, text, createdAt } = data;
-    const incomingMessage = {
-      _id: id,
-      text: text,
-      createdAt: new Date(createdAt),
-      user: {
-        _id: senderId,
-        name: senderId,
-        avatar:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmXGGuS_PrRhQt73sGzdZvnkQrPXvtA-9cjcPxJLhLo8rW-sVA',
-      },
+  get user() {
+    return {
+      name: 'randomname',
+     _id: Fire.shared.uid,
+      avatar: 'https://placeimg.com/140/140/any'
     };
-
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, incomingMessage),
-    }));
-  };
-
-  onSend = (messages) => {  
-    const toSend = this.getFormat(messages[0].text,'en' )
-    fetch('https://translation.googleapis.com/language/translate/v2?key='+variables.G_Places_API, toSend)
-      .then((response) => response.json())
-      .then((responseJson) => { 
-        console.log(responseJson)
-        this.currentUser
-        .sendMessage({
-          text: messages[0].text+ "  /-/  "+responseJson.data.translations[0].translatedText,
-          roomId: CHATKIT_ROOM_ID,
-        })
-      })
-      .catch((error) =>{
-        console.error(error);
-      })
-  };
-  
-  getFormat = (inputText, outputlanguage) => {
-    return format = {                        
-      method: 'POST',
-      key: variables.G_Places_API, 
-      body: JSON.stringify({  
-        q: [inputText],
-        target: outputlanguage 
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-  }}
-  
-
-  render() {
-    return  (     
-      <View  style={{flex:1}}>
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: CHATKIT_USER_NAME
-        }}
-      />
-      {Platform.OS === 'android' ? <KeyboardSpacer /> : null }
-      </View>
-    );
   }
-}
-
+  
+  
+  componentDidMount() {
+    console.log('Mounted')
+    console.log('user is:')    
+    console.log(this.user)
+    
+    Fire.shared.on(message =>
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }))
+      );
+    }
+    componentWillUnmount() {
+      Fire.shared.off();
+    }
+    
+    render() {
+      return (
+        <GiftedChat
+        messages={this.state.messages}
+        onSend={Fire.shared.send}
+        user={this.user}
+        />
+        );
+      }
+    }
+      
 export default ChatScreen;

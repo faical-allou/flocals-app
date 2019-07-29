@@ -16,7 +16,7 @@ helper._storeData('isLogged', variables.initialState);
 helper._storeData("airport", variables.destination )
 helper._storeData("airportname", '' )
 helper._storeData("sessionid", variables.sessionid )
-helper._storeData("username", 'Default User for testing' )
+helper._storeData("username", variables.userid )
 
 
 const AppNavigator = createStackNavigator({

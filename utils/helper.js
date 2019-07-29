@@ -63,7 +63,7 @@ const helper = {
         })
       },
 
-  createPost : async (compo, data) => {
+  createPostRec : async (compo, data) => {
       const _sessionid = await helper._retrieveData("sessionid");
       const _airport = await helper._retrieveData("airport");
               compo.setState({
@@ -90,6 +90,29 @@ const helper = {
             })
 
   },
+
+  createChatUser : async (compo, inputname) => {
+    const _sessionid = await helper._retrieveData("sessionid");
+            compo.setState({
+                dataTransfer : {
+                      method: 'POST',
+                      body: JSON.stringify({ 
+                        name: inputname,
+                        id: _sessionid+"-"+inputname,
+                        cil: variables.CIL,
+                        key: variables.CSK
+                      }),
+                      headers: {
+                        "content-type": "application/json",
+                      }
+                    }
+          }, ()=> {
+            console.log(compo.state.dataTransfer)
+            fetch(variables.chatkit_api, compo.state.dataTransfer)
+            .catch((error) =>  {console.log(error)} )
+        })
+
+},
 
   getAirportData : (compo, airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())

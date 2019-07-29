@@ -54,7 +54,7 @@ class FormScreen extends React.Component {
       )
     }
     handleSubmit() {
-      helper.createPost(this, this.state.detailjson);
+      helper.createPostRec(this, this.state.detailjson);
       Alert.alert(
         'Thank you for your recommendation',
         'We added your recommendation to the category: '+ dict.int2ext[this.state.type_convert],
