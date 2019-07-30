@@ -2,6 +2,7 @@ import firebase from 'firebase'; // 4.8.1
 
 
 import variables from './config/config.js'
+import helper from './utils/helper.js'
 
 
 
@@ -17,7 +18,7 @@ class Fire {
       authDomain: variables.fire_authDomain,
       databaseURL: variables.fire_databaseURL,
       projectId: variables.fire_projectId,
-     storageBucket: '',
+      storageBucket: '',
       messagingSenderId: variables.messagingSenderId,
     });
   }
@@ -38,8 +39,9 @@ class Fire {
     return (firebase.auth().currentUser || {}).uid;
   }
 
-  get ref() {
-    return firebase.database().ref('messages');
+  findroom(roomid) {
+    //firebase.database().ref('blabla').remove();
+    return firebase.database().ref(roomid);
   }
 
   parse = snapshot => {
@@ -55,29 +57,70 @@ class Fire {
     return message;
   };
 
-  on = callback =>
-    this.ref
+  subscribe(callback,roomId) {
+    this.findroom(roomId)
       .limitToLast(20)
-      .on('child_added', snapshot => callback(this.parse(snapshot)));
+      .on('child_added', snapshot => callback(this.parse(snapshot)))
+  }
 
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
   }
 
-  // send the message to the Backend
-  send = messages => {
-    for (let i = 0; i < messages.length; i++) {
-      const { text, user } = messages[i];
-      const message = {
-        text,
-        user,
-        timestamp: this.timestamp,
-      };
-      this.append(message);
-    }
-  };
 
-  append = message => this.ref.push(message);
+  sendmessage(messages, roomId) {
+    console.log('room to send to: ' +roomId);
+    for (let i = 0; i < messages.length; i++) {
+      const toSend = this.getFormat(messages[0].text,'en' )
+      const { text, user } = messages[i];
+      fetch('https://translation.googleapis.com/language/translate/v2?key='+variables.G_Places_API, toSend)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        text = text + "  /-/  " + responseJson.data.translations[0].translatedText
+        const message = {
+          text,
+          user,
+          timestamp: this.timestamp,
+        };
+        this.findroom(roomId).push(message);
+      })
+    } 
+  }
+
+  createRoom(roomId) {
+    var roomRef = firebase.database().ref(roomId);
+    roomRef.transaction(function(currentData) {
+      if (currentData === null) {
+        return { autoWelcome: { text: 'Hello, this is flocals, you can now ask question directly to your fellow passenger', user:{_id: 1, name: 'flocals' } }};
+      } else {
+        console.log('Room already exists.');
+        return; // Abort the transaction.
+      }
+    }, function(error, committed, snapshot) {
+      if (error) {
+        console.log('Transaction failed abnormally!', error);
+      } else if (!committed) {
+        console.log('We aborted the transaction (because room already exists).');
+      } else {
+        console.log('Room added!');
+      }
+      console.log("Text added ", snapshot.val());
+    });
+  }
+
+  getFormat = (inputText, outputlanguage) => {
+    return format = {                        
+      method: 'POST',
+      key: variables.G_Places_API, 
+      body: JSON.stringify({  
+        q: [inputText],
+        target: outputlanguage 
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+  }}
 
   // close the connection to the Backend
   off() {

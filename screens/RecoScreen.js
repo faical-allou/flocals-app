@@ -13,6 +13,8 @@ class RecoScreen extends React.Component {
     this.state ={ 
       isLoading: true,
       isLogged: helper._retrieveData('isLogged'),
+      username: helper._retrieveData('username'),
+      sessionid: helper._retrieveData('sessionid')
   }
 }
   
@@ -35,7 +37,15 @@ class RecoScreen extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
             <Text style={styles.textElement} >{item.userdescription}</Text>
-            <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Chat', {recommender: item.recommender})}>{item.recommender}</Text>
+            <Text style={styles.textElement} onPress={() => 
+              this.props.navigation.navigate('Chat', {
+                      recommender: item.recommender,
+                      username: this.state.username,
+                      sessionid: this.state.sessionid,
+                      placeid: this.state.currentPlace,
+                      })}>
+              {item.recommender}
+            </Text>
             </View>
             }
           keyExtractor={(item, index) => index.toString()} 
