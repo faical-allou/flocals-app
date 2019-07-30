@@ -47,7 +47,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -74,7 +74,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -101,7 +101,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -128,7 +128,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -155,7 +155,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -182,7 +182,7 @@ class DetailsScreen extends React.Component {
                 <FlatList
                   data={this.state.dataSource}
                   renderItem={({item}) => <View>
-                  <View style={styles.itemElement} >
+                  <View style={styles.itemElementdetail} >
                       <Text style={styles.textElement} onPress={
                         ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                         </View>
@@ -209,7 +209,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>
@@ -236,7 +236,7 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElement} >
+                <View style={styles.itemElementdetail} >
                     <Text style={styles.textElement} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
                       </View>

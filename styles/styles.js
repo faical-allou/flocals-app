@@ -9,6 +9,15 @@ const styles = StyleSheet.create({
       alignItems:"center",
       borderRadius: 100,
     },
+    itemElementdetail: {
+      flex: 1,
+      backgroundColor: "rgba(169,169,169,0.95)",
+      padding:30,
+      marginTop:20,
+      alignItems:"center",
+      borderTopLeftRadius: 100,
+      borderTopRightRadius: 100
+    },
     recElement: {
 //      flex: 1,
       backgroundColor: "rgba(211,211,211,0.95)",
@@ -19,7 +28,8 @@ const styles = StyleSheet.create({
       justifyContent:'space-between',
       borderBottomWidth:1,
       borderBottomColor:'lightblue',
-      borderRadius: 100,
+      borderBottomLeftRadius: 100,
+      borderBottomRightRadius: 100,
       fontSize : 14,
       opacity: 1,
       fontWeight: 'bold'
