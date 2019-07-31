@@ -69,7 +69,7 @@ class Fire {
   sendMessages(messages, roomId) {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      helper.getTranslation(text,'en', (response) => {
+      helper.getTranslation(text,'fr', (response) => {
         text = text + "  /-/  " + response
         const message = {
           text,

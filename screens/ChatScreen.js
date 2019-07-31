@@ -3,7 +3,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 
 
-import Fire from '../Fire';
+import Fire from '../Fire'; //it is read
 
 
 class ChatScreen extends React.Component {
@@ -88,6 +88,6 @@ class ChatScreen extends React.Component {
         }
       }
       
-      export default ChatScreen;
+export default ChatScreen;
       
  

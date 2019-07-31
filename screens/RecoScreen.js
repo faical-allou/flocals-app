@@ -14,7 +14,9 @@ class RecoScreen extends React.Component {
       isLoading: true,
       isLogged: helper._retrieveData('isLogged'),
       username: helper._retrieveData('username'),
+      userlang: helper._retrieveData('userlang'),
       sessionid: helper._retrieveData('sessionid')
+
   }
 }
   
@@ -22,7 +24,7 @@ class RecoScreen extends React.Component {
     const { navigation } = this.props;
     const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
     this.setState({currentPlace : _currentType});
-    return helper.getData(this,'home/recommendations/'+_currentType)   
+    return helper.getData(this,'home/recommendations/fr/'+_currentType)   
   }
   
 
@@ -33,10 +35,13 @@ class RecoScreen extends React.Component {
  
     return(
       <View style={styles.listElements}>
+        {console.log(this.state.dataSource)}
         <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => <View style={styles.itemElement} >
             <Text style={styles.textElement} >{item.userdescription}</Text>
+            <Text style={styles.textElement} >{item.userdescription_translated}</Text>
+            
             <Text style={styles.textElement} onPress={() => 
               this.props.navigation.navigate('Chat', {
                       recommender: item.recommender,

@@ -117,6 +117,7 @@ const helper = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'charset': 'utf-8'
       }
   };
     fetch('https://translation.googleapis.com/language/translate/v2?key='+variables.G_Places_API, format)

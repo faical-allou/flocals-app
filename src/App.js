@@ -17,6 +17,8 @@ helper._storeData("airport", variables.destination )
 helper._storeData("airportname", '' )
 helper._storeData("sessionid", variables.sessionid )
 helper._storeData("username", variables.userid )
+helper._storeData("userlang", variables.userlang )
+
 
 
 const AppNavigator = createStackNavigator({
