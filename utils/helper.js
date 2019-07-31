@@ -88,31 +88,7 @@ const helper = {
                         }
                       }
             })
-
   },
-
-  createChatUser : async (compo, inputname) => {
-    const _sessionid = await helper._retrieveData("sessionid");
-            compo.setState({
-                dataTransfer : {
-                      method: 'POST',
-                      body: JSON.stringify({ 
-                        name: inputname,
-                        id: _sessionid+"-"+inputname,
-                        cil: variables.CIL,
-                        key: variables.CSK
-                      }),
-                      headers: {
-                        "content-type": "application/json",
-                      }
-                    }
-          }, ()=> {
-            console.log(compo.state.dataTransfer)
-            fetch(variables.chatkit_api, compo.state.dataTransfer)
-            .catch((error) =>  {console.log(error)} )
-        })
-
-},
 
   getAirportData : (compo, airportcode) => {fetch(variables.endpoint+'/api/v1/airport/'+airportcode) 
   .then((response) => response.json())
@@ -128,6 +104,25 @@ const helper = {
   .catch((error) =>{
       console.error(error);
     });
+  },
+
+  getTranslation: (inputtext, outputlanguage, callback) => {
+    const format = {                        
+      method: 'POST',
+      key: variables.G_Places_API, 
+      body: JSON.stringify({  
+        q: [inputtext],
+        target: outputlanguage 
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+  };
+    fetch('https://translation.googleapis.com/language/translate/v2?key='+variables.G_Places_API, format)
+      .then((response) => response.json())
+      .then((responseJson) =>  callback(responseJson.data.translations[0].translatedText) )
+      .catch((error) =>{ console.error(error); })
   },
 
   getInternalType : (googletype) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; 
-import {  ActivityIndicator, View, Text } from 'react-native';
+import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 
 
 import Fire from '../Fire';
@@ -19,7 +19,6 @@ class ChatScreen extends React.Component {
       isLoading: true,
     }
     
-
     console.ignoredYellowBox = [
       'Setting a timer'
       ];
@@ -32,7 +31,7 @@ class ChatScreen extends React.Component {
   get user() {
     return {
       name: 'randomname',
-     _id: Fire.shared.uid,
+     _id: Firebasedata.uid,
       avatar: 'https://placeimg.com/140/140/any'
     };
   }
@@ -57,8 +56,8 @@ class ChatScreen extends React.Component {
     }
 
     Promise.all([ _sessionid, _placeid,_username,_recommender]).then(() =>{
-      Fire.shared.createRoom(this.state.roomId);
-      Fire.shared.subscribe( (message => this.updateChat(message)), this.state.roomId);
+      Firebasedata.createRoom(this.state.roomId);
+      Firebasedata.subscribe( (message => this.updateChat(message)), this.state.roomId);
       console.log('room name:  '+this.state.roomId)
       this.setState({
         isLoading: false,
@@ -67,7 +66,7 @@ class ChatScreen extends React.Component {
     } )
     }
   componentWillUnmount() {
-    Fire.shared.off();
+    Firebasedata.off(this.state.roomId);
   }
     
   render() {
@@ -75,13 +74,20 @@ class ChatScreen extends React.Component {
       return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
     }
     return (
-      <GiftedChat
-      messages={this.state.messages}
-      onSend={messages => Fire.shared.sendmessage(messages, this.state.roomId)}
-      user={this.user}
-      />
-      );
-    }
-  }
+      <View style={{ flex: 1 }}>
+           
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={messages => Firebasedata.sendMessages(messages, this.state.roomId)}
+          user={this.user}
+          />
+        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : {}}
       
-export default ChatScreen;
+      </View>
+         );
+        }
+      }
+      
+      export default ChatScreen;
+      
+ 

@@ -2,9 +2,7 @@ import firebase from 'firebase'; // 4.8.1
 
 
 import variables from './config/config.js'
-import helper from './utils/helper.js'
-
-
+import helper from './utils/helper.js';
 
 class Fire {
   constructor() {
@@ -68,15 +66,11 @@ class Fire {
   }
 
 
-  sendmessage(messages, roomId) {
-    console.log('room to send to: ' +roomId);
+  sendMessages(messages, roomId) {
     for (let i = 0; i < messages.length; i++) {
-      const toSend = this.getFormat(messages[0].text,'en' )
       const { text, user } = messages[i];
-      fetch('https://translation.googleapis.com/language/translate/v2?key='+variables.G_Places_API, toSend)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        text = text + "  /-/  " + responseJson.data.translations[0].translatedText
+      helper.getTranslation(text,'en', (response) => {
+        text = text + "  /-/  " + response
         const message = {
           text,
           user,
@@ -123,10 +117,10 @@ class Fire {
   }}
 
   // close the connection to the Backend
-  off() {
-    this.ref.off();
+  off(roomId) {
+    this.findroom(roomId).off();
   }
 }
 
-Fire.shared = new Fire();
+Firebasedata = new Fire();
 export default Fire;
