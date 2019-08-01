@@ -31,7 +31,7 @@ const dict = {
         shopping: 'Shopping',
         nature: 'Nature',
         nightlife: 'Nightlife',
-        park: 'Park',
+        park: 'Parks',
         artnhistory: 'Culture'
     }
 }

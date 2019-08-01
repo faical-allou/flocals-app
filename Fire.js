@@ -85,7 +85,7 @@ class Fire {
     var roomRef = firebase.database().ref(roomId);
     roomRef.transaction(function(currentData) {
       if (currentData === null) {
-        return { autoWelcome: { text: 'Hello, this is flocals, you can now ask question directly to your fellow passenger', user:{_id: 1, name: 'flocals' } }};
+        return { autoWelcome: { text: 'Hello, this is flocals, you can now ask questions directly to your fellow passenger', user:{_id: 1, name: 'flocals' } }};
       } else {
         console.log('Room already exists.');
         return; // Abort the transaction.

@@ -3,41 +3,64 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
     itemElement: {
       flex: 1,
-      backgroundColor: "rgba(169,169,169,0.95)",
+      backgroundColor: "rgba(255,255,255,1)",
       padding:30,
       marginTop:20,
       alignItems:"center",
-      borderRadius: 100,
+      borderRadius: 20,
+      borderColor: 'grey',
+      borderWidth: 1,
+      marginHorizontal: 20
     },
     itemElementdetail: {
       flex: 1,
-      backgroundColor: "rgba(169,169,169,0.95)",
+      backgroundColor: "rgba(255,255,255,1)",
       padding:30,
       marginTop:20,
       alignItems:"center",
-      borderTopLeftRadius: 100,
-      borderTopRightRadius: 100
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderColor: 'grey',
+      borderBottomColor: 'white',
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderTopWidth: 1,
+      marginHorizontal: 20,
+      
     },
     recElement: {
-//      flex: 1,
+      flex: 1,
       backgroundColor: "rgba(211,211,211,0.95)",
       paddingVertical:25,
       paddingHorizontal:15,
-      flexDirection:'row',
-      alignItems:"center",
       justifyContent:'space-between',
       borderBottomWidth:1,
       borderBottomColor:'lightblue',
-      borderBottomLeftRadius: 100,
-      borderBottomRightRadius: 100,
-      fontSize : 14,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      fontSize : 10,
       opacity: 1,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      borderColor: 'grey',
+      borderTopColor:'white',
+      borderTopWidth: 1,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      marginHorizontal: 20,
     },
     textElement: {
       fontSize : 20,
       opacity: 1,
       fontWeight: 'bold'
+    },
+    textRecElement: {
+      fontSize : 16,
+      opacity: 1,
+      alignSelf: 'flex-end',
+      fontWeight: 'bold',
+      textAlign: 'right',
     },
     listElements: {
       flex: 1,
@@ -75,7 +98,6 @@ const styles = StyleSheet.create({
     bkgImage: {
       width: '100%',
       height: '100%',
-      opacity:0.75
     },
 
   })

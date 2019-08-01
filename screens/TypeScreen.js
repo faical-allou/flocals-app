@@ -32,7 +32,7 @@ class TypeScreen extends React.Component {
       }
 
       return(
-      <ImageBackground source={require('../assets/activities.jpg')} style={styles.bkgImage}>
+      <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
         <View style={styles.listElements}>
           <FlatList
             data={this.state.dataSource}

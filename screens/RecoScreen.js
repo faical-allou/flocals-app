@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground } from 'react-native';
 
 
 import helper from '../utils/helper.js';
@@ -34,6 +34,7 @@ class RecoScreen extends React.Component {
     }
  
     return(
+    <ImageBackground source={require('../assets/words.jpg')} style={styles.bkgImage}>
       <View style={styles.listElements}>
         {console.log(this.state.dataSource)}
         <FlatList
@@ -42,14 +43,14 @@ class RecoScreen extends React.Component {
             <Text style={styles.textElement} >{item.userdescription}</Text>
             <Text style={styles.textElement} >{item.userdescription_translated}</Text>
             
-            <Text style={styles.textElement} onPress={() => 
+            <Text style={styles.textRecElement} onPress={() => 
               this.props.navigation.navigate('Chat', {
                       recommender: item.recommender,
                       username: this.state.username,
                       sessionid: this.state.sessionid,
                       placeid: this.state.currentPlace,
                       })}>
-              {item.recommender}
+              {"Chat : "+item.recommender}
             </Text>
             </View>
             }
@@ -60,6 +61,7 @@ class RecoScreen extends React.Component {
           onPress={() => this.props.navigation.goBack()}
         />
       </View>
+    </ImageBackground>
     );
   }
 }

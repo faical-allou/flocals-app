@@ -112,7 +112,8 @@ const helper = {
       key: variables.G_Places_API, 
       body: JSON.stringify({  
         q: [inputtext],
-        target: outputlanguage 
+        target: outputlanguage,
+        format:  'text'
       }),
       headers: {
         'Accept': 'application/json',
