@@ -69,7 +69,7 @@ class DetailsScreen extends React.Component {
       switch (this.state.currentType) {
         case 'general':
         return (
-          <ImageBackground source={require('../assets/skyline.jpg')} style={styles.bkgImage}>
+          <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
             {this.renderBody()}
           </ImageBackground>
         )
@@ -99,7 +99,7 @@ class DetailsScreen extends React.Component {
         )
         case 'park':
           return (
-          <ImageBackground source={require('../assets/centralpark.jpg')} style={styles.bkgImage}>
+          <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
             {this.renderBody()}
           </ImageBackground>
           )
