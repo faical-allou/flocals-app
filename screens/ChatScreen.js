@@ -81,7 +81,7 @@ class ChatScreen extends React.Component {
           onSend={messages => Firebasedata.sendMessages(messages, this.state.roomId)}
           user={this.user}
           />
-        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : {}}
+        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : <Text></Text>}
       
       </View>
          );
