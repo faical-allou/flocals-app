@@ -35,10 +35,18 @@ class HomeScreen extends React.Component {
 
     return(
       <ImageBackground source={require('../assets/homepage.jpg')} style={styles.bkgImage}>
-        <View style={styles.homeElement}>
+      <View style={styles.homeElement}>
+          <View style={styles.itemElementHometop}>
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to: {this.state.airport}</Text>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}</Text>
+          </View>
+            <View style={styles.itemElementHomebottom}>
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
+              <View style={styles.itemElementHomesubBottom}>
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> ({this.state.airport})</Text>
+              </Text>
+              </View>
+              </View>
         </View>
       </ImageBackground>
       );
