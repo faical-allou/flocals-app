@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
           </View>
             <View style={styles.itemElementHomebottom}>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
+             <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
               <View style={styles.itemElementHomesubBottom}>
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> ({this.state.airport})</Text>

@@ -85,6 +85,7 @@ class FormScreen extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder="Activity"
+            placeholderTextColor= 'white'
             maxLength={20}
             onBlur={Keyboard.dismiss}
             value={this.state.name}
@@ -101,6 +102,7 @@ class FormScreen extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder="Description"
+            placeholderTextColor= 'white'
             maxLength={180}
             onBlur={Keyboard.dismiss}
             value={this.state.userDescription}

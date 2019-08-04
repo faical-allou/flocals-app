@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Dimensions} from 'react-native';
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
 const styles = StyleSheet.create({
     itemElement: {
       flex: 1,
@@ -15,6 +16,27 @@ const styles = StyleSheet.create({
       borderTopWidth: 100/2,
 //      borderTopWidth: 100,
 //      borderRightWidth: 100/2,
+      borderRightColor: 'transparent',
+    },
+    itemElement_bicolor: {
+      flex: 1,
+      backgroundColor: "rgba(29, 72, 134,1)",
+      padding:20,
+      marginTop:20,
+      marginHorizontal: 20,
+      alignItems:"center",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      borderTopColor: "rgba(252, 177, 48,1)",
+      borderTopWidth: SCREEN_HEIGHT/15,
+      borderBottomColor: "rgba(252, 177, 48,1)",
+      borderBottomWidth: SCREEN_HEIGHT/15,
+      borderRightColor: "rgba(252, 177, 48,1)",
+      borderRightWidth: SCREEN_WIDTH/5,
+      borderLeftColor: "rgba(252, 177, 48,1)",
+      borderLeftWidth: SCREEN_WIDTH/5,
       borderRightColor: 'transparent',
     },
     itemElementdetail: {
@@ -84,29 +106,30 @@ const styles = StyleSheet.create({
       flex: 1,
       margin:50,
       justifyContent:"center",
-
     },
     textInput: {
       fontSize: 28,
       flex: 1,
-      backgroundColor: "rgba(255,255,255,1)",
+      backgroundColor: "rgba(252, 177, 48,0.95)",
       alignItems:"center",
       textAlign:"center",
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       borderBottomLeftRadius: 20,
       borderBottomRightRadius: 20,
-      borderColor: 'grey',
+//      borderColor: 'grey',
       borderBottomWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,
       borderTopWidth: 1,
-
+      borderTopColor: "rgba(29, 72, 134,1)",
+      borderTopWidth: 100/2,
+      color: 'white'
     },
     textSuggest: {
       height: 50,
       fontSize: 18,
-      margin: 5
+      margin: 5,
     },
     suggestElement: {
       borderColor: '#CCCCCC',
