@@ -1,19 +1,23 @@
 
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button,TextInput, Keyboard, Alert } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button,ImageButton,TextInput, Keyboard, Alert, ImageBackground} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js'
 
 class FormScreen extends React.Component {
+    static navigationOptions = {
+      title: 'You recommend',
+    };
+
     constructor(props){
       super(props);
-      this.state ={ 
-        isLoading: true, 
-        name: '', 
+      this.state ={
+        isLoading: true,
+        name: '',
         description:'' ,
-        place_id:'default',  
+        place_id:'default',
         placeDetails: '',
         autoSuggest:'',
         username:'',
@@ -23,14 +27,14 @@ class FormScreen extends React.Component {
       this.handleNameChange = this.handleNameChange.bind(this);
       this.handleUserDescriptionChange = this.handleUserDescriptionChange.bind(this);
     }
-      
+
     async componentDidMount(){
       const { navigation } = this.props;
       const _airport = await helper._retrieveData("airport");
       const _airportlat = await helper._retrieveData("airportlat");
       const _airportlong = await helper._retrieveData("airportlong");
-  
-  
+
+
       this.setState({
         username: navigation.getParam('username', 'Username_default'),
         act_type: navigation.getParam('act_type', 'default_type'),
@@ -67,16 +71,17 @@ class FormScreen extends React.Component {
           {text: 'Cancel', onPress: () => ''},
         ],
         {cancelable: false},
-      )   
+      )
     }
-      
+
     render(){
       if(this.state.isLoading){
-        return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+        return(<View style={styles.bottomView}><ActivityIndicator/></View>)
       }
-      
+
       return(
-        <View >
+        <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
+        <View style={styles.listRecomandationPage}>
           <TextInput
             style={styles.textInput}
             placeholder="Activity"
@@ -85,11 +90,11 @@ class FormScreen extends React.Component {
             value={this.state.name}
             onChangeText={this.handleNameChange}
           />
-          <FlatList 
+          <FlatList
             data={this.state.autoSuggest.predictions}
             renderItem={({item}) => <View style={styles.suggestElement} >
                 <Text style={styles.textSuggest} onPress={() => this.handleSelectSuggest(item) }>{item.description}</Text>
-                </View>           
+                </View>
               }
             keyExtractor={({id}, index) => id.toString()}
           />
@@ -101,6 +106,8 @@ class FormScreen extends React.Component {
             value={this.state.userDescription}
             onChangeText={this.handleUserDescriptionChange}
           />
+          </View>
+          <View>
           <Button
             title="Submit"
             onPress={() => this.handleSubmit()}
@@ -110,6 +117,7 @@ class FormScreen extends React.Component {
             onPress={() => this.props.navigation.goBack()}
           />
         </View>
+        </ImageBackground>
       );
     }
   }

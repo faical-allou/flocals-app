@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
       borderRightWidth: 1,
       borderTopWidth: 1,
       marginHorizontal: 20,
-      
+
     },
     recElement: {
       flex: 1,
@@ -68,15 +68,28 @@ const styles = StyleSheet.create({
       justifyContent:"center",
       alignItems:"center"
     },
+    listRecomandationPage: {
+      flex: 1,
+      margin:50,
+      justifyContent:"center",
+
+    },
     textInput: {
-      borderColor: '#CCCCCC',
-      borderTopWidth: 1,
+      fontSize: 28,
+      flex: 1,
+      backgroundColor: "rgba(255,255,255,1)",
+      alignItems:"center",
+      textAlign:"center",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      borderColor: 'grey',
       borderBottomWidth: 1,
-      height: 50,
-      fontSize: 18,
-      paddingLeft: 20,
-      paddingRight: 20,
-      margin: 5
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderTopWidth: 1,
+
     },
     textSuggest: {
       height: 50,
@@ -85,9 +98,18 @@ const styles = StyleSheet.create({
     },
     suggestElement: {
       borderColor: '#CCCCCC',
-      borderTopWidth: 1,
+      alignItems:"center",
+      textAlign:"center",
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      borderBottomLeftRadius: 15,
+      borderBottomRightRadius: 15,
+      borderColor: 'grey',
       borderBottomWidth: 1,
-      backgroundColor:"white",
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderTopWidth: 1,
+      backgroundColor:"lightgrey",
       height: 50,
       fontSize: 18,
       margin: 5
@@ -99,7 +121,15 @@ const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
     },
-
+    bottomView:{
+      width: '100%',
+      height: 50,
+      backgroundColor: '#FF9800',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      bottom: 0
+    },
   })
 
   export default styles
