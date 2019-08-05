@@ -32,7 +32,7 @@ const AppNavigator = createDrawerNavigator({
   Recom: {screen: RecoScreen},
   Test: {screen: Test}
 }, 
-{ initialRouteName: variables.landingScreen, contentComponent: ChatList, drawerWidth: 300}
+{ initialRouteName: variables.landingScreen, contentComponent: ChatList, drawerWidth: 300, drawerPosition : 'right'}
 );
 
 export default createAppContainer(AppNavigator);

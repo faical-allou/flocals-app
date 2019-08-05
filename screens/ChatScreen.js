@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; 
-import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
+import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView, Button } from 'react-native';
 
 
 import Fire from '../Fire';
@@ -49,9 +49,14 @@ class ChatScreen extends React.Component {
     const _recommender =  await navigation.getParam('recommender', 'chat buddy');      
     const _sessionid =  await navigation.getParam('sessionid', '123SQ1234');
     const _placeid =  await navigation.getParam('placeid', 'ChIJPTacEpBQwokRKwIlDXelxkA');       
-    
+    console.log(_sessionid, _placeid,_username,_recommender)
     Promise.all([ _sessionid, _placeid,_username,_recommender]).then(() =>{
-      const _roomId= _placeid+'-'+_username+'-'+_recommender
+      if (_username >_recommender) {
+      _roomId = _placeid+'-'+_recommender+'-'+_username
+      }
+      else {
+      _roomId = _placeid+'-'+_username+'-'+_recommender
+      }
       Firebasedata.logUserChatlists(_sessionid, _roomId, _username);
       Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender);
       Firebasedata.createRoom(_sessionid,_roomId);
@@ -81,7 +86,6 @@ class ChatScreen extends React.Component {
     }
     return (
       <View style={{ flex: 1 }}>
-           
         <GiftedChat
           messages={this.state.messages}
           onSend={messages => {
@@ -89,6 +93,10 @@ class ChatScreen extends React.Component {
           }}
           user={this.user}
           />
+        <Button style={{ margin: 20 }}
+          title="Go back"
+          onPress={() => this.props.navigation.goBack()}
+        />
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : <Text></Text>}
       
       </View>

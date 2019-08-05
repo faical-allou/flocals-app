@@ -23,11 +23,29 @@ class ChatList extends React.Component {
     const _username = await helper._retrieveData('username')
     Promise.all([ _sessionId,_username]).then(() =>{ 
       Firebasedata.getOpenChats(_sessionId,_username, (output) => {
+        chats = [];
+        for (let i= 0; i< output.length;i++ ){
+          outputsplit = output[i].split('-')
+          
+          if (outputsplit[1] === _username) {
+            chats.push({'userwith': outputsplit[2], 'location' : outputsplit[0]})
+            helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
+              chats[i]['locationname']= response.rec_name;
+              if( i == output.length-1) {this.setState({isLoading : false})}                     
+            })
+          } else {
+            chats.push({'userwith': outputsplit[1], 'location' : outputsplit[0]})
+            helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
+              chats[i]['locationname']= response.rec_name;
+              if( i == output.length-1) {this.setState({isLoading : false})}
+            })
+          } 
+        }
         this.setState({
-          list: output,
+          list: chats,
           sessionId : _sessionId,
-          username: _username, 
-          isLoading: false})
+          username: _username,
+          })
       })})
     }
       
@@ -41,7 +59,14 @@ class ChatList extends React.Component {
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => <View style={styles.itemElement} >
-              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Chat')}>{item}</Text>
+              <Text style={styles.textElement} >{item.locationname}</Text>
+              <Text style={styles.textElement} onPress={() =>
+              this.props.navigation.navigate('Chat', {
+                      recommender: item.userwith,
+                      username: this.state.username,
+                      sessionid: this.state.sessionId,
+                      placeid: item.location,
+                      })}>{item.userwith}</Text>
               </View>
               }
           />

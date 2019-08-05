@@ -8,8 +8,6 @@ import dict from '../utils/dict.js';
 import BottomSignupBar from '../screens/BottomSignupBar.js'
 import Fire from '../Fire';
 
-import SideMenu from 'react-native-side-menu'
-
 
 class TypeScreen extends React.Component {
       static navigationOptions = {
