@@ -36,7 +36,6 @@ class RecoScreen extends React.Component {
     return(
     <ImageBackground source={require('../assets/words.jpg')} style={styles.bkgImage}>
       <View style={styles.listElements}>
-        {console.log(this.state.dataSource)}
         <FlatList
           data={this.state.dataSource}
 //          renderItem={({item}) => <View style={styles.itemElement} >

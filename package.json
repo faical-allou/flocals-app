@@ -19,6 +19,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-gifted-chat": "^0.9.11",
     "react-native-keyboard-spacer": "^0.4.1",
+    "react-native-side-menu": "^1.1.3",
     "react-native-web": "^0.11.5",
     "react-navigation": "^3.11.1",
     "react-router-dom": "^5.0.1",

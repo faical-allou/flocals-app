@@ -6,6 +6,9 @@ import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
 import BottomSignupBar from '../screens/BottomSignupBar.js'
+import Fire from '../Fire';
+
+import SideMenu from 'react-native-side-menu'
 
 
 class TypeScreen extends React.Component {
@@ -25,6 +28,7 @@ class TypeScreen extends React.Component {
       const _airport = await helper._retrieveData("airport")
       helper.getData(this,"home/"+_airport)
     }
+
 
     render(){
       if(this.state.isLoading){

@@ -4,6 +4,10 @@ import firebase from 'firebase'; // 4.8.1
 import variables from './config/config.js'
 import helper from './utils/helper.js';
 
+console.ignoredYellowBox = [
+  'Setting a timer'
+  ];
+
 class Fire {
   constructor() {
     this.init();
@@ -34,12 +38,12 @@ class Fire {
   };
 
   get uid() {
-    return (firebase.auth().currentUser || {}).uid;
+    return '123'
+    //return (firebase.auth().currentUser || {}).uid;
   }
 
-  findroom(roomid) {
-    //firebase.database().ref('blabla').remove();
-    return firebase.database().ref(roomid);
+  findroom(Id) {
+    return firebase.database().ref(Id);
   }
 
   parse = snapshot => {
@@ -55,8 +59,8 @@ class Fire {
     return message;
   };
 
-  subscribe(callback,roomId) {
-    this.findroom(roomId)
+  subscribe(callback,sessionId, roomId) {
+    this.findroom(sessionId+"/"+roomId+"/messages")
       .limitToLast(20)
       .on('child_added', snapshot => callback(this.parse(snapshot)))
   }
@@ -66,7 +70,7 @@ class Fire {
   }
 
 
-  sendMessages(messages, roomId) {
+  sendMessages(sessionId,  roomId, messages) {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
       helper.getTranslation(text,'fr', (response) => {
@@ -76,16 +80,16 @@ class Fire {
           user,
           timestamp: this.timestamp,
         };
-        this.findroom(roomId).push(message);
+        this.findroom(sessionId+"/"+roomId+"/messages").push(message);
       })
     } 
   }
 
-  createRoom(roomId) {
-    var roomRef = firebase.database().ref(roomId);
-    roomRef.transaction(function(currentData) {
+  createRoom(sessionId, roomId) {
+    var roomRefMessage = firebase.database().ref(sessionId+"/"+roomId+"/messages");
+    roomRefMessage.transaction(function(currentData) {
       if (currentData === null) {
-        return { autoWelcome: { text: 'Hello, this is flocals, you can now ask questions directly to your fellow passenger', user:{_id: 1, name: 'flocals' } }};
+        return { autoWelcome: { text: 'Hello!', user:{_id: 1, name: 'flocals' } }};
       } else {
         console.log('Room already exists.');
         return; // Abort the transaction.
@@ -98,8 +102,15 @@ class Fire {
       } else {
         console.log('Room added!');
       }
-      console.log("Text added ", snapshot.val());
     });
+  }
+
+  logUserChatlists(sessionId, roomId, user1) {
+    var userRoomRef = firebase.database().ref(sessionId+"/"+user1+"/"+roomId);
+    userRoomRef.transaction(function (current_value) {
+      return (current_value || 0) + 1;
+    });
+
   }
 
   getFormat = (inputText, outputlanguage) => {
@@ -116,9 +127,14 @@ class Fire {
       }
   }}
 
+  getOpenChats(sessionId, userId, callback){
+    this.findroom(sessionId+"/"+userId).on("value", function(snapshot) {
+      callback( Object.keys(snapshot.val()))
+  })}
+
   // close the connection to the Backend
-  off(roomId) {
-    this.findroom(roomId).off();
+  off(sessionId, roomId) {
+    this.findroom(sessionId+"/"+roomId).off();
   }
 }
 

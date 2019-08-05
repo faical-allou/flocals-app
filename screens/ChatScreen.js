@@ -3,8 +3,11 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 
 
-import Fire from '../Fire'; //it is read
+import Fire from '../Fire';
 
+console.ignoredYellowBox = [
+  'Setting a timer'
+  ];
 
 class ChatScreen extends React.Component {
   constructor(props) {
@@ -30,8 +33,8 @@ class ChatScreen extends React.Component {
 
   get user() {
     return {
-      name: 'randomname',
-     _id: Firebasedata.uid,
+      name: this.state.username,
+     _id: this.state.sessionid+"-"+this.state.username,
       avatar: 'https://placeimg.com/140/140/any'
     };
   }
@@ -42,31 +45,34 @@ class ChatScreen extends React.Component {
   
   async componentDidMount() {
     const { navigation } = this.props;
-    const _username = await navigation.getParam('username', 'test person');
-    const _recommender = await navigation.getParam('recommender', 'chat buddy');      
-    const _sessionid = await navigation.getParam('sessionid', '123SQ1234');
-    const _placeid = await navigation.getParam('placeid', 'ChIJPTacEpBQwokRKwIlDXelxkA');       
-
-    this.state ={
-      username : _username,
-      recommender :  _recommender,    
-      sessionid : _sessionid,
-      placeid : _placeid,
-      roomId: _sessionid+'-'+_placeid+'-'+_username+'-'+_recommender,
-    }
-
+    const _username =  await navigation.getParam('username', 'test person');
+    const _recommender =  await navigation.getParam('recommender', 'chat buddy');      
+    const _sessionid =  await navigation.getParam('sessionid', '123SQ1234');
+    const _placeid =  await navigation.getParam('placeid', 'ChIJPTacEpBQwokRKwIlDXelxkA');       
+    
     Promise.all([ _sessionid, _placeid,_username,_recommender]).then(() =>{
-      Firebasedata.createRoom(this.state.roomId);
-      Firebasedata.subscribe( (message => this.updateChat(message)), this.state.roomId);
-      console.log('room name:  '+this.state.roomId)
+      const _roomId= _placeid+'-'+_username+'-'+_recommender
+      Firebasedata.logUserChatlists(_sessionid, _roomId, _username);
+      Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender);
+      Firebasedata.createRoom(_sessionid,_roomId);
+      
+      Firebasedata.subscribe( (message => this.updateChat(message)), _sessionid, _roomId);
+
+      
+      
       this.setState({
         isLoading: false,
-        roomId: _sessionid+'-'+_placeid+'-'+_username+'-'+_recommender
+        username : _username,
+        userid: _sessionid+"-"+_username,
+        recommender :  _recommender,    
+        sessionid : _sessionid,
+        placeid : _placeid,
+        roomId: _roomId,
         })
     } )
     }
   componentWillUnmount() {
-    Firebasedata.off(this.state.roomId);
+    Firebasedata.off(this.state.sessionid, this.state.roomId);
   }
     
   render() {
@@ -78,7 +84,9 @@ class ChatScreen extends React.Component {
            
         <GiftedChat
           messages={this.state.messages}
-          onSend={messages => Firebasedata.sendMessages(messages, this.state.roomId)}
+          onSend={messages => {
+            Firebasedata.sendMessages(this.state.sessionid, this.state.roomId, messages )
+          }}
           user={this.user}
           />
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : <Text></Text>}
