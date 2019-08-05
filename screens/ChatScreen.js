@@ -52,10 +52,10 @@ class ChatScreen extends React.Component {
     console.log(_sessionid, _placeid,_username,_recommender)
     Promise.all([ _sessionid, _placeid,_username,_recommender]).then(() =>{
       if (_username >_recommender) {
-      _roomId = _placeid+'-'+_recommender+'-'+_username
+      _roomId = _placeid+' '+_recommender+' '+_username
       }
       else {
-      _roomId = _placeid+'-'+_username+'-'+_recommender
+      _roomId = _placeid+' '+_username+' '+_recommender
       }
       Firebasedata.logUserChatlists(_sessionid, _roomId, _username);
       Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender);

@@ -25,24 +25,23 @@ class ChatList extends React.Component {
       Firebasedata.getOpenChats(_sessionId,_username, (output) => {
         chats = [];
         for (let i= 0; i< output.length;i++ ){
-          outputsplit = output[i].split('-')
+          outputsplit = output[i].split(' ')
           
           if (outputsplit[1] === _username) {
             chats.push({'userwith': outputsplit[2], 'location' : outputsplit[0]})
             helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
               chats[i]['locationname']= response.rec_name;
-              if( i == output.length-1) {this.setState({isLoading : false})}                     
+              if( i == output.length-1) {this.setState({isLoading : false, list: chats})}                     
             })
           } else {
             chats.push({'userwith': outputsplit[1], 'location' : outputsplit[0]})
             helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
               chats[i]['locationname']= response.rec_name;
-              if( i == output.length-1) {this.setState({isLoading : false})}
+              if( i == output.length-1) {this.setState({isLoading : false,list: chats })}
             })
           } 
         }
         this.setState({
-          list: chats,
           sessionId : _sessionId,
           username: _username,
           })

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Linking, Button,TextInput, Keyboard, Alert } from 'react-native';
-import { createStackNavigator, createAppContainer , createDrawerNavigator} from "react-navigation";
+import { createStackNavigator, createAppContainer , StackNavigator, createDrawerNavigator} from "react-navigation";
 
 import HomeScreen from '../screens/HomeScreen.js'
 import TypeScreen from '../screens/TypeScreen.js'
@@ -23,7 +23,7 @@ helper._storeData("userlang", variables.userlang )
 
 
 
-const AppNavigator = createDrawerNavigator({
+const drawer1 = createStackNavigator({
   Home: {screen: HomeScreen},
   Types: {screen: TypeScreen},
   Details: {screen: DetailsScreen},
@@ -31,8 +31,16 @@ const AppNavigator = createDrawerNavigator({
   Chat: {screen: ChatScreen},
   Recom: {screen: RecoScreen},
   Test: {screen: Test}
-}, 
-{ initialRouteName: variables.landingScreen, contentComponent: ChatList, drawerWidth: 300, drawerPosition : 'right'}
+},
+{initialRouteName: variables.landingScreen}
 );
+
+const AppNavigator = createDrawerNavigator({
+  drawer1: {
+    screen: drawer1,
+}},
+{  contentComponent: ChatList, drawerWidth: 300, drawerPosition : 'right'}
+)
+
 
 export default createAppContainer(AppNavigator);

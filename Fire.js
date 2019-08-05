@@ -129,7 +129,10 @@ class Fire {
 
   getOpenChats(sessionId, userId, callback){
     this.findroom(sessionId+"/"+userId).on("value", function(snapshot) {
+      if (snapshot.val() == null) {callback([])} 
+      else { 
       callback( Object.keys(snapshot.val()))
+    }
   })}
 
   // close the connection to the Backend
