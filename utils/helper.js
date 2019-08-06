@@ -157,18 +157,18 @@ const helper = {
     return max_id
     },
 
-    _storeData : async (key, value) => {
+    _storeData :  (key, value) => {
       try {
-       await AsyncStorage.setItem(key, value);
+        AsyncStorage.setItem(key, value);
       } catch (error) {
         console.log(error);
         return
       }
     },
 
-    _retrieveData : async  (key) => {
+    _retrieveData :   (key) => {
       try {
-        const value = await AsyncStorage.getItem(key);
+        const value =  AsyncStorage.getItem(key);
         if (value !== null) {
           return value
         }

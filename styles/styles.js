@@ -1,23 +1,26 @@
 import {StyleSheet,Dimensions} from 'react-native';
 
+import colors from './colors.js'
+
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
+
 const styles = StyleSheet.create({
     itemElement: {
-      backgroundColor: "rgba(252, 177, 48,1)",
+      backgroundColor: colors.secondary,
       margin:5,
       alignItems:"center",
       borderRadius: 20,
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderWidth: 1,
       padding: 20,
       width: 200,
     },
     itemInitial: {
-      backgroundColor: "rgba(29, 72, 134,1)",
+      backgroundColor: colors.primary,
       margin:5,
       alignItems:"center",
       borderRadius: 50,
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderWidth: 1,
       padding: 20,
       width: 80,
@@ -25,13 +28,13 @@ const styles = StyleSheet.create({
 
     itemElementdetail: {
       flex: 1,
-      backgroundColor: "rgba(252, 177, 48,0.95)",
+      backgroundColor: colors.primary,
       padding:30,
       marginTop:20,
       alignItems:"center",
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderBottomWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
     },
     recElement: {
       flex: 1,
-      backgroundColor: "rgba(29, 72, 134,1)",
+      backgroundColor: colors.secondary,
       paddingVertical:10,
       paddingHorizontal:15,
       justifyContent:'space-between',
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
       fontSize : 10,
       opacity: 1,
       fontWeight: 'bold',
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderTopWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
     },
     translatedElement: {
       flex: 1,
-      backgroundColor: 'grey',
+      backgroundColor: colors.tertiary,
       paddingVertical:10,
       paddingHorizontal:15,
       justifyContent:'space-between',
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
       fontSize : 10,
       opacity: 1,
       fontWeight: 'bold',
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderTopWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
       fontSize : 20,
       opacity: 1,
       fontWeight: 'bold',
-      color: 'white'
+      color: colors.textPrimary
     },
     textRecElement: {
       fontSize : 16,
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
       alignItems:"center",
       textAlign:"center",
       borderRadius: 5,
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderWidth: 1,
       height: 50,
       fontSize: 18,
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
       alignItems:"center",
       textAlign:"center",
       borderRadius: 5,
-      borderColor: 'grey',
+      borderColor: colors.tertiary,
       borderWidth: 1,
       height: 150,
       fontSize: 18,
@@ -139,12 +142,11 @@ const styles = StyleSheet.create({
       padding:10,
     },
     itemElementHometop: {
-      backgroundColor: "rgba(29, 72, 134,0)",
       padding:5,
     },
     itemElementHomeButton: {
       borderRadius: 20,
-      backgroundColor: "rgba(252, 177, 48,1)",
+      backgroundColor: colors.primary,
       padding:5,
       marginBottom: 36,
       marginHorizontal:20,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     bottomView:{
       width: '100%',
       height: 50,
-      backgroundColor: '#FF9800',
+      backgroundColor: colors.secondary,
       justifyContent: 'center',
       alignItems: 'center',
       position: 'absolute',

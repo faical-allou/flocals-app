@@ -109,15 +109,21 @@ class FormScreen extends React.Component {
             onChangeText={this.handleUserDescriptionChange}
           />
           </View>
-          <View style={{alignContent: 'flex-end'}}>
+          <View style={{  justifyContent:"center"}}>
+              <View style={{ justifyContent:"center", flexDirection:'row'}}>
           <Button
+            styles={{flex:1}}
             title="Submit"
+            color={colors.secondary}
             onPress={() => this.handleSubmit()}
           />
           <Button
+            styles={{flex:1}}
             title="Go back"
+            color={colors.secondary}
             onPress={() => this.props.navigation.goBack()}
           />
+          </View>
         </View>
         </View>
        );

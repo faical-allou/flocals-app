@@ -42,6 +42,7 @@ class BottomSigninBar extends React.Component {
           scopes: ["profile", "email"] 
         })
         if (result.type === "success") { 
+            this.props.toggleStatus()
             helper._storeData('isLogged','loggedin');
             helper._storeData('username',this.state.username);
             this.setState({ isLogged: 'loggedin'} ); 
@@ -63,7 +64,8 @@ class BottomSigninBar extends React.Component {
             <View  style= {{ flexDirection:'row'}} >
                 <LoggedinBar username={this.state.username} />
                 <Button   
-                style= {{flex:1}}     
+                style= {{flex:1}}  
+                color={colors.secondary}   
                 title="Add Stuff"
                 onPress={() => this.props.navigation.navigate('Form',{
                 username: this.state.username})}/>
@@ -77,16 +79,15 @@ class BottomSigninBar extends React.Component {
   }
   
   const LoginBar = props => {
-    return (
-      
-        <Button title="Sign in" style= {{flex:1}}   onPress={() => props.signIn()} />
-      
+    return (     
+        <Button title="Sign in" color={colors.secondary} style= {{flex:1}}   onPress={() => props.signIn()} />
     )
   }
   
   const LoggedinBar = props => {
     return (
-            <Button   
+            <Button  
+              color={colors.secondary}
               style= {{flex:1}}     
               title={props.username}/>
     )

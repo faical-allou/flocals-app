@@ -1,33 +1,44 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground,Alert } from 'react-native';
 
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
-import BottomSignupBar from './BottomSignupBar.js'
+import BottomSignupBar from './BottomSignupBar.js';
 
 
 
 class RecoScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('nextHeader', 'Default'),
+    };
+  };
   constructor(props){
     super(props);
     this.state ={
       isLoading: true,
-      isLogged: helper._retrieveData('isLogged'),
       username: helper._retrieveData('username'),
       userlang: helper._retrieveData('userlang'),
-      sessionid: helper._retrieveData('sessionid')
-
+      sessionid: helper._retrieveData('sessionid'),
   }
 }
 
   async componentDidMount(){
     const { navigation } = this.props;
     const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
-    this.setState({currentPlace : _currentType});
-    return helper.getData(this,'home/recommendations/fr/'+_currentType)
+    const _logged = await helper._retrieveData('isLogged')
+    this.setState({currentPlace : _currentType, isLogged: _logged},
+    helper.getData(this,'home/recommendations/fr/'+_currentType) )
   }
 
+  toggleStatus(){
+    if(this.state.isLogged === 'loggedin'){ 
+      this.setState({isLogged:'notloggedin'})
+    } else {
+      this.setState({isLogged:'loggedin'})
+    }
+  }
 
   render(){
     if(this.state.isLoading){
@@ -46,24 +57,29 @@ class RecoScreen extends React.Component {
             <Text style={styles.textElement} >{item.userdescription_translated}</Text>
           </View>             
           <View style={styles.recElement} >
+          <View >
             <Text style={styles.textRecElement} onPress={() =>
+            { this.state.isLogged === 'loggedin' ? (
+              
               this.props.navigation.navigate('Chat', {
                       recommender: item.recommender,
                       username: this.state.username,
                       sessionid: this.state.sessionid,
                       placeid: this.state.currentPlace,
-                      })}>
-              {"Chat : "+item.recommender}
-            </Text>
+                      })) : (
+              Alert.alert("You must be signed in to chat")
+                      )
+                    }}>  {"Chat : "+item.recommender}</Text>
+              </View>
             </View>
-         
-            </View>
+          </View>
             }
           keyExtractor={(item, index) => index.toString()}
         /><View style= {{ flexDirection:'row'}}>
-        <BottomSignupBar />
+        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
         <Button
           title="Go back"
+          color={colors.secondary}
           onPress={() => this.props.navigation.goBack()}
         />
       </View>

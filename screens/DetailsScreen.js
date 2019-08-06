@@ -4,7 +4,9 @@ import { FlatList, ActivityIndicator, Text, View, Linking, Button, ImageBackgrou
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import BottomSignupBar from './BottomSignupBar.js'
+
 import dict from '../utils/dict.js'
+import colors from '../styles/colors.js'
 
 class DetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -29,7 +31,9 @@ class DetailsScreen extends React.Component {
       const _currentType = await navigation.getParam('nextScreen', 'general');
       helper.getData(this,'home/'+_airport+'/'+_currentType);
       this.setState({
-        currentType : _currentType,}
+        currentType : _currentType,
+        isLogged: helper._retrieveData('isLogged'),
+      }
           )
 
     }
@@ -40,7 +44,7 @@ class DetailsScreen extends React.Component {
         return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
       }
         return (
-                  <View style={styles.listElements}>
+              <View style={styles.listElements}>
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
@@ -50,7 +54,7 @@ class DetailsScreen extends React.Component {
                       </View>
                     <View style={styles.recElement} >
                     <Text style={styles.textRecElement} onPress={
-                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id})}>check {item.nb_rec} recommendation(s)</Text>
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id, nextHeader: item.rec_name})}>check {item.nb_rec} recommendation(s)</Text>
                     </View>
                   </View>
                   }
@@ -59,6 +63,7 @@ class DetailsScreen extends React.Component {
               <BottomSignupBar />
               <Button
                 title="Go back"
+                color={colors.secondary}
                 onPress={() => this.props.navigation.goBack()}
               /></View>
             </View>

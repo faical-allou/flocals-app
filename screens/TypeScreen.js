@@ -52,6 +52,7 @@ class TypeScreen extends React.Component {
         <BottomSignupBar />
           <Button
             title="Go back"
+            color={colors.secondary}
             onPress={() => this.props.navigation.goBack()}
           />
         </View>
