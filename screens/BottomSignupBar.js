@@ -80,14 +80,14 @@ class BottomSigninBar extends React.Component {
   
   const LoginBar = props => {
     return (     
-        <Button title="Sign in" color={colors.secondary} style= {{flex:1}}   onPress={() => props.signIn()} />
+        <Button title="Sign in to contribute" color={colors.secondary} style= {{flex:1}}   onPress={() => props.signIn()} />
     )
   }
   
   const LoggedinBar = props => {
     return (
             <Button  
-              color={colors.secondary}
+              color={colors.tertiary}
               style= {{flex:1}}     
               title={props.username}/>
     )

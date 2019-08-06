@@ -27,6 +27,13 @@ class TypeScreen extends React.Component {
       helper.getData(this,"home/"+_airport)
     }
 
+    toggleStatus(){
+      if(this.state.isLogged === 'loggedin'){ 
+        this.setState({isLogged:'notloggedin'})
+      } else {
+        this.setState({isLogged:'loggedin'})
+      }
+    }
 
     render(){
       if(this.state.isLoading){
@@ -49,7 +56,7 @@ class TypeScreen extends React.Component {
               </View>
               }
           /><View style= {{ flexDirection:'row'}}>
-        <BottomSignupBar />
+        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
           <Button
             title="Go back"
             color={colors.secondary}

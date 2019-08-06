@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     },
     itemElementHometop: {
       padding:5,
+      width: 300,
     },
     itemElementHomeButton: {
       borderRadius: 20,

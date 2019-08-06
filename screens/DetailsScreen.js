@@ -35,9 +35,16 @@ class DetailsScreen extends React.Component {
         isLogged: helper._retrieveData('isLogged'),
       }
           )
-
     }
 
+    
+    toggleStatus(){
+      if(this.state.isLogged === 'loggedin'){ 
+        this.setState({isLogged:'notloggedin'})
+      } else {
+        this.setState({isLogged:'loggedin'})
+      }
+    }
 
     render(){
       if(this.state.isLoading){
@@ -60,7 +67,7 @@ class DetailsScreen extends React.Component {
                   }
                   keyExtractor={(item, index) => index.toString()}
               /><View style= {{ flexDirection:'row'}}>
-              <BottomSignupBar />
+              <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
               <Button
                 title="Go back"
                 color={colors.secondary}
