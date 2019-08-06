@@ -80,17 +80,17 @@ class FormScreen extends React.Component {
       }
 
       return(
-        <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
-        <View style={styles.listRecomandationPage}>
+        <View>
+        <View style={styles.suggestElement}>
           <TextInput
             style={styles.textInput}
-            placeholder="Activity"
-            placeholderTextColor= 'white'
+            placeholder="What?"
             maxLength={20}
             onBlur={Keyboard.dismiss}
             value={this.state.name}
             onChangeText={this.handleNameChange}
           />
+          </View>
           <FlatList
             data={this.state.autoSuggest.predictions}
             renderItem={({item}) => <View style={styles.suggestElement} >
@@ -99,17 +99,17 @@ class FormScreen extends React.Component {
               }
             keyExtractor={({id}, index) => id.toString()}
           />
+          <View style={styles.suggestElementDesc}>
           <TextInput
             style={styles.textInput}
-            placeholder="Description"
-            placeholderTextColor= 'white'
+            placeholder="Why?"
             maxLength={180}
             onBlur={Keyboard.dismiss}
             value={this.state.userDescription}
             onChangeText={this.handleUserDescriptionChange}
           />
           </View>
-          <View>
+          <View style={{alignContent: 'flex-end'}}>
           <Button
             title="Submit"
             onPress={() => this.handleSubmit()}
@@ -119,8 +119,8 @@ class FormScreen extends React.Component {
             onPress={() => this.props.navigation.goBack()}
           />
         </View>
-        </ImageBackground>
-      );
+        </View>
+       );
     }
   }
 

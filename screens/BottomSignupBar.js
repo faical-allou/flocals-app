@@ -55,14 +55,15 @@ class BottomSigninBar extends React.Component {
   
     render(){
       if(this.state.isLoading){
-        return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
+        return(<View ><ActivityIndicator/></View>)
       } 
       return(
           <View >
           { this.state.isLogged == 'loggedin' ? (
-            <View>
-                <LoggedinBar username={this.state.username} photoUrl={this.state.photoUrl} />
-                <Button
+            <View  style= {{ flexDirection:'row'}} >
+                <LoggedinBar username={this.state.username} />
+                <Button   
+                style= {{flex:1}}     
                 title="Add Stuff"
                 onPress={() => this.props.navigation.navigate('Form',{
                 username: this.state.username})}/>
@@ -77,18 +78,17 @@ class BottomSigninBar extends React.Component {
   
   const LoginBar = props => {
     return (
-      <View>
-        <Button title="Sign in with Google to add stuff " onPress={() => props.signIn()} />
-      </View>
+      
+        <Button title="Sign in" style= {{flex:1}}   onPress={() => props.signIn()} />
+      
     )
   }
   
   const LoggedinBar = props => {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Welcome: {props.username}</Text>
-        <Image style={styles.image} source={{ uri: props.photoUrl }} />
-      </View>
+            <Button   
+              style= {{flex:1}}     
+              title={props.username}/>
     )
   }
 

@@ -34,23 +34,28 @@ class TypeScreen extends React.Component {
       }
 
       return(
-      <ImageBackground source={require('../assets/explorer.jpg')} style={styles.bkgImage}>
         <View style={styles.listElements}>
           <FlatList
             data={this.state.dataSource}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => <View style={styles.itemElement} >
-              <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert]}</Text>
+            renderItem={({item}) => 
+              <View style={{flexDirection:"row"}} >
+                <View style={styles.itemInitial} >
+                  <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert][0]}</Text>
+                </View>
+                <View style={styles.itemElement} >
+                  <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert]}</Text>
+                </View>
               </View>
               }
-          />
+          /><View style= {{ flexDirection:'row'}}>
         <BottomSignupBar />
           <Button
             title="Go back"
             onPress={() => this.props.navigation.goBack()}
           />
         </View>
-      </ImageBackground>
+        </View>
       );
     }
   }

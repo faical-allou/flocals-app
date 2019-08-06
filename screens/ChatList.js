@@ -57,9 +57,11 @@ class ChatList extends React.Component {
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => <View style={styles.itemElement} >
+            renderItem={({item}) => <View><View style={styles.itemElementdetail} >
               <Text style={styles.textElement} >{item.locationname}</Text>
-              <Text style={styles.textElement} onPress={() =>
+              </View>
+              <View style={styles.recElement}>
+              <Text style={styles.textRecElement} onPress={() =>
               this.props.navigation.navigate('Chat', {
                       recommender: item.userwith,
                       username: this.state.username,
@@ -67,6 +69,8 @@ class ChatList extends React.Component {
                       placeid: item.location,
                       })}>{item.userwith}</Text>
               </View>
+              </View>
+              
               }
           />
         </View>

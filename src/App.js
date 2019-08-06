@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, Button,TextInput, Keyboard, Alert } from 'react-native';
+import { YellowBox, FlatList, ActivityIndicator, Text, View, Linking, Button,TextInput, Keyboard, Alert } from 'react-native';
 import { createStackNavigator, createAppContainer , StackNavigator, createDrawerNavigator} from "react-navigation";
 
 import HomeScreen from '../screens/HomeScreen.js'
@@ -13,6 +13,17 @@ import ChatList from '../screens/ChatList.js'
 import Test from '../screens/Test.js'
 
 import helper from '../utils/helper.js'
+
+import _ from 'lodash';
+
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
+
 
 helper._storeData('isLogged', variables.initialState);
 helper._storeData("airport", variables.destination )

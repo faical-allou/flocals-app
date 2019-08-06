@@ -4,6 +4,7 @@ import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground } from
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
+import BottomSignupBar from './BottomSignupBar.js'
 
 
 
@@ -34,38 +35,39 @@ class RecoScreen extends React.Component {
     }
 
     return(
-    <ImageBackground source={require('../assets/words.jpg')} style={styles.bkgImage}>
       <View style={styles.listElements}>
         <FlatList
           data={this.state.dataSource}
-//          renderItem={({item}) => <View style={styles.itemElement} >
           renderItem={({item}) => <View>
           <View style={styles.itemElementdetail} >
               <Text style={styles.textElement} >{item.userdescription}</Text>
           </View>
-            <View style={styles.recElement} >
-              <Text style={styles.textElement} >{item.userdescription_translated}</Text>
-
-              <Text style={styles.textRecElement} onPress={() =>
-                this.props.navigation.navigate('Chat', {
-                        recommender: item.recommender,
-                        username: this.state.username,
-                        sessionid: this.state.sessionid,
-                        placeid: this.state.currentPlace,
-                        })}>
-                {"Chat : "+item.recommender}
-              </Text>
-              </View>
+          <View style={styles.translatedElement} >
+            <Text style={styles.textElement} >{item.userdescription_translated}</Text>
+          </View>             
+          <View style={styles.recElement} >
+            <Text style={styles.textRecElement} onPress={() =>
+              this.props.navigation.navigate('Chat', {
+                      recommender: item.recommender,
+                      username: this.state.username,
+                      sessionid: this.state.sessionid,
+                      placeid: this.state.currentPlace,
+                      })}>
+              {"Chat : "+item.recommender}
+            </Text>
+            </View>
+         
             </View>
             }
           keyExtractor={(item, index) => index.toString()}
-        />
+        /><View style= {{ flexDirection:'row'}}>
+        <BottomSignupBar />
         <Button
           title="Go back"
           onPress={() => this.props.navigation.goBack()}
         />
       </View>
-    </ImageBackground>
+      </View>
     );
   }
 }

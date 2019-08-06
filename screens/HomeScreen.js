@@ -36,17 +36,19 @@ class HomeScreen extends React.Component {
     return(
       <ImageBackground source={require('../assets/homepage.jpg')} style={styles.bkgImage}>
       <View style={styles.homeElement}>
-          <View style={styles.itemElementHometop}>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
+          <View style={styles.itemWelcome}>
+              <Text style={styles.textWelcome} onPress={() => this.props.navigation.navigate('Types')}>Welcome to flocals</Text>
           </View>
-            <View style={styles.itemElementHomebottom}>
-             <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
-              <View style={styles.itemElementHomesubBottom}>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname}
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> ({this.state.airport})</Text>
-              </Text>
-              </View>
-              </View>
+          <View style={styles.itemElementHometop}>    
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname} ({this.state.airport})</Text>
+              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> </Text>
+
+          </View>
+          <View style={{flex: 1, justifyContent: 'flex-end'}}></View>
+          <View style={styles.itemElementHomeButton}>
+              <Text style={styles.textElementHomeButton} onPress={() => this.props.navigation.navigate('Types')}> Explore </Text>
+          </View>
         </View>
       </ImageBackground>
       );
