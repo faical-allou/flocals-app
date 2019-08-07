@@ -1,9 +1,6 @@
-import {StyleSheet,Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import colors from './colors.js'
-import { bold } from 'ansi-colors';
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     itemElement: {
