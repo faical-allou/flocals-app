@@ -5,7 +5,7 @@ import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
-import Fire from '../Fire';
+import Fire from '../utils/Fire';
 
 
 class ChatList extends React.Component {
@@ -57,17 +57,18 @@ class ChatList extends React.Component {
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => <View><View style={styles.itemElementdetail} >
-              <Text style={styles.textElement} >{item.locationname}</Text>
-              </View>
-              <View style={styles.recElement}>
-              <Text style={styles.textRecElement} onPress={() =>
+            renderItem={({item}) => <View style={styles.chatList} >
+              <View  >
+              <Text style = {styles.textChatList} onPress={() =>
               this.props.navigation.navigate('Chat', {
                       recommender: item.userwith,
                       username: this.state.username,
                       sessionid: this.state.sessionId,
                       placeid: item.location,
-                      })}>{item.userwith}</Text>
+                      })}>{item.locationname}</Text>
+              </View>
+              <View >
+              <Text style = {styles.textChatBuddyList} >{item.userwith}</Text>
               </View>
               </View>
               

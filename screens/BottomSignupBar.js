@@ -53,26 +53,34 @@ class BottomSigninBar extends React.Component {
         console.log("error", e)
       }
     }
-  
+    
+    toggleDrawer = () => {this.props.navigation.toggleDrawer()}
+
     render(){
       if(this.state.isLoading){
         return(<View ><ActivityIndicator/></View>)
       } 
       return(
-          <View >
+          <View style= {{ flexDirection:'row'}}>
           { this.state.isLogged == 'loggedin' ? (
-            <View  style= {{ flexDirection:'row'}} >
+            <View style= {{ flexDirection:'row'}}  >
                 <LoggedinBar username={this.state.username} />
-                <Button   
-                style= {{flex:1}}  
+                <Button                 
                 color={colors.secondary}   
                 title="Add Stuff"
                 onPress={() => this.props.navigation.navigate('Form',{
                 username: this.state.username})}/>
+                <ChatsDrawer toggleDrawer={this.toggleDrawer}/>
             </View>
           ) : (
             <LoginBar signIn={this.signIn} />
-          )}      
+          )
+        }
+          <Button
+            title="Go back"
+            color={colors.secondary}
+            onPress={() => this.props.navigation.goBack()}
+          />     
         </View>
       );
     }
@@ -80,16 +88,25 @@ class BottomSigninBar extends React.Component {
   
   const LoginBar = props => {
     return (     
-        <Button title="Sign in to contribute" color={colors.secondary} style= {{flex:1}}   onPress={() => props.signIn()} />
+        <Button title="Sign in to contribute" 
+        color={colors.secondary}          
+        onPress={() => props.signIn()} />
     )
   }
   
   const LoggedinBar = props => {
     return (
             <Button  
-              color={colors.tertiary}
-              style= {{flex:1}}     
+              color={colors.tertiary}                
               title={props.username}/>
+    )
+  }
+  const ChatsDrawer = props => {
+    return (
+            <Button  
+              color={colors.secondary}               
+              title='Chats'
+              onPress={()=> props.toggleDrawer() }/>
     )
   }
 

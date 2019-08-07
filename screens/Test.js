@@ -6,7 +6,7 @@ import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
 import BottomSignupBar from '../screens/BottomSignupBar.js'
-import Fire from '../Fire';
+
 
 import SideMenu from 'react-native-side-menu'
 

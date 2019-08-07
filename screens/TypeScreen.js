@@ -1,12 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, Button, FlatList, ImageBackground} from 'react-native';
+import { ActivityIndicator, Text, View, FlatList} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
 import BottomSignupBar from '../screens/BottomSignupBar.js'
-import Fire from '../Fire';
 
 
 class TypeScreen extends React.Component {
@@ -55,14 +54,9 @@ class TypeScreen extends React.Component {
                 </View>
               </View>
               }
-          /><View style= {{ flexDirection:'row'}}>
-        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
-          <Button
-            title="Go back"
-            color={colors.secondary}
-            onPress={() => this.props.navigation.goBack()}
           />
-        </View>
+        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+
         </View>
       );
     }

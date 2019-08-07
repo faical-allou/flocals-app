@@ -1,12 +1,12 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking, Button, ImageBackground} from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import BottomSignupBar from './BottomSignupBar.js'
 
 import dict from '../utils/dict.js'
-import colors from '../styles/colors.js'
+
 
 class DetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -66,13 +66,9 @@ class DetailsScreen extends React.Component {
                   </View>
                   }
                   keyExtractor={(item, index) => index.toString()}
-              /><View style= {{ flexDirection:'row'}}>
+              />
               <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
-              <Button
-                title="Go back"
-                color={colors.secondary}
-                onPress={() => this.props.navigation.goBack()}
-              /></View>
+
             </View>
     
         )

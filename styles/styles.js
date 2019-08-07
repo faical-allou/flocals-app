@@ -1,6 +1,7 @@
 import {StyleSheet,Dimensions} from 'react-native';
 
 import colors from './colors.js'
+import { bold } from 'ansi-colors';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
 
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       fontWeight: 'bold',
       textAlign: 'right',
-      color: 'white'
+      color: colors.textPrimary,
     },
     listElements: {
       marginTop: 30,
@@ -182,6 +183,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       position: 'absolute',
       bottom: 0
+    },
+    chatList:{
+      borderColor: colors.secondary,
+      borderWidth: 1,
+      width: '100%',
+      padding : 5,
+    },
+    textChatList:{
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    textChatBuddyList:{
+      fontSize: 14,
+      textAlign: 'right',
     },
   })
   

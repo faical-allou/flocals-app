@@ -29,7 +29,7 @@ class RecoScreen extends React.Component {
     const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
     const _logged = await helper._retrieveData('isLogged')
     this.setState({currentPlace : _currentType, isLogged: _logged},
-    helper.getData(this,'home/recommendations/fr/'+_currentType) )
+    helper.getData(this,'home/recommendations/it/'+_currentType) )
   }
 
   toggleStatus(){
@@ -75,14 +75,9 @@ class RecoScreen extends React.Component {
           </View>
             }
           keyExtractor={(item, index) => index.toString()}
-        /><View style= {{ flexDirection:'row'}}>
-        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
-        <Button
-          title="Go back"
-          color={colors.secondary}
-          onPress={() => this.props.navigation.goBack()}
         />
-      </View>
+        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+
       </View>
     );
   }

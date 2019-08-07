@@ -2,8 +2,7 @@ import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; 
 import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView, Button } from 'react-native';
 
-
-import Fire from '../Fire';
+import Fire from '../utils/Fire';
 
 console.ignoredYellowBox = [
   'Setting a timer'
@@ -93,10 +92,6 @@ class ChatScreen extends React.Component {
           }}
           user={this.user}
           />
-        <Button style={{ margin: 20 }}
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}/> : <Text></Text>}
       
       </View>
