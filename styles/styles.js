@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     itemImage: {
       margin:5,
-      borderRadius: 50,
+      borderRadius: 40,
       borderWidth: 1,
       padding: 20,
       width: 80,

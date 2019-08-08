@@ -70,10 +70,10 @@ class Fire {
   }
 
 
-  sendMessages(sessionId,  roomId, messages) {
+  sendMessages(sessionId,  roomId, messages, lang) {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      helper.getTranslation(text,'it', (response) => {
+      helper.getTranslation(text,lang, (response) => {
         text = text + "  /-/  " + response
         const message = {
           text,
@@ -105,12 +105,22 @@ class Fire {
     });
   }
 
-  logUserChatlists(sessionId, roomId, user1) {
+  logUserChatlists(sessionId, roomId, user1, _lang,_placename,_partner,_placeid) {
     var userRoomRef = firebase.database().ref(sessionId+"/"+user1+"/"+roomId);
     userRoomRef.transaction(function (current_value) {
       return (current_value || 0) + 1;
     });
 
+    userRoomRef.set({
+      placename: _placename,
+      targetlang: _lang,
+      partner: _partner,
+      placeid:_placeid
+      },function(error) {
+        if (error) {
+          console.log(error)
+        }}
+      )
   }
 
   getFormat = (inputText, outputlanguage) => {
@@ -131,9 +141,18 @@ class Fire {
     this.findroom(sessionId+"/"+userId).on("value", function(snapshot) {
       if (snapshot.val() == null) {callback([])} 
       else { 
-      callback( Object.keys(snapshot.val()))
+      callback( Object.values(snapshot.val()))
     }
   })}
+  
+  getTargetLang(compo, sessionId,username,roomId) {
+  firebase.database().ref(sessionId+"/"+username+"/"+roomId).once('value')
+  .then(function(snapshot) {
+    compo.setState({
+      target_lang: snapshot.val().targetlang
+      })
+    })
+  }
 
   // close the connection to the Backend
   off(sessionId, roomId) {

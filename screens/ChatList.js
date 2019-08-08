@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, Button, FlatList, ImageBackground} from 'react-native';
+import { ActivityIndicator, Text, View, FlatList} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -23,37 +23,23 @@ class ChatList extends React.Component {
     const _username = await helper._retrieveData('username')
     Promise.all([ _sessionId,_username]).then(() =>{ 
       Firebasedata.getOpenChats(_sessionId,_username, (output) => {
-        chats = [];
-        for (let i= 0; i< output.length;i++ ){
-          outputsplit = output[i].split(' ')
-          
-          if (outputsplit[1] === _username) {
-            chats.push({'userwith': outputsplit[2], 'location' : outputsplit[0]})
-            helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
-              chats[i]['locationname']= response.rec_name;
-              if( i == output.length-1) {this.setState({isLoading : false, list: chats})}                     
-            })
-          } else {
-            chats.push({'userwith': outputsplit[1], 'location' : outputsplit[0]})
-            helper.getPlaceName( 'home/places/'+chats[i].location, (response) => {
-              chats[i]['locationname']= response.rec_name;
-              if( i == output.length-1) {this.setState({isLoading : false,list: chats })}
-            })
-          } 
-        }
-        this.setState({
-          sessionId : _sessionId,
-          username: _username,
+          this.setState({
+            list: output,
+            sessionId : _sessionId,
+            username: _username,
+            isLoading: false
           })
-      })})
+        })
+      })
     }
+    
       
     render() {
       if(this.state.isLoading){
         return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
       }
       return (
-        <View style={styles.listElements}>
+        <View style={styles.listElements}>{console.log(this.state)}
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
@@ -61,14 +47,15 @@ class ChatList extends React.Component {
               <View  >
               <Text style = {styles.textChatList} onPress={() =>
               this.props.navigation.navigate('Chat', {
-                      recommender: item.userwith,
+                      recommender: item.partner,
                       username: this.state.username,
                       sessionid: this.state.sessionId,
-                      placeid: item.location,
-                      })}>{item.locationname}</Text>
+                      placeid: item.placeid,
+                      target_lang: item.targetlang,
+                      })}>{item.placename}</Text>
               </View>
               <View >
-              <Text style = {styles.textChatBuddyList} >{item.userwith}</Text>
+              <Text style = {styles.textChatBuddyList} >{item.partner}</Text>
               </View>
               </View>
               

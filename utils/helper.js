@@ -88,7 +88,8 @@ const helper = {
                           place_id: compo.state.place_id,
                           recommender: compo.state.username,
                           address: data.result.formatted_address,
-                          details : data 
+                          details : data ,
+                          userlang: compo.state.userlang,
                         }),
                         headers: {
                           'Accept': 'application/json',

@@ -45,24 +45,28 @@ class ChatScreen extends React.Component {
   async componentDidMount() {
     const { navigation } = this.props;
     const _username =  await navigation.getParam('username', 'test person');
+    const _userlang =  await navigation.getParam('userlang', 'en');
+    
     const _recommender =  await navigation.getParam('recommender', 'chat buddy');      
+    const _target_lang =  await navigation.getParam('target_lang', 'en');       
     const _sessionid =  await navigation.getParam('sessionid', '123SQ1234');
     const _placeid =  await navigation.getParam('placeid', 'ChIJPTacEpBQwokRKwIlDXelxkA');       
-    console.log(_sessionid, _placeid,_username,_recommender)
-    Promise.all([ _sessionid, _placeid,_username,_recommender]).then(() =>{
+    const _placename =  await navigation.getParam('placename', 'Statue of Liberty'); 
+
+    Promise.all([ _sessionid, _placeid,_username,_recommender,_placename]).then(() =>{
       if (_username >_recommender) {
       _roomId = _placeid+' '+_recommender+' '+_username
       }
       else {
       _roomId = _placeid+' '+_username+' '+_recommender
       }
-      Firebasedata.logUserChatlists(_sessionid, _roomId, _username);
-      Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender);
+      Firebasedata.logUserChatlists(_sessionid, _roomId, _username,_target_lang,_placename,_recommender,_placeid );
+      Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender, _userlang,_placename,_username,_placeid);
       Firebasedata.createRoom(_sessionid,_roomId);
       
       Firebasedata.subscribe( (message => this.updateChat(message)), _sessionid, _roomId);
 
-      
+      Firebasedata.getTargetLang(this, _sessionid,_username,_roomId)
       
       this.setState({
         isLoading: false,
@@ -72,9 +76,10 @@ class ChatScreen extends React.Component {
         sessionid : _sessionid,
         placeid : _placeid,
         roomId: _roomId,
-        })
+      })
     } )
     }
+
   componentWillUnmount() {
     Firebasedata.off(this.state.sessionid, this.state.roomId);
   }
@@ -88,7 +93,8 @@ class ChatScreen extends React.Component {
         <GiftedChat
           messages={this.state.messages}
           onSend={messages => {
-            Firebasedata.sendMessages(this.state.sessionid, this.state.roomId, messages )
+            console.log(this.state)
+            Firebasedata.sendMessages(this.state.sessionid, this.state.roomId, messages, this.state.target_lang )
           }}
           user={this.user}
           />

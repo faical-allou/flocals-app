@@ -22,6 +22,7 @@ class FormScreen extends React.Component {
         autoSuggest:'',
         username:'',
         act_type:'',
+        lang: '',
         isLogged: helper._retrieveData('isLogged'),
       }
       this.handleNameChange = this.handleNameChange.bind(this);
@@ -33,11 +34,12 @@ class FormScreen extends React.Component {
       const _airport = await helper._retrieveData("airport");
       const _airportlat = await helper._retrieveData("airportlat");
       const _airportlong = await helper._retrieveData("airportlong");
-
+      const _userlang = await helper._retrieveData("userlang");
 
       this.setState({
         username: navigation.getParam('username', 'Username_default'),
         act_type: navigation.getParam('act_type', 'default_type'),
+        userlang: _userlang,
         airport : _airport,
         airportlat : _airportlat,
         airportlong : _airportlong,
@@ -59,11 +61,13 @@ class FormScreen extends React.Component {
     }
     handleSubmit() {
       helper.createPostRec(this, this.state.detailjson);
+      
       Alert.alert(
         'Thank you for your recommendation',
         'We added your recommendation to the category: '+ dict.int2ext[this.state.type_convert],
         [
           {text: 'OK', onPress: () => {
+            console.log(this.state.datatransfer)
             fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer);
             this.props.navigation.navigate('Types') ;
           }

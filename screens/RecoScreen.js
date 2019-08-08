@@ -29,9 +29,11 @@ class RecoScreen extends React.Component {
     const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
     const _logged = await helper._retrieveData('isLogged')
     const _userlang = await helper._retrieveData('userlang')
+    const _placename = await navigation.getParam('nextHeader', 'Default');
     this.setState({currentPlace : _currentType, 
                     isLogged: _logged, 
-                    userlang: _userlang },
+                    userlang: _userlang,
+                  placename: _placename },
     helper.getData(this,'home/recommendations/'+_userlang+'/'+_currentType) )
   }
 
@@ -66,9 +68,12 @@ class RecoScreen extends React.Component {
               
               this.props.navigation.navigate('Chat', {
                       recommender: item.recommender,
+                      target_lang: item.lang,
                       username: this.state.username,
+                      userlang: this.state.userlang,
                       sessionid: this.state.sessionid,
                       placeid: this.state.currentPlace,
+                      placename: this.state.placename
                       })) : (
               Alert.alert("You must be signed in to chat")
                       )
