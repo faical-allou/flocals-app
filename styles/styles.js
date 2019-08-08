@@ -143,6 +143,15 @@ const styles = StyleSheet.create({
       padding:5,
       width: 300,
     },
+    itemElementLangPicker: {
+      backgroundColor: colors.primary,
+      width: 150,
+      padding:5,
+      color: colors.textPrimary,
+      alignContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center'
+    },
     itemElementHomeButton: {
       borderRadius: 20,
       backgroundColor: colors.primary,
@@ -150,7 +159,6 @@ const styles = StyleSheet.create({
       marginBottom: 36,
       marginHorizontal:20,
       alignItems: 'center',
-      justifyContent:'space-between',
     },
     textElementHomeButton: {
       fontSize: 28,

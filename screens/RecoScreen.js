@@ -19,8 +19,8 @@ class RecoScreen extends React.Component {
     this.state ={
       isLoading: true,
       username: helper._retrieveData('username'),
-      userlang: helper._retrieveData('userlang'),
       sessionid: helper._retrieveData('sessionid'),
+      userlang: '',
   }
 }
 
@@ -28,8 +28,11 @@ class RecoScreen extends React.Component {
     const { navigation } = this.props;
     const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
     const _logged = await helper._retrieveData('isLogged')
-    this.setState({currentPlace : _currentType, isLogged: _logged},
-    helper.getData(this,'home/recommendations/it/'+_currentType) )
+    const _userlang = await helper._retrieveData('userlang')
+    this.setState({currentPlace : _currentType, 
+                    isLogged: _logged, 
+                    userlang: _userlang },
+    helper.getData(this,'home/recommendations/'+_userlang+'/'+_currentType) )
   }
 
   toggleStatus(){
