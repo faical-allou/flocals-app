@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, FlatList} from 'react-native';
+import { ActivityIndicator, Text, View, FlatList,Image} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -45,10 +45,11 @@ class TypeScreen extends React.Component {
             data={this.state.dataSource}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => 
-              <View style={{flexDirection:"row"}} >
-                <View style={styles.itemInitial} >
-                  <Text style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert][0]}</Text>
-                </View>
+            <View style={{flexDirection:"row"}} >
+                <Image
+                  style={styles.itemImage}
+                  source={dict.images[item.type_convert]}
+                />
                 <View style={styles.itemElement} >
                   <Text ellipsizeMode='tail' numberOfLines={1} style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{dict.int2ext[item.type_convert]}</Text>
                 </View>

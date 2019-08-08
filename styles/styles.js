@@ -13,15 +13,13 @@ const styles = StyleSheet.create({
       padding: 20,
       width: 200
     },
-    itemInitial: {
-      backgroundColor: colors.primary,
+    itemImage: {
       margin:5,
-      alignItems:"center",
       borderRadius: 50,
-      borderColor: colors.tertiary,
       borderWidth: 1,
       padding: 20,
       width: 80,
+      height: 80,
     },
 
     itemElementdetail: {

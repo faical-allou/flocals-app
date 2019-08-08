@@ -34,6 +34,15 @@ const dict = {
         park: 'Parks',
         artnhistory: 'Culture'
     },
+    images:  {
+        general: require('../assets/general.jpg'),
+        food: require('../assets/food.jpg'),
+        shopping: require('../assets/shopping.jpg'),
+        nature: require('../assets/nature.jpg'),
+        nightlife: require('../assets/nightlife.jpg'),
+        park: require('../assets/park.jpg'),
+        artnhistory: require('../assets/artnhistory.jpg'),
+    },
     languages: {
         af: 'Afrikaans',
         sq:'Albanian',
@@ -139,6 +148,7 @@ const dict = {
         yi:'Yiddish',
         yo:'Yoruba',
         zu:'Zulu',
-    }
+    },
+
 }
 export default dict;
