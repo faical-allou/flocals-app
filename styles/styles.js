@@ -142,13 +142,10 @@ const styles = StyleSheet.create({
       width: 300,
     },
     itemElementLangPicker: {
+      borderRadius: 20,
       backgroundColor: colors.primary,
-      width: 150,
-      padding:5,
-      color: colors.textPrimary,
-      alignContent: 'center',
-      alignItems: 'center',
-      alignSelf: 'center'
+      marginBottom: 36,
+      marginHorizontal:20,
     },
     itemElementHomeButton: {
       borderRadius: 20,

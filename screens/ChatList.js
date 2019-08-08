@@ -39,7 +39,7 @@ class ChatList extends React.Component {
         return(<View style={{flex: 1, padding: 20}}><ActivityIndicator/></View>)
       }
       return (
-        <View style={styles.listElements}>{console.log(this.state)}
+        <View style={styles.listElements}>
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}

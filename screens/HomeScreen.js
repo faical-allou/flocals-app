@@ -53,7 +53,7 @@ class HomeScreen extends React.Component {
           <View style={styles.itemElementHomeButton}>
               <Text style={styles.textElementHomeButton} onPress={() => this.props.navigation.navigate('Types')}> Explore </Text>
           </View>
-          <View style={styles.itemElementHomeButton}>
+          <View >
             <Picker
               selectedValue={this.state.userlang}
               style={styles.itemElementLangPicker}
