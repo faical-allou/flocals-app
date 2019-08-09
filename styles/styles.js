@@ -7,17 +7,15 @@ const styles = StyleSheet.create({
       backgroundColor: colors.secondary,
       margin:5,
       alignItems:"center",
+      justifyContent: 'center',
       borderRadius: 20,
-      borderColor: colors.tertiary,
-      borderWidth: 1,
       padding: 20,
-      width: 200
+      height: 80,
+      width: 200,
     },
     itemImage: {
       margin:5,
       borderRadius: 40,
-      borderWidth: 1,
-      padding: 20,
       width: 80,
       height: 80,
     },
@@ -141,18 +139,26 @@ const styles = StyleSheet.create({
       padding:5,
       width: 300,
     },
-    itemElementLangPicker: {
+    langPicker: {
       borderRadius: 20,
-      backgroundColor: colors.primary,
+      backgroundColor: 'white',
       marginBottom: 36,
       marginHorizontal:20,
     },
-    itemElementHomeButton: {
-      borderRadius: 20,
+    itemElementExploreButton: {
+      borderRadius: 10,
       backgroundColor: colors.primary,
       padding:5,
-      marginBottom: 36,
+      marginBottom: 20,
       marginHorizontal:20,
+      alignItems: 'center',
+    },
+    itemElementLangButton: {
+      borderRadius: 20,
+      backgroundColor: colors.secondary,
+      padding:5,
+      marginBottom: 36,
+      marginHorizontal:40,
       alignItems: 'center',
     },
     textElementHomeButton: {
