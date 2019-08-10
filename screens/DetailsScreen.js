@@ -1,5 +1,7 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Linking} from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Linking,TouchableOpacity} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -55,14 +57,15 @@ class DetailsScreen extends React.Component {
               <FlatList
                 data={this.state.dataSource}
                 renderItem={({item}) => <View>
-                <View style={styles.itemElementdetail} >
-                    <Text style={styles.textElement} onPress={
-                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>{item.rec_name}</Text>
-                      </View>
-                    <View style={styles.recElement} >
-                    <Text style={styles.textRecElement} onPress={
-                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id, nextHeader: item.rec_name})}>check {item.nb_rec} recommendation(s)</Text>
-                    </View>
+                <TouchableOpacity style={styles.itemElementdetail} onPress={
+                      ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>
+                    <Text style={styles.textElement} >{item.rec_name}</Text>
+                      <FontAwesomeIcon style= {styles.icons} icon={ faExternalLinkAlt }/>
+                      </TouchableOpacity>
+                    <TouchableOpacity style={styles.recElement} onPress={
+                      ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id, nextHeader: item.rec_name})} >                   
+                    <Text style={styles.textRecElement} > {item.nb_rec} recommendation(s)</Text>
+                    </TouchableOpacity>
                   </View>
                   }
                   keyExtractor={(item, index) => index.toString()}

@@ -18,15 +18,6 @@ const helper = {
         console.error(error);
       });
     },
-
-    getPlaceName : (path_toCall, callback) => {fetch(variables.endpoint+'/api/v1/'+path_toCall) 
-    .then((response) => response.json())
-    .then((responseJson) => { callback(responseJson)  })
-    .catch((error) =>{
-      console.error(error);
-    });
-  },
-
       
 
     getRandomName : (compo) => {fetch('https://randomuser.me/api') 

@@ -1,10 +1,13 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground,Alert } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {  faComment } from '@fortawesome/free-solid-svg-icons'
 
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import BottomSignupBar from './BottomSignupBar.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -61,8 +64,8 @@ class RecoScreen extends React.Component {
           <View style={styles.translatedElement} >
             <Text style={styles.textElement} >{item.userdescription_translated}</Text>
           </View>             
-          <View style={styles.recElement} >
-          <View >
+          <TouchableOpacity style={styles.recElement} >
+          <FontAwesomeIcon style= {styles.icons} icon={ faComment }/>
             <Text style={styles.textRecElement} onPress={() =>
             { this.state.isLogged === 'loggedin' ? (
               
@@ -77,9 +80,8 @@ class RecoScreen extends React.Component {
                       })) : (
               Alert.alert("You must be signed in to chat")
                       )
-                    }}>  {"Chat : "+item.recommender}</Text>
-              </View>
-            </View>
+                    }}>  {item.recommender}</Text>
+            </TouchableOpacity>
           </View>
             }
           keyExtractor={(item, index) => index.toString()}
