@@ -65,12 +65,11 @@ class RecoScreen extends React.Component {
             <Text style={styles.textElement} >{item.userdescription_translated}</Text>
           </View>             
           <TouchableOpacity style={styles.recElement} >
-          <FontAwesomeIcon style= {styles.icons} icon={ faComment }/>
             <Text style={styles.textRecElement} onPress={() =>
             { this.state.isLogged === 'loggedin' ? (
               
               this.props.navigation.navigate('Chat', {
-                      recommender: item.recommender,
+                recommender: item.recommender,
                       target_lang: item.lang,
                       username: this.state.username,
                       userlang: this.state.userlang,
@@ -78,9 +77,10 @@ class RecoScreen extends React.Component {
                       placeid: this.state.currentPlace,
                       placename: this.state.placename
                       })) : (
-              Alert.alert("You must be signed in to chat")
+                        Alert.alert("You must be signed in to chat")
                       )
                     }}>  {item.recommender}</Text>
+            <FontAwesomeIcon style= {styles.icons} icon={ faComment }/>
             </TouchableOpacity>
           </View>
             }

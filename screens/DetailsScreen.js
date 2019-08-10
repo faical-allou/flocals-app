@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Linking,TouchableOpacity} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -31,7 +31,7 @@ class DetailsScreen extends React.Component {
       const { navigation } = this.props;
       const _airport = await helper._retrieveData("airport");
       const _currentType = await navigation.getParam('nextScreen', 'general');
-      helper.getData(this,'home/'+_airport+'/'+_currentType);
+      helper.getData(this,'home/details/'+_airport+'/'+_currentType);
       this.setState({
         currentType : _currentType,
         isLogged: helper._retrieveData('isLogged'),
@@ -65,6 +65,7 @@ class DetailsScreen extends React.Component {
                     <TouchableOpacity style={styles.recElement} onPress={
                       ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id, nextHeader: item.rec_name})} >                   
                     <Text style={styles.textRecElement} > {item.nb_rec} recommendation(s)</Text>
+                    <FontAwesomeIcon style= {styles.icons} icon={ faArrowRight }/>
                     </TouchableOpacity>
                   </View>
                   }
