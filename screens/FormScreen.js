@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Button,TextInput, Keyboard, Alert, TouchableOpacity} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {  faBackward, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -120,6 +122,7 @@ class FormScreen extends React.Component {
               color={colors.secondary}
               onPress={() => this.handleSubmit()}
             >
+            <FontAwesomeIcon style= {styles.icons} icon={ faUpload }/> 
             <Text style={styles.bottomButtonText}>Submit</Text>
             </TouchableOpacity> 
             <TouchableOpacity  
@@ -127,6 +130,7 @@ class FormScreen extends React.Component {
               color={colors.secondary}
               onPress={() => this.props.navigation.goBack()}
             >
+            <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>
             <Text style={styles.bottomButtonText}>Go Back</Text>
             </TouchableOpacity> 
           </View>

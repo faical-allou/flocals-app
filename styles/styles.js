@@ -219,9 +219,14 @@ const styles = StyleSheet.create({
     },
     bottomButtonText:{
       color: colors.textPrimary,
-      fontSize: 16,
+      fontSize: 12,
       textAlign: 'center',
-
+    },
+    icons:{
+      color: colors.textPrimary,
+      fontSize: 32,
+      textAlign: 'center',
+      marginBottom: 4
     }
   })
   

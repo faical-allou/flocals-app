@@ -1,7 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, Text, View, Button, Image, TouchableOpacity} from 'react-native';
 import { withNavigation } from 'react-navigation';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faComments, faUser, faBackward, faEdit, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { Google } from 'expo';
 
 import helper from '../utils/helper.js';
@@ -64,11 +65,12 @@ class BottomSigninBar extends React.Component {
           <View style= {styles.bottomBarContainer}>
           { this.state.isLogged == 'loggedin' ? (
             <View style= {{ flexDirection:'row'}}  >
-                <LoggedinBar username={this.state.username} />
+                <LoggedinBar username={this.state.username} />               
                 <TouchableOpacity  
                 style= {styles.bottomButton}               
                 onPress={() => this.props.navigation.navigate('Form',{
                 username: this.state.username})}>
+                  <FontAwesomeIcon style= {styles.icons} icon={ faEdit }/>
                   <Text style={styles.bottomButtonText}>Add Stuff</Text>
                 </TouchableOpacity>
                 <ChatsDrawer toggleDrawer={this.toggleDrawer}/>
@@ -82,6 +84,7 @@ class BottomSigninBar extends React.Component {
               color={colors.secondary}
               onPress={() => this.props.navigation.goBack()}
             >
+            <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>
             <Text style={styles.bottomButtonText}>Go Back</Text>
             </TouchableOpacity>     
         </View>
@@ -94,6 +97,7 @@ class BottomSigninBar extends React.Component {
         <TouchableOpacity  
               style= {styles.bottomButton}       
         onPress={() => props.signIn()} >
+          <FontAwesomeIcon style= {styles.icons} icon={ faSignInAlt }/>
           <Text style={styles.bottomButtonText}>Sign in to Contribute</Text>
           </TouchableOpacity>
     )
@@ -103,6 +107,7 @@ class BottomSigninBar extends React.Component {
     return (
       <TouchableOpacity  
       style= {styles.bottomButton}  >
+        <FontAwesomeIcon style= {styles.icons} icon={ faUser }/>
         <Text style={styles.bottomButtonText}>{props.username}</Text>
       </TouchableOpacity>
     )
@@ -112,6 +117,7 @@ class BottomSigninBar extends React.Component {
       <TouchableOpacity  
       style= {styles.bottomButton}   
       onPress={()=> props.toggleDrawer() }>
+        <FontAwesomeIcon style= {styles.icons} icon={ faComments }/>
       <Text style={styles.bottomButtonText}>Chats</Text>
       </TouchableOpacity>
       )
