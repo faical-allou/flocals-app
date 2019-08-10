@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View, Button, Image} from 'react-native';
+import { ActivityIndicator, Text, View, Button, Image, TouchableOpacity} from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import { Google } from 'expo';
@@ -61,26 +61,29 @@ class BottomSigninBar extends React.Component {
         return(<View ><ActivityIndicator/></View>)
       } 
       return(
-          <View style= {{ flexDirection:'row'}}>
+          <View style= {styles.bottomBarContainer}>
           { this.state.isLogged == 'loggedin' ? (
             <View style= {{ flexDirection:'row'}}  >
                 <LoggedinBar username={this.state.username} />
-                <Button                 
-                color={colors.secondary}   
-                title="Add Stuff"
+                <TouchableOpacity  
+                style= {styles.bottomButton}               
                 onPress={() => this.props.navigation.navigate('Form',{
-                username: this.state.username})}/>
+                username: this.state.username})}>
+                  <Text style={styles.bottomButtonText}>Add Stuff</Text>
+                </TouchableOpacity>
                 <ChatsDrawer toggleDrawer={this.toggleDrawer}/>
             </View>
           ) : (
             <LoginBar signIn={this.signIn} />
           )
         }
-          <Button
-            title="Go back"
-            color={colors.secondary}
-            onPress={() => this.props.navigation.goBack()}
-          />     
+            <TouchableOpacity  
+              style= {styles.bottomButton}   
+              color={colors.secondary}
+              onPress={() => this.props.navigation.goBack()}
+            >
+            <Text style={styles.bottomButtonText}>Go Back</Text>
+            </TouchableOpacity>     
         </View>
       );
     }
@@ -88,26 +91,30 @@ class BottomSigninBar extends React.Component {
   
   const LoginBar = props => {
     return (     
-        <Button title="Sign in to contribute" 
-        color={colors.secondary}          
-        onPress={() => props.signIn()} />
+        <TouchableOpacity  
+              style= {styles.bottomButton}       
+        onPress={() => props.signIn()} >
+          <Text style={styles.bottomButtonText}>Sign in to Contribute</Text>
+          </TouchableOpacity>
     )
   }
   
   const LoggedinBar = props => {
     return (
-            <Button  
-              color={colors.tertiary}                
-              title={props.username}/>
+      <TouchableOpacity  
+      style= {styles.bottomButton}  >
+        <Text style={styles.bottomButtonText}>{props.username}</Text>
+      </TouchableOpacity>
     )
   }
   const ChatsDrawer = props => {
     return (
-            <Button  
-              color={colors.secondary}               
-              title='Chats'
-              onPress={()=> props.toggleDrawer() }/>
-    )
+      <TouchableOpacity  
+      style= {styles.bottomButton}   
+      onPress={()=> props.toggleDrawer() }>
+      <Text style={styles.bottomButtonText}>Chats</Text>
+      </TouchableOpacity>
+      )
   }
 
 export default withNavigation(BottomSigninBar);

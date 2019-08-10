@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button,ImageButton,TextInput, Keyboard, Alert, ImageBackground} from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button,TextInput, Keyboard, Alert, TouchableOpacity} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -113,20 +113,22 @@ class FormScreen extends React.Component {
             onChangeText={this.handleUserDescriptionChange}
           />
           </View>
-          <View style={{  justifyContent:"center"}}>
-              <View style={{ justifyContent:"center", flexDirection:'row'}}>
-          <Button
-            styles={{flex:1}}
-            title="Submit"
-            color={colors.secondary}
-            onPress={() => this.handleSubmit()}
-          />
-          <Button
-            styles={{flex:1}}
-            title="Go back"
-            color={colors.secondary}
-            onPress={() => this.props.navigation.goBack()}
-          />
+          <View style={{  alignItems: 'center'}}>
+              <View style={{ flexDirection:'row'}}>
+            <TouchableOpacity  
+              style= {styles.bottomButton}   
+              color={colors.secondary}
+              onPress={() => this.handleSubmit()}
+            >
+            <Text style={styles.bottomButtonText}>Submit</Text>
+            </TouchableOpacity> 
+            <TouchableOpacity  
+              style= {styles.bottomButton}   
+              color={colors.secondary}
+              onPress={() => this.props.navigation.goBack()}
+            >
+            <Text style={styles.bottomButtonText}>Go Back</Text>
+            </TouchableOpacity> 
           </View>
         </View>
         </View>

@@ -204,6 +204,25 @@ const styles = StyleSheet.create({
       fontSize: 14,
       textAlign: 'right',
     },
+    bottomBarContainer:{
+      flexDirection:'row',
+    },
+    bottomButton:{
+      backgroundColor: colors.secondary,
+      width: 80,
+      borderWidth:1,
+      borderColor: colors.textPrimary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 4,
+      padding: 10
+    },
+    bottomButtonText:{
+      color: colors.textPrimary,
+      fontSize: 16,
+      textAlign: 'center',
+
+    }
   })
   
   export default styles
