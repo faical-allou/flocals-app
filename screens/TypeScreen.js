@@ -10,7 +10,7 @@ import BottomSignupBar from '../screens/BottomSignupBar.js'
 
 class TypeScreen extends React.Component {
       static navigationOptions = {
-        title: 'Activity list near your destination',
+        title: 'What to do',
       };
 
     constructor(props){

@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     recElement: {
       textAlign: 'right',
       flexDirection:'row',
-      backgroundColor: visual.secondaryColor,
       paddingVertical:10,
       paddingHorizontal:15,
       justifyContent:'space-between',
@@ -60,10 +59,7 @@ const styles = StyleSheet.create({
       opacity: 1,
       fontWeight: 'bold',
       borderColor: visual.tertiaryColor,
-      borderTopWidth: 1,
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
-      borderBottomWidth: 1,
+      borderWidth: 1,
       marginHorizontal: 20,
     },
     textElement: {
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       fontWeight: 'bold',
       textAlign: 'right',
-      color: visual.textPrimaryColor,
+      color: visual.textSecondaryColor,
     },
     listElements: {
       marginTop: 30,
@@ -131,16 +127,12 @@ const styles = StyleSheet.create({
       borderRadius: visual.borderRadiusMedium,
       backgroundColor: visual.primaryColor,
       padding:5,
-      marginBottom: 20,
-      marginHorizontal:20,
       alignItems: 'center',
     },
     itemElementLangButton: {
       borderRadius: visual.borderRadiusLarge,
       backgroundColor: visual.secondaryColor,
       padding:5,
-      marginBottom: 36,
-      marginHorizontal:40,
       alignItems: 'center',
     },
     textElementHomeButton: {
