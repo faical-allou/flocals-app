@@ -3,6 +3,11 @@ import {StyleSheet} from 'react-native';
 import visual from './visual.js'
 
 const styles = StyleSheet.create({
+  loadingIndicator:{
+      flex: 1,
+      alignContent: "center",
+      justifyContent: "center",
+  },
     itemElement: {
       backgroundColor: visual.primaryColor,
       margin:5,
@@ -186,7 +191,8 @@ const styles = StyleSheet.create({
       fontSize: 32,
       textAlign: 'center',
       marginBottom: 4
-    }
+    },
+
   })
   
   export default styles

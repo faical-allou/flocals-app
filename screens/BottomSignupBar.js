@@ -59,7 +59,7 @@ class BottomSigninBar extends React.Component {
 
     render(){
       if(this.state.isLoading){
-        return(<View ><ActivityIndicator/></View>)
+        return(<View ></View>)
       } 
       return(
           <View style= {styles.bottomBarContainer}>

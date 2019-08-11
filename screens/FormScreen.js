@@ -82,7 +82,7 @@ class FormScreen extends React.Component {
 
     render(){
       if(this.state.isLoading){
-        return(<View><ActivityIndicator/></View>)
+        return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)
       }
 
       return(
