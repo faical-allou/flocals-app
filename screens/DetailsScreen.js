@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Linking,TouchableOpacity} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faExternalLinkAlt, faArrowRight} from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt, faArrowRight, faCommentDots} from '@fortawesome/free-solid-svg-icons'
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -63,13 +63,14 @@ class DetailsScreen extends React.Component {
                 renderItem={({item}) => <View>
                 <TouchableOpacity style={styles.itemElementdetail} onPress={
                       ()=> Linking.openURL('https://google.com/search?q='+item.rec_name) }>
-                    <Text style={styles.textElement} >{item.rec_name}</Text>
+                      <Text style={styles.textElement} >{item.rec_name}</Text>
                       <FontAwesomeIcon style= {styles.icons} icon={ faExternalLinkAlt }/>
                       </TouchableOpacity>
                     <TouchableOpacity style={styles.recElement} onPress={
                       ()=> this.props.navigation.navigate('Recom', {nextScreen: item.place_id, nextHeader: item.rec_name})} >                   
-                    <Text style={styles.textRecElement} > {item.nb_rec} recommendation(s)</Text>
-                    <FontAwesomeIcon style= {styles.icons} icon={ faArrowRight }/>
+                      <FontAwesomeIcon style= {styles.icons} icon={ faCommentDots }/>
+                      <Text style={styles.textRecElement} > {item.nb_rec}</Text>
+                      <FontAwesomeIcon style= {styles.icons} icon={ faArrowRight }/>
                     </TouchableOpacity>
                   </View>
                   }

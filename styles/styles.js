@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
       color: visual.textSecondaryColor,
       fontSize: 32,
       textAlign: 'center',
-      marginBottom: 4
+      marginBottom: 4,
     },
 
   })
