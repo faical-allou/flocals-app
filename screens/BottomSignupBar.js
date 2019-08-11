@@ -81,7 +81,6 @@ class BottomSigninBar extends React.Component {
         }
             <TouchableOpacity  
               style= {styles.bottomButton}   
-              color={colors.secondary}
               onPress={() => this.props.navigation.goBack()}
             >
             <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>

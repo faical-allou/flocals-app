@@ -82,7 +82,7 @@ class FormScreen extends React.Component {
 
     render(){
       if(this.state.isLoading){
-        return(<View style={styles.bottomView}><ActivityIndicator/></View>)
+        return(<View><ActivityIndicator/></View>)
       }
 
       return(
@@ -119,7 +119,6 @@ class FormScreen extends React.Component {
               <View style={{ flexDirection:'row'}}>
             <TouchableOpacity  
               style= {styles.bottomButton}   
-              color={colors.secondary}
               onPress={() => this.handleSubmit()}
             >
             <FontAwesomeIcon style= {styles.icons} icon={ faUpload }/> 
@@ -127,7 +126,6 @@ class FormScreen extends React.Component {
             </TouchableOpacity> 
             <TouchableOpacity  
               style= {styles.bottomButton}   
-              color={colors.secondary}
               onPress={() => this.props.navigation.goBack()}
             >
             <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>
