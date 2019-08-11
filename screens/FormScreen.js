@@ -7,10 +7,13 @@ import {  faBackward, faUpload } from '@fortawesome/free-solid-svg-icons'
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js'
+import visual from '../styles/visual.js';
 
 class FormScreen extends React.Component {
     static navigationOptions = {
       title: 'You recommend',
+      headerTintColor: visual.textSecondaryColor,
+      headerTitleStyle: styles.textStandard,
     };
 
     constructor(props){
@@ -21,7 +24,7 @@ class FormScreen extends React.Component {
         description:'' ,
         place_id:'default',
         placeDetails: '',
-        autoSuggest:'',
+        autoSuggest:{},
         username:'',
         act_type:'',
         lang: '',
@@ -57,7 +60,11 @@ class FormScreen extends React.Component {
       this.setState({ userDescription: desc });
     }
     handleSelectSuggest(itemSelected) {
-      this.setState({ name:itemSelected.description, place_id: itemSelected.place_id, autoSuggest:''  },
+      this.setState({ 
+        name:itemSelected.description, 
+        place_id: itemSelected.place_id, 
+        autoSuggest:{}  
+      },
         () => helper.getPlaceDetails(this, this.state.place_id)
       )
     }
@@ -71,7 +78,7 @@ class FormScreen extends React.Component {
           {text: 'OK', onPress: () => {
             console.log(this.state.datatransfer)
             fetch(variables.endpoint+'/api/v1/home/newactivity/', this.state.datatransfer);
-            this.props.navigation.navigate('Types') ;
+            this.props.navigation.navigate('Home') ;
           }
         },
           {text: 'Cancel', onPress: () => ''},
@@ -86,16 +93,17 @@ class FormScreen extends React.Component {
       }
 
       return(
-        <View>
-        <View style={styles.suggestElement}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="What?"
-            maxLength={20}
-            onBlur={Keyboard.dismiss}
-            value={this.state.name}
-            onChangeText={this.handleNameChange}
-          />
+        <View style={{flex:1}}>
+          <Text style={styles.textStandard}> Place </Text>
+          <View style={styles.suggestElement}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="What?"
+              multiline={true}
+              onBlur={Keyboard.dismiss}
+              value={this.state.name}
+              onChangeText={this.handleNameChange}
+            />
           </View>
           <FlatList
             data={this.state.autoSuggest.predictions}
@@ -105,33 +113,33 @@ class FormScreen extends React.Component {
               }
             keyExtractor={({id}, index) => id.toString()}
           />
+          <Text style={styles.textStandard}> Description </Text>
           <View style={styles.suggestElementDesc}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Why?"
-            maxLength={180}
-            onBlur={Keyboard.dismiss}
-            value={this.state.userDescription}
-            onChangeText={this.handleUserDescriptionChange}
-          />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Why?"
+              multiline={true}
+              maxLength={180}
+              onBlur={Keyboard.dismiss}
+              value={this.state.userDescription}
+              onChangeText={this.handleUserDescriptionChange}
+            />
           </View>
-          <View style={{  alignItems: 'center'}}>
-              <View style={{ flexDirection:'row'}}>
+          <View style={styles.bottomBarContainer}>
             <TouchableOpacity  
               style= {styles.bottomButton}   
               onPress={() => this.handleSubmit()}
             >
-            <FontAwesomeIcon style= {styles.icons} icon={ faUpload }/> 
-            <Text style={styles.bottomButtonText}>Submit</Text>
+              <FontAwesomeIcon style= {styles.icons} icon={ faUpload }/> 
+              <Text style={styles.bottomButtonText}>Submit</Text>
             </TouchableOpacity> 
             <TouchableOpacity  
               style= {styles.bottomButton}   
               onPress={() => this.props.navigation.goBack()}
             >
-            <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>
-            <Text style={styles.bottomButtonText}>Go Back</Text>
+              <FontAwesomeIcon style= {styles.icons} icon={ faBackward }/>
+              <Text style={styles.bottomButtonText}>Go Back</Text>
             </TouchableOpacity> 
-          </View>
         </View>
         </View>
        );

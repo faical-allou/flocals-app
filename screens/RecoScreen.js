@@ -1,20 +1,22 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button, ImageBackground,Alert } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, TouchableOpacity,Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {  faComment } from '@fortawesome/free-solid-svg-icons'
 
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
-import BottomSignupBar from './BottomSignupBar.js';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import visual from '../styles/visual.js';
+import dict from '../utils/dict.js';
 
-
+import BottomSignupBar from '../screens/BottomSignupBar.js'
 
 class RecoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('nextHeader', 'Default'),
+      headerTintColor: visual.textSecondaryColor,
+      headerTitleStyle: styles.textStandard,
     };
   };
   constructor(props){
@@ -74,7 +76,8 @@ class RecoScreen extends React.Component {
                       userlang: this.state.userlang,
                       sessionid: this.state.sessionid,
                       placeid: this.state.currentPlace,
-                      placename: this.state.placename
+                      placename: this.state.placename,
+                      userdescription: item.userdescription
                       })) : (
                         Alert.alert("You must be signed in to chat")
                       )

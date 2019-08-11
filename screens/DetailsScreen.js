@@ -5,15 +5,19 @@ import { faExternalLinkAlt, faArrowRight} from '@fortawesome/free-solid-svg-icon
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
-import BottomSignupBar from './BottomSignupBar.js'
+import visual from '../styles/visual.js';
+import dict from '../utils/dict.js';
 
-import dict from '../utils/dict.js'
+import BottomSignupBar from '../screens/BottomSignupBar.js'
+
 
 
 class DetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
           title: dict.int2ext[navigation.getParam('nextScreen', 'Default')],
+          headerTintColor: visual.textSecondaryColor,
+          headerTitleStyle: styles.textStandard,
         };
       };
     constructor(props){

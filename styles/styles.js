@@ -3,6 +3,11 @@ import {StyleSheet} from 'react-native';
 import visual from './visual.js'
 
 const styles = StyleSheet.create({
+  textStandard:{
+      color:visual.textSecondaryColor,
+      fontSize: 18,
+      padding: 3,
+  },
   loadingIndicator:{
       flex: 1,
       alignContent: "center",
@@ -88,34 +93,30 @@ const styles = StyleSheet.create({
       alignItems:"center"
     },
     textInput: {
-      fontSize: 28,
+      fontSize: 16,
       flex: 1,
+      padding :5,
     },
     textSuggest: {
-      height: 50,
-      fontSize: 18,
+      fontSize: 16,
       margin: 5,
     },
     suggestElement: {
-      borderColor: '#CCCCCC',
+      flex: 1,
       alignItems:"center",
       textAlign:"center",
       borderRadius: visual.borderRadiusSmall,
       borderColor: visual.tertiaryColor,
       borderWidth: 1,
-      height: 50,
-      fontSize: 18,
       margin: 5
     },
     suggestElementDesc: {
-      borderColor: '#CCCCCC',
+      flex:4,
       alignItems:"center",
       textAlign:"center",
       borderRadius: visual.borderRadiusSmall,
       borderColor: visual.tertiaryColor,
       borderWidth: 1,
-      height: 150,
-      fontSize: 18,
       margin: 5
     },
     homeElement: {
@@ -170,6 +171,8 @@ const styles = StyleSheet.create({
       textAlign: 'right',
     },
     bottomBarContainer:{
+      width: '100%',
+      justifyContent: 'center',
       flexDirection:'row',
       borderTopWidth: 2,
       borderTopColor: visual.tertiaryColor,

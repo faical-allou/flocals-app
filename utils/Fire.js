@@ -85,11 +85,11 @@ class Fire {
     } 
   }
 
-  createRoom(sessionId, roomId) {
+  createRoom(sessionId, roomId, placename, desc) {
     var roomRefMessage = firebase.database().ref(sessionId+"/"+roomId+"/messages");
     roomRefMessage.transaction(function(currentData) {
       if (currentData === null) {
-        return { autoWelcome: { text: 'Hello!', user:{_id: 1, name: 'flocals' } }};
+        return { autoWelcome: { text: "🗺"+placename+"🗺", user:{_id: 1, name: "😃", avatar: require('../assets/flocals.png') } }};
       } else {
         console.log('Room already exists.');
         return; // Abort the transaction.

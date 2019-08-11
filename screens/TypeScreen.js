@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View, FlatList,Image} from 'react-native';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
+import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
 
 import BottomSignupBar from '../screens/BottomSignupBar.js'
@@ -11,6 +12,8 @@ import BottomSignupBar from '../screens/BottomSignupBar.js'
 class TypeScreen extends React.Component {
       static navigationOptions = {
         title: 'What to do',
+        headerTintColor: visual.textSecondaryColor,
+        headerTitleStyle: styles.textStandard,
       };
 
     constructor(props){
@@ -55,10 +58,10 @@ class TypeScreen extends React.Component {
                 <View style={styles.itemElement} >
                   <Text ellipsizeMode='tail' numberOfLines={1} style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{item.type_translated}</Text>
                 </View>
-              </View>
+            </View>
               }
           />
-        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+          <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
 
         </View>
       );

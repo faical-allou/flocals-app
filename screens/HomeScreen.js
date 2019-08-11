@@ -3,13 +3,14 @@ import {  ActivityIndicator, Text, View, ImageBackground, Picker} from 'react-na
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
+import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
-
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    headerTitleStyle: { alignSelf: 'center' },
     title: 'Welcome to flocals',
+    headerTintColor: visual.textSecondaryColor,
+    headerTitleStyle: styles.textStandard,
   };
 
   constructor(props){
@@ -49,10 +50,10 @@ class HomeScreen extends React.Component {
         onValueChange={(itemValue) => {
           this.setState({userlang: itemValue, showpicker: false})
           helper._storeData("userlang", itemValue)
-        }
-      }>
+        }}
+      itemStyle={styles.langPickerItem}>
       {Object.keys(dict.languages).map((key) => {
-        return (<Picker.Item label={dict.languages[key]} value={key} key={key}/>)
+        return (<Picker.Item label={dict.languages[key]} color= {visual.textSecondaryColor} value={key} key={key}/>)
       })}
     </Picker>
     </View>

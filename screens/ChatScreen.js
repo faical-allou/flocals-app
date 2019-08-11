@@ -1,14 +1,25 @@
 import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; 
-import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView, Button } from 'react-native';
+import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 
 import Fire from '../utils/Fire';
+import helper from '../utils/helper.js';
+import styles from '../styles/styles.js';
+import dict from '../utils/dict.js'
+import visual from '../styles/visual.js';
+
 
 console.ignoredYellowBox = [
   'Setting a timer'
-  ];
+];
 
 class ChatScreen extends React.Component {
+  
+  static navigationOptions = () => ({
+    title: 'Chat!',
+    headerTintColor: visual.textSecondaryColor,
+    headerTitleStyle: styles.textStandard,
+  });
   constructor(props) {
     super(props);
     
@@ -26,9 +37,6 @@ class ChatScreen extends React.Component {
       ];
   }
 
-  static navigationOptions = () => ({
-    title: 'Chat!',
-  });
 
   get user() {
     return {
@@ -52,8 +60,9 @@ class ChatScreen extends React.Component {
     const _sessionid =  await navigation.getParam('sessionid', '123SQ1234');
     const _placeid =  await navigation.getParam('placeid', 'ChIJPTacEpBQwokRKwIlDXelxkA');       
     const _placename =  await navigation.getParam('placename', 'Statue of Liberty'); 
+    const _userdescription =  await navigation.getParam('userdescription', 'Cool Place'); 
 
-    Promise.all([ _sessionid, _placeid,_username,_recommender,_placename]).then(() =>{
+    Promise.all([ _sessionid, _placeid,_username,_recommender,_placename,_userdescription ]).then(() =>{
       if (_username >_recommender) {
       _roomId = _placeid+' '+_recommender+' '+_username
       }
@@ -62,7 +71,7 @@ class ChatScreen extends React.Component {
       }
       Firebasedata.logUserChatlists(_sessionid, _roomId, _username,_target_lang,_placename,_recommender,_placeid );
       Firebasedata.logUserChatlists(_sessionid, _roomId, _recommender, _userlang,_placename,_username,_placeid);
-      Firebasedata.createRoom(_sessionid,_roomId);
+      Firebasedata.createRoom(_sessionid,_roomId,_placename);
       
       Firebasedata.subscribe( (message => this.updateChat(message)), _sessionid, _roomId);
 

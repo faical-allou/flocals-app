@@ -52,6 +52,7 @@ class ChatList extends React.Component {
                       sessionid: this.state.sessionId,
                       placeid: item.placeid,
                       target_lang: item.targetlang,
+                      placename: item.placename,
                       })}>{item.placename}</Text>
               </View>
               <View >
