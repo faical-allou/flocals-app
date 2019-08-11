@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
       borderRadius: visual.borderRadiusMedium,
       backgroundColor: visual.primaryColor,
       padding:5,
+      marginBottom: 10,
       alignItems: 'center',
     },
     itemElementLangButton: {
@@ -170,16 +171,17 @@ const styles = StyleSheet.create({
     },
     bottomBarContainer:{
       flexDirection:'row',
+      borderTopWidth: 2,
+      borderTopColor: visual.tertiaryColor,
     },
     bottomButton:{
       backgroundColor: 'white',
       width: 80,
-      borderWidth:1,
-      borderColor: visual.textPrimaryColor,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: visual.borderRadiusSmall,
-      padding: 10
+      padding: 2,
+      paddingVertical: 10
     },
     bottomButtonText:{
       color: visual.textSecondaryColor,
