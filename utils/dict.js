@@ -44,6 +44,7 @@ const dict = {
         artnhistory: require('../assets/artnhistory.jpg'),
     },
     languages: {
+        default: 'Choose your language',
         af: 'Afrikaans',
         sq:'Albanian',
         am:'Amharic',

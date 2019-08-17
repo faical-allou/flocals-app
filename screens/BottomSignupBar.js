@@ -16,9 +16,9 @@ class BottomSigninBar extends React.Component {
         username: 'Default_User', 
         photoUrl: variables.default_pic,
         isLogged: '',
-        isLoading: true
+        isLoading: true,
       };   
-    }
+     }
     
     async componentDidMount(){
       
@@ -32,6 +32,8 @@ class BottomSigninBar extends React.Component {
           username: _username
       })
   }
+
+
 
     signIn = async () => {
       helper.getRandomName(this);

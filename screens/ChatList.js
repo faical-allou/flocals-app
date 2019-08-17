@@ -15,9 +15,9 @@ class ChatList extends React.Component {
     this.state ={
       isLoading: true,
       isLogged: helper._retrieveData('isLogged'),
-
     };
   }
+
   async componentDidMount(){  
     const _sessionId = await helper._retrieveData('sessionid')
     const _username = await helper._retrieveData('username')
@@ -40,6 +40,7 @@ class ChatList extends React.Component {
       }
       return (
         <View style={styles.listElements}>
+          
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
@@ -55,11 +56,10 @@ class ChatList extends React.Component {
                       placename: item.placename,
                       })}>{item.placename}</Text>
               </View>
-              <View >
-              <Text style = {styles.textChatBuddyList} >{item.partner}</Text>
-              </View>
-              </View>
-              
+                <View >
+                <Text style = {styles.textChatBuddyList} >{item.partner}</Text>
+                </View>
+              </View>             
               }
           />
         </View>

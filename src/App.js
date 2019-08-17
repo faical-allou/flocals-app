@@ -1,6 +1,6 @@
 import React from 'react';
-import { YellowBox, FlatList, ActivityIndicator, Text, View, Linking, Button,TextInput, Keyboard, Alert } from 'react-native';
-import { createStackNavigator, createAppContainer , StackNavigator, createDrawerNavigator} from "react-navigation";
+import { YellowBox} from 'react-native';
+import { createStackNavigator, createAppContainer , createDrawerNavigator} from "react-navigation";
 
 import HomeScreen from '../screens/HomeScreen.js'
 import TypeScreen from '../screens/TypeScreen.js'
@@ -33,7 +33,6 @@ helper._storeData("username", variables.userid )
 helper._storeData("userlang", variables.userlang )
 
 
-
 const drawer1 = createStackNavigator({
   Home: {screen: HomeScreen},
   Types: {screen: TypeScreen},
@@ -50,8 +49,12 @@ const AppNavigator = createDrawerNavigator({
   drawer1: {
     screen: drawer1,
 }},
-{  contentComponent: ChatList, drawerWidth: 300, drawerPosition : 'right'}
+
+{ contentComponent: (props) => <ChatList {...props}/>, 
+  drawerWidth: 300, 
+  drawerPosition : 'right'}
 )
+
 
 
 export default createAppContainer(AppNavigator);

@@ -25,9 +25,11 @@
     "react-native-side-menu": "^1.1.3",
     "react-native-web": "^0.11.5",
     "react-navigation": "^3.11.1",
+    "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-router-native": "^5.0.1",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.1.1"

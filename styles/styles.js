@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
       borderRadius: visual.borderRadiusMedium,
       backgroundColor: visual.primaryColor,
       padding:5,
-      marginBottom: 10,
+      marginBottom: 30,
       alignItems: 'center',
     },
     itemElementLangButton: {
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
       backgroundColor: visual.secondaryColor,
       padding:5,
       alignItems: 'center',
+      marginBottom: 10,
     },
     textElementHomeButton: {
       fontSize: 28,

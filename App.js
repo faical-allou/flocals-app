@@ -4,7 +4,7 @@ import HybridApp from './src/App';
 
 const App = (props) => {
   return (
-    <HybridApp />
+    <HybridApp {...props}/>
   );
 }
 export default App;

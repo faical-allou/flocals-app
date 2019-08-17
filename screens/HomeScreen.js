@@ -5,6 +5,7 @@ import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -93,13 +94,13 @@ class HomeScreen extends React.Component {
 
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <View style={styles.itemElementExploreButton}>
-              <Text style={styles.textElementHomeButton} onPress={() => this.props.navigation.navigate('Types')}> Explore </Text>
-          </View>
-          <View style={styles.itemElementLangButton}>
-              <Text style={styles.textElementHomeButton} onPress={() => this.togglePicker()}>{this.toggleText()} </Text>
-          </View> 
+          <TouchableOpacity style={styles.itemElementLangButton} onPress={() => this.togglePicker()}>
+              <Text style={styles.textElementHomeButton} >{this.toggleText()} </Text>
+          </TouchableOpacity> 
           {this.togglePickerDisplay()}
+          <TouchableOpacity style={styles.itemElementExploreButton} onPress={() => this.props.navigation.navigate('Types')}>
+              <Text style={styles.textElementHomeButton} > Explore </Text>
+          </TouchableOpacity>
 
         </View>
 
