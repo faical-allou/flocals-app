@@ -8,7 +8,6 @@ import dict from '../utils/dict.js';
 import BottomSignupBar from '../screens/BottomSignupBar.js'
 
 
-import SideMenu from 'react-native-side-menu'
 
 class Test extends React.Component {
   constructor(props){
@@ -20,27 +19,24 @@ class Test extends React.Component {
     };
   }
   componentDidMount(){   
-      Firebasedata.getOpenChats('190813SQ1789','fake_user3', (output) => {
-        console.log(output)
-        let testabc = [1,2,3,4]
-        this.setState({list: output, isLoading: false})
-      })}
+    1
+  }
       
     
   
   
-    render() {
-      if(this.state.isLoading){
-        return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)
-      }
-      return (
-        <View style={styles.listElements}>
-          <Text>
-        {this.state.list}
-        </Text>
-        </View>
-      )
+  render() {
+    if(this.state.isLoading){
+      return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)
     }
+    return (
+      <View style={styles.listElements}>
+        <Text>
+      {this.state.list}
+      </Text>
+      </View>
+    )
   }
+}
 
 export default Test;
