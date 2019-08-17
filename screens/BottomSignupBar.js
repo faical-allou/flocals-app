@@ -4,10 +4,11 @@ import { withNavigation } from 'react-navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faComments, faUser, faBackward, faEdit, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { Google } from 'expo';
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
-
+import store from '../utils/store.js'
 
 class BottomSigninBar extends React.Component {
     constructor(props){
@@ -21,7 +22,6 @@ class BottomSigninBar extends React.Component {
      }
     
     async componentDidMount(){
-      
       const _logged = await helper._retrieveData('isLogged')
       const _username = await helper._retrieveData('username')
       const { navigation } = this.props;
@@ -31,6 +31,7 @@ class BottomSigninBar extends React.Component {
           isLogged: _logged, 
           username: _username
       })
+      this.props.dispatch({ type: 'LOGOUT' })
   }
 
 
@@ -59,6 +60,8 @@ class BottomSigninBar extends React.Component {
     
     toggleDrawer = () => {this.props.navigation.toggleDrawer()}
 
+
+
     render(){
       if(this.state.isLoading){
         return(<View ></View>)
@@ -67,11 +70,11 @@ class BottomSigninBar extends React.Component {
           <View style= {styles.bottomBarContainer}>
           { this.state.isLogged == 'loggedin' ? (
             <View style= {{ flexDirection:'row'}}  >
-                <LoggedinBar username={this.state.username} />               
+                <LoggedinBar dispatch={this.props.dispatch} username={this.state.username} />               
                 <TouchableOpacity  
-                style= {styles.bottomButton}               
-                onPress={() => this.props.navigation.navigate('Form',{
-                username: this.state.username})}>
+                    style= {styles.bottomButton}               
+                    onPress={() => this.props.navigation.navigate('Form',{
+                    username: this.state.username})}>
                   <FontAwesomeIcon style= {styles.icons} icon={ faEdit }/>
                   <Text style={styles.bottomButtonText}>Add Stuff</Text>
                 </TouchableOpacity>
@@ -97,17 +100,18 @@ class BottomSigninBar extends React.Component {
     return (     
         <TouchableOpacity  
               style= {styles.bottomButton}       
-        onPress={() => props.signIn()} >
+              onPress={() => props.signIn()} >
           <FontAwesomeIcon style= {styles.icons} icon={ faSignInAlt }/>
           <Text style={styles.bottomButtonText}>Sign in to Contribute</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
     )
   }
   
   const LoggedinBar = props => {
     return (
       <TouchableOpacity  
-      style= {styles.bottomButton}  >
+        style= {styles.bottomButton} 
+        onPress= {()=> props.dispatch({ type: 'LOGIN' })}>
         <FontAwesomeIcon style= {styles.icons} icon={ faUser }/>
         <Text style={styles.bottomButtonText}>{props.username}</Text>
       </TouchableOpacity>
@@ -116,12 +120,19 @@ class BottomSigninBar extends React.Component {
   const ChatsDrawer = props => {
     return (
       <TouchableOpacity  
-      style= {styles.bottomButton}   
-      onPress={()=> props.toggleDrawer() }>
+        style= {styles.bottomButton}   
+        onPress={()=> props.toggleDrawer() }>
         <FontAwesomeIcon style= {styles.icons} icon={ faComments }/>
-      <Text style={styles.bottomButtonText}>Chats</Text>
+        <Text style={styles.bottomButtonText}>Chats</Text>
       </TouchableOpacity>
       )
   }
 
-export default withNavigation(BottomSigninBar);
+  const mapStateToProps = function(state) {
+    return {
+      isLogged: state.status.isLogged
+    }
+  }
+
+
+export default connect(mapStateToProps)(BottomSigninBar);

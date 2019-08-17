@@ -79,6 +79,8 @@ class HomeScreen extends React.Component {
     
   }
 
+
+
   render(){
     if(this.state.isLoading){
       return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)

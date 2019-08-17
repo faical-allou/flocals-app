@@ -1,12 +1,13 @@
 import React from 'react';
 import { ActivityIndicator, Text, View, FlatList} from 'react-native';
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
 import Fire from '../utils/Fire';
-
+import store from '../utils/store.js'
 
 class ChatList extends React.Component {
   constructor(props){
@@ -14,7 +15,7 @@ class ChatList extends React.Component {
     super(props);
     this.state ={
       isLoading: true,
-      isLogged: helper._retrieveData('isLogged'),
+      isLogged: this.props.isLogged
     };
   }
 
@@ -27,7 +28,7 @@ class ChatList extends React.Component {
             list: output,
             sessionId : _sessionId,
             username: _username,
-            isLoading: false
+            isLoading: false,
           })
         })
       })
@@ -37,10 +38,11 @@ class ChatList extends React.Component {
     render() {
       if(this.state.isLoading){
         return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)
-      }
+      } 
+      if(this.props.isLogged==='loggedin'){
       return (
         <View style={styles.listElements}>
-          
+          <Text>{this.props.isLogged}</Text>
         <FlatList
             data={this.state.list}
             keyExtractor={(item, index) => index.toString()}
@@ -64,7 +66,17 @@ class ChatList extends React.Component {
           />
         </View>
       )
+      } else {
+        return <Text>Log in to see your Chats</Text>
+      }
     }
   }
 
-export default ChatList;
+  const mapStateToProps = function(state) {
+    return {
+      isLogged: state.status.isLogged
+    }
+  }
+
+
+export default connect(mapStateToProps)(ChatList);
