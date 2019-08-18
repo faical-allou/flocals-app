@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, TouchableOpacity,Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import {  faComment } from '@fortawesome/free-solid-svg-icons'
+import {  faComments } from '@fortawesome/free-solid-svg-icons'
 import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
@@ -100,7 +100,7 @@ class RecoScreen extends React.Component {
                       )
                     }}>
             <Text style={styles.textRecElement} >  {item.recommender}</Text>
-            <FontAwesomeIcon style= {styles.icons} icon={ faComment }/>
+            <FontAwesomeIcon style= {styles.icons} icon={ faComments }/>
             </TouchableOpacity>
           </View>
             }

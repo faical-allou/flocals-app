@@ -167,6 +167,15 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color: visual.textSecondaryColor,
     },
+    chatPleaseLog:{
+      flex:1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    textPleaseLog:{
+      fontSize: 18,
+      color: visual.textSecondaryColor,
+    },
     textChatBuddyList:{
       fontSize: 14,
       textAlign: 'right',

@@ -1,6 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, Text, View, FlatList} from 'react-native';
 import {connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {  faCommentAlt } from '@fortawesome/free-solid-svg-icons'
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -72,7 +74,10 @@ class ChatList extends React.Component {
       </View>
     )
     } else {
-      return <Text>Log in to see your Chats</Text>
+      return  <View style={styles.chatPleaseLog}> 
+                <FontAwesomeIcon style= {styles.icons} icon={ faCommentAlt }/>
+                <Text style={styles.textPleaseLog}>Log in to see your Chats</Text> 
+              </View>
     }
   }
 }
