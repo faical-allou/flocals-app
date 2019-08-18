@@ -1,7 +1,8 @@
 import { AsyncStorage} from 'react-native';
 
 import variables from '../config/config.js';
-import dict from '../utils/dict.js';
+import dict from './dict.js';
+import store from './store.js'
 
 const helper = {
 
@@ -22,7 +23,10 @@ const helper = {
 
     getRandomName : (compo) => {fetch('https://randomuser.me/api') 
     .then((response) => response.json())
-    .then((responseJson) => {compo.setState({username: responseJson.results[0].login.username})})
+    .then((responseJson) => {
+      compo.setState({username: responseJson.results[0].login.username})
+      store.dispatch({type: 'SETNAME', username: responseJson.results[0].login.username})
+    })
     .catch((error) =>{
       console.error(error);
     });

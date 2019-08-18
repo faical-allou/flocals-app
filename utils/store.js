@@ -13,7 +13,8 @@ function status(state, action) {
         return Object.assign({}, state, { isLogged: 'notloggedin'})
       case 'TOGGLESTATUS':
         return Object.assign({}, state, { isLogged: action.status})
-            
+      case 'LANGUAGE':
+        return Object.assign({}, state, { userlang: action.userlang})     
       case 'SETNAME':
         return Object.assign({}, state, { username: action.username})
             

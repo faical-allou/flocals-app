@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, TouchableOpacity,Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {  faComment } from '@fortawesome/free-solid-svg-icons'
-
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -23,7 +23,7 @@ class RecoScreen extends React.Component {
     super(props);
     this.state ={
       isLoading: true,
-      username: helper._retrieveData('username'),
+      username: '',
       sessionid: helper._retrieveData('sessionid'),
       userlang: '',
   }
@@ -31,15 +31,32 @@ class RecoScreen extends React.Component {
 
   async componentDidMount(){
     const { navigation } = this.props;
-    const _currentType = await navigation.getParam('nextScreen', 'ChIJPTacEpBQwokRKwIlDXelxkA');
-    const _logged = await helper._retrieveData('isLogged')
-    const _userlang = await helper._retrieveData('userlang')
-    const _placename = await navigation.getParam('nextHeader', 'Default');
-    this.setState({currentPlace : _currentType, 
-                    isLogged: _logged, 
-                    userlang: _userlang,
-                  placename: _placename },
-    helper.getData(this,'home/recommendations/'+_userlang+'/'+_currentType) )
+    const _currentType = await navigation.getParam('nextScreen', 'Food');
+    const _placename = await navigation.getParam('nextHeader', 'ChIJPTacEpBQwokRKwIlDXelxkA');
+    console.log(this.props.userlang)
+    this.setState({isLogged: this.props.isLogged, 
+                  username: this.props.username,
+                  userlang: this.props.userlang,
+                  currentPlace : _currentType, 
+                  placename: _placename 
+                },
+                  () => {
+                    helper.getData(this,'home/recommendations/'+this.state.userlang+'/'+_currentType) 
+                  }
+    )
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      Firebasedata.getOpenChats(this.state.sessionId,this.props.username, (output) => {
+      this.setState({
+        isLogged: this.props.isLogged, 
+        username: this.props.username,
+        userlang: this.props.userlang,
+        list: output
+      })
+    })
+    }
   }
 
   toggleStatus(){
@@ -96,4 +113,12 @@ class RecoScreen extends React.Component {
   }
 }
 
-export default RecoScreen;
+const mapStateToProps = function(state) {
+  return {
+    isLogged: state.status.isLogged,
+    username: state.status.username,
+    userlang: state.status.userlang
+  }
+}
+
+export default connect(mapStateToProps)(RecoScreen);

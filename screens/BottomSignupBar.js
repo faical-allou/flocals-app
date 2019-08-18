@@ -15,24 +15,33 @@ class BottomSigninBar extends React.Component {
       super(props);
       this.state ={ 
         username: 'Default_User', 
-        photoUrl: variables.default_pic,
         isLogged: '',
+        userlang: 'en',
         isLoading: true,
       };   
      }
     
     async componentDidMount(){
-      const _logged = await helper._retrieveData('isLogged')
-      const _username = await helper._retrieveData('username')
-      const { navigation } = this.props;
-
        this.setState({
           isLoading: false,
-          isLogged: _logged, 
-          username: (this.props.username) ? this.props.username : _username
+          isLogged: this.props.isLogged, 
+          username: this.props.username,
+          userlang: this.props.userlang,
       })
-  }
+    }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (prevProps !== this.props) {
+        Firebasedata.getOpenChats(this.state.sessionId,this.props.username, (output) => {
+        this.setState({
+          isLogged: this.props.isLogged, 
+          username: this.props.username,
+          userlang: this.props.userlang,
+          list: output
+        })
+      })
+      }
+    }
 
 
     signIn = async () => {
@@ -46,11 +55,9 @@ class BottomSigninBar extends React.Component {
         })
         if (result.type === "success") { 
             this.props.toggleStatus()
-            this.props.dispatch({ type: 'SETNAME', username:this.state.username  })
             this.props.dispatch({ type: 'LOGIN'})
             helper._storeData('isLogged','loggedin');
             helper._storeData('username',this.state.username);
-            this.setState({ isLogged: 'loggedin'} ); 
         } else {
           console.log("cancelled")
         }
@@ -60,8 +67,6 @@ class BottomSigninBar extends React.Component {
     }
     
     toggleDrawer = () => {this.props.navigation.toggleDrawer()}
-
-
 
     render(){
       if(this.state.isLoading){
@@ -111,7 +116,9 @@ class BottomSigninBar extends React.Component {
   const LoggedinBar = props => {
     return (
       <TouchableOpacity  
-        style= {styles.bottomButton} >
+        style= {styles.bottomButton} 
+        onPress={() => props.dispatch({type: 'LOGOUT'})}
+        >
         <FontAwesomeIcon style= {styles.icons} icon={ faUser }/>
         <Text style={styles.bottomButtonText}>{props.username}</Text>
       </TouchableOpacity>
@@ -131,7 +138,8 @@ class BottomSigninBar extends React.Component {
   const mapStateToProps = function(state) {
     return {
       isLogged: state.status.isLogged,
-      username: state.status.username
+      username: state.status.username,
+      userlang: state.status.userlang
     }
   }
 
