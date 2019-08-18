@@ -1,6 +1,4 @@
-import React from 'react';
 
-import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
 // A very simple reducer
@@ -10,9 +8,15 @@ function status(state, action) {
     }
     switch (action.type) {
       case 'LOGIN':
-        return {...state, isLogged: 'loggedin'}
+        return Object.assign({}, state, { isLogged: 'loggedin'})
       case 'LOGOUT':
-        return {...state, isLogged: 'notloggedin'}
+        return Object.assign({}, state, { isLogged: 'notloggedin'})
+      case 'TOGGLESTATUS':
+        return Object.assign({}, state, { isLogged: action.status})
+            
+      case 'SETNAME':
+        return Object.assign({}, state, { username: action.username})
+            
       default:
         return state;
     }

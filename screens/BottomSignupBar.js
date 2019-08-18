@@ -29,9 +29,8 @@ class BottomSigninBar extends React.Component {
        this.setState({
           isLoading: false,
           isLogged: _logged, 
-          username: _username
+          username: (this.props.username) ? this.props.username : _username
       })
-      this.props.dispatch({ type: 'LOGOUT' })
   }
 
 
@@ -47,6 +46,8 @@ class BottomSigninBar extends React.Component {
         })
         if (result.type === "success") { 
             this.props.toggleStatus()
+            this.props.dispatch({ type: 'SETNAME', username:this.state.username  })
+            this.props.dispatch({ type: 'LOGIN'})
             helper._storeData('isLogged','loggedin');
             helper._storeData('username',this.state.username);
             this.setState({ isLogged: 'loggedin'} ); 
@@ -110,8 +111,7 @@ class BottomSigninBar extends React.Component {
   const LoggedinBar = props => {
     return (
       <TouchableOpacity  
-        style= {styles.bottomButton} 
-        onPress= {()=> props.dispatch({ type: 'LOGIN' })}>
+        style= {styles.bottomButton} >
         <FontAwesomeIcon style= {styles.icons} icon={ faUser }/>
         <Text style={styles.bottomButtonText}>{props.username}</Text>
       </TouchableOpacity>
@@ -130,9 +130,10 @@ class BottomSigninBar extends React.Component {
 
   const mapStateToProps = function(state) {
     return {
-      isLogged: state.status.isLogged
+      isLogged: state.status.isLogged,
+      username: state.status.username
     }
   }
 
 
-export default connect(mapStateToProps)(BottomSigninBar);
+export default connect(mapStateToProps)(withNavigation(BottomSigninBar));
