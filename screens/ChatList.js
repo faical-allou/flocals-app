@@ -43,6 +43,10 @@ class ChatList extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    Firebasedata.offList(this.state.sessionId,this.props.username);
+  }
+
   render() {
     
     if(this.state.isLoading){
@@ -81,6 +85,7 @@ class ChatList extends React.Component {
     }
   }
 }
+
 
   const mapStateToProps = function(state) {
     return {

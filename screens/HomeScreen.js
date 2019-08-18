@@ -1,11 +1,14 @@
 import React from 'react';
 import {  ActivityIndicator, Text, View, ImageBackground, Picker} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import store from '../utils/store.js'
+
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -40,6 +43,16 @@ class HomeScreen extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      this.setState({
+        isLogged: this.props.isLogged, 
+        username: this.props.username,
+        userlang: this.props.userlang,
+      })
+    }
+  }
+
   togglePickerDisplay(){
     if(this.state.showpicker){
     return(
@@ -51,6 +64,7 @@ class HomeScreen extends React.Component {
         onValueChange={(itemValue) => {
           this.setState({userlang: itemValue, showpicker: false})
           helper._storeData("userlang", itemValue)
+          store.dispatch({type: 'LANGUAGE', userlang:itemValue})
         }}
       itemStyle={styles.langPickerItem}>
       {Object.keys(dict.languages).map((key) => {
@@ -112,4 +126,12 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = function(state) {
+  return {
+    isLogged: state.status.isLogged,
+    username: state.status.username,
+    userlang: state.status.userlang
+  }
+}
+
+export default connect(mapStateToProps)(HomeScreen);

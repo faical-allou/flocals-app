@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, Linking,TouchableOpacity} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faExternalLinkAlt, faArrowRight, faCommentDots} from '@fortawesome/free-solid-svg-icons'
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -39,16 +40,16 @@ class DetailsScreen extends React.Component {
       this.setState({
         currentType : _currentType,
         isLogged: helper._retrieveData('isLogged'),
-      }
-          )
+      })
     }
 
-    
-    toggleStatus(){
-      if(this.state.isLogged === 'loggedin'){ 
-        this.setState({isLogged:'notloggedin'})
-      } else {
-        this.setState({isLogged:'loggedin'})
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (prevProps !== this.props) {
+        this.setState({
+          isLogged: this.props.isLogged, 
+          username: this.props.username,
+          userlang: this.props.userlang,
+        })
       }
     }
 
@@ -76,13 +77,20 @@ class DetailsScreen extends React.Component {
                   }
                   keyExtractor={(item, index) => index.toString()}
               />
-              <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+              <BottomSignupBar />
 
             </View>
     
         )
       }
     }
-  
 
-export default DetailsScreen;
+  const mapStateToProps = function(state) {
+    return {
+      isLogged: state.status.isLogged,
+      username: state.status.username,
+      userlang: state.status.userlang
+    }
+  }
+
+export default connect(mapStateToProps)(DetailsScreen);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Text, View, FlatList,Image} from 'react-native';
+import {connect } from 'react-redux';
 
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
@@ -21,21 +22,23 @@ class TypeScreen extends React.Component {
       this.state ={
         isLoading: true,
         userlang: '',
-        isLogged: helper._retrieveData('isLogged'),
+        isLogged: this.props.isLogged,
       };
     }
 
     async componentDidMount(){
-      const _userlang = await helper._retrieveData("userlang");
+      const _userlang = this.props.userlang;
       const _airport = await helper._retrieveData("airport")
       helper.getData(this,"home/alltypes/"+_userlang+"/"+_airport)
     }
 
-    toggleStatus(){
-      if(this.state.isLogged === 'loggedin'){ 
-        this.setState({isLogged:'notloggedin'})
-      } else {
-        this.setState({isLogged:'loggedin'})
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (prevProps !== this.props) {
+        this.setState({
+          isLogged: this.props.isLogged, 
+          username: this.props.username,
+          userlang: this.props.userlang,
+        })
       }
     }
 
@@ -61,11 +64,19 @@ class TypeScreen extends React.Component {
             </View>
               }
           />
-          <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+          <BottomSignupBar />
 
         </View>
       );
     }
   }
 
-export default TypeScreen;
+  const mapStateToProps = function(state) {
+    return {
+      isLogged: state.status.isLogged,
+      username: state.status.username,
+      userlang: state.status.userlang
+    }
+  }
+
+export default connect(mapStateToProps)(TypeScreen);

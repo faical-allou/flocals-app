@@ -54,7 +54,6 @@ class BottomSigninBar extends React.Component {
           scopes: ["profile", "email"] 
         })
         if (result.type === "success") { 
-            this.props.toggleStatus()
             this.props.dispatch({ type: 'LOGIN'})
             helper._storeData('isLogged','loggedin');
             helper._storeData('username',this.state.username);

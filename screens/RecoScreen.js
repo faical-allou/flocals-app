@@ -33,14 +33,13 @@ class RecoScreen extends React.Component {
     const { navigation } = this.props;
     const _currentType = await navigation.getParam('nextScreen', 'Food');
     const _placename = await navigation.getParam('nextHeader', 'ChIJPTacEpBQwokRKwIlDXelxkA');
-    console.log(this.props.userlang)
+
     this.setState({isLogged: this.props.isLogged, 
                   username: this.props.username,
                   userlang: this.props.userlang,
                   currentPlace : _currentType, 
                   placename: _placename 
-                },
-                  () => {
+                }, () => {
                     helper.getData(this,'home/recommendations/'+this.state.userlang+'/'+_currentType) 
                   }
     )
@@ -48,24 +47,14 @@ class RecoScreen extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps !== this.props) {
-      Firebasedata.getOpenChats(this.state.sessionId,this.props.username, (output) => {
       this.setState({
         isLogged: this.props.isLogged, 
         username: this.props.username,
         userlang: this.props.userlang,
-        list: output
       })
-    })
     }
-  }
-
-  toggleStatus(){
-    if(this.state.isLogged === 'loggedin'){ 
-      this.setState({isLogged:'notloggedin'})
-    } else {
-      this.setState({isLogged:'loggedin'})
     }
-  }
+  
 
   render(){
     if(this.state.isLoading){
@@ -106,7 +95,7 @@ class RecoScreen extends React.Component {
             }
           keyExtractor={(item, index) => index.toString()}
         />
-        <BottomSignupBar toggleStatus = {this.toggleStatus.bind(this)} />
+        <BottomSignupBar />
 
       </View>
     );

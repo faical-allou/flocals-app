@@ -158,6 +158,10 @@ class Fire {
   off(sessionId, roomId) {
     this.findroom(sessionId+"/"+roomId).off();
   }
+  // close the connection to the Backend
+  offList(sessionId, userId) {
+    this.findroom(sessionId+"/"+userId).off();
+  }
 }
 
 Firebasedata = new Fire();

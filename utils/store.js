@@ -1,7 +1,6 @@
 
 import { createStore, combineReducers } from 'redux';
 
-// A very simple reducer
 function status(state, action) {
     if (typeof state === 'undefined') {
       return 0;
@@ -23,7 +22,6 @@ function status(state, action) {
     }
   }
   
-  // A very simple store
   let store = createStore(combineReducers({status: status}));
 
   export default store;
