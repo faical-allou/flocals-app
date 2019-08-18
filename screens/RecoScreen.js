@@ -33,16 +33,14 @@ class RecoScreen extends React.Component {
     const { navigation } = this.props;
     const _currentType = await navigation.getParam('nextScreen', 'Food');
     const _placename = await navigation.getParam('nextHeader', 'ChIJPTacEpBQwokRKwIlDXelxkA');
+    helper.getData(this,'home/recommendations/'+this.props.userlang+'/'+_currentType)
 
     this.setState({isLogged: this.props.isLogged, 
                   username: this.props.username,
                   userlang: this.props.userlang,
                   currentPlace : _currentType, 
                   placename: _placename 
-                }, () => {
-                    helper.getData(this,'home/recommendations/'+this.state.userlang+'/'+_currentType) 
-                  }
-    )
+                })
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

@@ -90,7 +90,8 @@ class ChatList extends React.Component {
   const mapStateToProps = function(state) {
     return {
       isLogged: state.status.isLogged,
-      username: state.status.username
+      username: state.status.username,
+      userlang: state.status.userlang,
     }
   }
 

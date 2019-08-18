@@ -5,8 +5,6 @@ import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
-import BottomSignupBar from '../screens/BottomSignupBar.js'
-
 
 
 class Test extends React.Component {

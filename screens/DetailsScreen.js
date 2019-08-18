@@ -26,8 +26,7 @@ class DetailsScreen extends React.Component {
       this.state ={
         isLoading: false,
         username: 'Default_User',
-        photoUrl: variables.default_pic,
-        isLogged: helper._retrieveData('isLogged'),
+        isLogged: this.props.isLogged,
         currentType: ''
       };
     }
@@ -39,7 +38,7 @@ class DetailsScreen extends React.Component {
       helper.getData(this,'home/details/'+_airport+'/'+_currentType);
       this.setState({
         currentType : _currentType,
-        isLogged: helper._retrieveData('isLogged'),
+        isLogged: this.props.isLogged,
       })
     }
 

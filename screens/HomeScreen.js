@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
     super(props);
     this.state ={
       isLoading: true,
-      isLogged: helper._retrieveData('isLogged'),
+      isLogged: this.props.isLogged,
       airport: '',
       airportname: '',
       sessionid: '',
@@ -31,15 +31,14 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount(){
-    const _userlang = await helper._retrieveData("userlang");
     const _airport = await helper._retrieveData("airport");
-    helper.getAirportData(this, _airport);
     const _sessionid = await helper._retrieveData("sessionid");
+    helper.getAirportData(this, _airport);
 
     this.setState({
       airport: _airport,
       sessionid: _sessionid,
-      userlang: _userlang
+      userlang: this.props.userlang
     });
   }
 
