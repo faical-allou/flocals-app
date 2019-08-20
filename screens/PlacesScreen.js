@@ -9,11 +9,11 @@ import styles from '../styles/styles.js';
 import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
 
-import BottomSignupBar from '../screens/BottomSignupBar.js'
+import BottomSignupBar from './BottomSignupBar.js'
 
 
 
-class DetailsScreen extends React.Component {
+class PlacesScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
           title: dict.int2ext[navigation.getParam('nextScreen', 'Default')],
@@ -92,4 +92,4 @@ class DetailsScreen extends React.Component {
     }
   }
 
-export default connect(mapStateToProps)(DetailsScreen);
+export default connect(mapStateToProps)(PlacesScreen);

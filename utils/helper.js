@@ -33,11 +33,11 @@ const helper = {
   },
 
     getAutosuggest : (compo,input_text, lat, long) => {
-      url_location = '&location='+lat+','+long;
-      url_radius = '&radius=100000&strictbounds';
-      url_input = '&input='+input_text ;
-      url_type = '&types=establishment'
-      url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key='+variables.G_Places_API+url_location+url_radius+url_type+url_input;
+      const url_location = '&location='+lat+','+long;
+      const url_radius = '&radius=100000&strictbounds';
+      const url_input = '&input='+input_text ;
+      const url_type = '&types=establishment'
+      const url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key='+variables.G_Places_API+url_location+url_radius+url_type+url_input;
       fetch(url) 
     .then((response) => response.json())
     .then((responseJson) => {
@@ -53,12 +53,12 @@ const helper = {
     },
 
     getPlaceDetails : (compo,place_id_check) => {     
-      url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
+      const url = 'https://maps.googleapis.com/maps/api/place/details/json?key='+variables.G_Places_API+'&placeid='+place_id_check ;
       console.log(url)
       fetch(url) 
         .then((response) => response.json())
         .then( (responseJson) => {
-          _type_convert = helper.getInternalType(responseJson.result.types);
+          const _type_convert = helper.getInternalType(responseJson.result.types);
           compo.setState({detailjson: responseJson, type_convert : _type_convert})
           }) 
         .catch((error) =>{

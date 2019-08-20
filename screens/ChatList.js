@@ -8,7 +8,7 @@ import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js';
 
-import Fire from '../utils/Fire';
+import Fire from '../utils/fire.js';
 import store from '../utils/store.js'
 
 class ChatList extends React.Component {

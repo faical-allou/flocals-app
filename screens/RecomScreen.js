@@ -9,9 +9,9 @@ import styles from '../styles/styles.js';
 import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
 
-import BottomSignupBar from '../screens/BottomSignupBar.js'
+import BottomSignupBar from './BottomSignupBar.js'
 
-class RecoScreen extends React.Component {
+class RecomScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('nextHeader', 'Default'),
@@ -108,4 +108,4 @@ const mapStateToProps = function(state) {
   }
 }
 
-export default connect(mapStateToProps)(RecoScreen);
+export default connect(mapStateToProps)(RecomScreen);

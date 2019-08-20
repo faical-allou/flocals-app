@@ -2,7 +2,7 @@ import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; 
 import {  ActivityIndicator, View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 
-import Fire from '../utils/Fire';
+import Fire from '../utils/fire.js';
 import helper from '../utils/helper.js';
 import styles from '../styles/styles.js';
 import dict from '../utils/dict.js'

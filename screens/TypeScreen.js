@@ -59,7 +59,7 @@ class TypeScreen extends React.Component {
                   source={dict.images[item.type_convert]}
                 />
                 <View style={styles.itemElement} >
-                  <Text ellipsizeMode='tail' numberOfLines={1} style={styles.textElement} onPress={() => this.props.navigation.navigate('Details', {nextScreen: item.type_convert})}>{item.type_translated}</Text>
+                  <Text ellipsizeMode='tail' numberOfLines={1} style={styles.textElement} onPress={() => this.props.navigation.navigate('Places', {nextScreen: item.type_convert})}>{item.type_translated}</Text>
                 </View>
             </View>
               }

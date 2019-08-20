@@ -7,9 +7,9 @@ import { createStore, combineReducers } from 'redux';
 
 import HomeScreen from './screens/HomeScreen.js'
 import TypeScreen from './screens/TypeScreen.js'
-import DetailsScreen from './screens/DetailsScreen.js'
+import PlacesScreen from './screens/PlacesScreen.js'
 import FormScreen from './screens/FormScreen.js'
-import RecoScreen from './screens/RecoScreen.js'
+import RecomScreen from './screens/RecomScreen.js'
 import ChatScreen from './screens/ChatScreen.js'
 import ChatList from './screens/ChatList.js'
 
@@ -44,10 +44,10 @@ store.dispatch({ type: 'LANGUAGE', userlang: variables.userlang})
 const drawer1 = createStackNavigator({
   Home: {screen: HomeScreen},
   Types: {screen: TypeScreen},
-  Details: {screen: DetailsScreen},
+  Places: {screen: PlacesScreen},
   Form: {screen: FormScreen},
   Chat: {screen: ChatScreen},
-  Recom: {screen: RecoScreen},
+  Recom: {screen: RecomScreen},
   Test: {screen: Test}
 },
 {initialRouteName: variables.landingScreen}
