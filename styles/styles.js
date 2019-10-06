@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     },
     homeElement: {
       flex: 1,
-      padding:10,
     },
     langPicker: {
       borderRadius: visual.borderRadiusLarge,
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
       backgroundColor: visual.primaryColor,
       padding:5,
       marginBottom: 30,
+      marginHorizontal: 10,
       alignItems: 'center',
     },
     itemElementLangButton: {
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
       padding:5,
       alignItems: 'center',
       marginBottom: 10,
+      marginHorizontal: 10,
     },
     textElementHomeButton: {
       fontSize: 28,
@@ -152,6 +153,10 @@ const styles = StyleSheet.create({
       fontSize : 20,
       opacity: 1,
       fontWeight: 'bold',
+    },
+    welcomeElement:{
+      backgroundColor: "rgba(255,255,255,0.5)",
+      padding:10,
     },
     bkgImage: {
       width: '100%',

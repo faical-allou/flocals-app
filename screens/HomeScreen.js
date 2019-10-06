@@ -12,7 +12,7 @@ import store from '../utils/store.js'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to flocals',
+    title: 'Welcome to flocals by AirAsia',
     headerTintColor: visual.textSecondaryColor,
     headerTitleStyle: styles.textStandard,
   };
@@ -102,7 +102,7 @@ class HomeScreen extends React.Component {
     return(
       <ImageBackground source={require('../assets/homepage.jpg')} style={styles.bkgImage}>
       <View style={styles.homeElement}>
-          <View >    
+          <View style={styles.welcomeElement}>    
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname} ({this.state.airport})</Text>
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> </Text>
