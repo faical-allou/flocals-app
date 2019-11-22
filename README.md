@@ -2,8 +2,8 @@
 
 # flocals-app
 
-This app requires an endpoint that you can find [here](https://github.com/faical-allou/flocals) if you want to run your own.
-You can also use the current herokuapp running here: 'https://flocals.herokuapp.com' with the caveat that it is not maintained, goes to sleep after 30min of inactivity, is load restricted and could be terminated anytime.
+This app requires an endpoint whose repo is [here](https://github.com/faical-allou/flocals) if you want to run your own instance.
+Otherwise, you can also use the current herokuapp running here: 'https://flocals.herokuapp.com' with the caveat that it is not maintained, goes to sleep after 30min of inactivity, is load restricted and could be terminated anytime.
 
 To get started you also need a few external accounts (free and freemium):
 + Expo: https://expo.io/
@@ -41,3 +41,10 @@ export default variables = {
     userlang : 'default', //use 'default' to start the normal app
 };
 ```
+
+It is a pretty standard set up with Expo tutorial is here: https://expo.io/learn.
+Once expo is running you only need to run `<expo start>`, you'll need expo app on your phone or an emulator to see it running.
+
+That's quite a long set up, and many things can happen in between. If you have any issue, you can ping me here or in linkedin
+
+Have fun
