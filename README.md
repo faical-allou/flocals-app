@@ -14,3 +14,26 @@ To get started you also need a few external accounts (free and freemium):
 
 and a bunch of dependencies that can be installed with *yarn* or *npm* 
 
+To make the app work you'll need a folder config and a file config.js in it with teh following format:
+export default variables = {
+    endpoint : 'https://flocals.herokuapp.com', 
+
+    G_Places_API: 'abc',
+
+    G_firebase_key: "efg",
+    fire_authDomain: "xxx.firebaseapp.com",
+    fire_databaseURL: "https://xxx.firebaseio.com",
+    fire_projectId: "xxx",
+    fire_storageBucket: "",
+    fire_messagingSenderId: "123",
+    fire_appID: "foo:bar",
+
+    default_pic: 'https://placeimg.com/140/140/any',
+    landingScreen: 'Home',
+    destination: 'CDG', 
+    sessionid: '190901SQ1000CDG',
+    airlinename: 'ECAir',
+    initialState: 'loggedin', //use 'loggedin' to start logged-in
+    userid: 'Batman',
+    userlang : 'default', //use 'default' to start the normal app
+};
