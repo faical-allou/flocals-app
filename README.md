@@ -1,4 +1,4 @@
-![screenshot](https://github.com/faical-allou/flocals-app/screenshot.png)
+![screenshot](https://github.com/faical-allou/flocals-app/blob/master/screenshot.png)
 
 # flocals-app
 
