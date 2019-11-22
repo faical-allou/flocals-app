@@ -29,9 +29,10 @@ console.warn = message => {
 };
 
 
-helper._storeData('isLogged', variables.initialState);
+helper._storeData('isLogged', variables.initialState)
 helper._storeData("airport", variables.destination )
 helper._storeData("airportname", '' )
+helper._storeData("airlinename", variables.airlinename )
 helper._storeData("sessionid", variables.sessionid )
 helper._storeData("username", variables.userid )
 helper._storeData("userlang", variables.userlang )

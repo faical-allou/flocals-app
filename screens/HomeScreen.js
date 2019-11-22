@@ -8,11 +8,12 @@ import styles from '../styles/styles.js';
 import visual from '../styles/visual.js';
 import dict from '../utils/dict.js';
 import store from '../utils/store.js'
+import config from '../config/config.js';
 
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to flocals by AirAsia',
+    title: 'Welcome to flocals by '+ variables.airlinename ,
     headerTintColor: visual.textSecondaryColor,
     headerTitleStyle: styles.textStandard,
   };
@@ -40,6 +41,7 @@ class HomeScreen extends React.Component {
       sessionid: _sessionid,
       userlang: this.props.userlang
     });
+    
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -98,14 +100,13 @@ class HomeScreen extends React.Component {
     if(this.state.isLoading){
       return(<View style={styles.loadingIndicator}><ActivityIndicator/></View>)
     }
-
     return(
       <ImageBackground source={require('../assets/homepage.jpg')} style={styles.bkgImage}>
       <View style={styles.homeElement}>
           <View style={styles.welcomeElement}>    
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>You are flying to:</Text>
               <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}>{this.state.airportname} ({this.state.airport})</Text>
-              <Text style={styles.textElementHome} onPress={() => this.props.navigation.navigate('Types')}> </Text>
+             
 
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
