@@ -14,7 +14,8 @@ To get started you also need a few external accounts (free and freemium):
 
 and a bunch of dependencies that can be installed with *yarn* or *npm* 
 
-To make the app work you'll need a folder config and a file config.js in it with teh following format:
+To make the app work you'll need a folder config and a file config.js in it with the following format:
+```
 export default variables = {
     endpoint : 'https://flocals.herokuapp.com', 
 
@@ -37,3 +38,4 @@ export default variables = {
     userid: 'Batman',
     userlang : 'default', //use 'default' to start the normal app
 };
+```
