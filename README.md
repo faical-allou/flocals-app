@@ -42,8 +42,9 @@ export default variables = {
 };
 ```
 
-It is a pretty standard set up with Expo tutorial is here: https://expo.io/learn.
-Once expo is running you only need to run `<expo start>`, you'll need expo app on your phone or an emulator to see it running.
+It is a pretty standard set up with expo which tutorial is here: https://expo.io/learn.
+You'll also need the expo app on your phone or an emulator to see it running.
+Once expo is running you need to run `expo start` and scan the QR code (or press the a key to see it running in an emulator)
 
 That's quite a long set up, and many things can happen in between. If you have any issue, you can ping me here or in linkedin
 
