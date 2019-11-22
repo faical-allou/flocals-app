@@ -3,7 +3,7 @@
 This app requires an endpoint that you can find [here](https://github.com/faical-allou/flocals) if you want to run your own.
 You can also use the current herokuapp running here: 'https://flocals.herokuapp.com' with the caveat that it is not maintained, goes to sleep after 30min of inactivity, is load restricted and could be terminated anytime.
 
-To get started you also need a few external accounts (both are freemium):
+To get started you also need a few external accounts (free and freemium):
 + Expo: https://expo.io/
 + React Native: https://facebook.github.io/react-native/
 + firebase: https://firebase.google.com/
