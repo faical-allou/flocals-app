@@ -1,3 +1,5 @@
+![screenshot](https://github.com/faical-allou/flocals-app/blob/master/screenshot.png)
+
 # flocals-app
 
 This app requires an endpoint that you can find [here](https://github.com/faical-allou/flocals) if you want to run your own.
