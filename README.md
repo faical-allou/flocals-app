@@ -1,6 +1,9 @@
 ![screenshot](https://github.com/faical-allou/flocals-app/blob/master/screenshot.png)
 
+A video demo can be found [on youtube here](https://youtu.be/ilsmJ3jalu8)
+
 # flocals-app
+
 
 This app requires an endpoint whose repo is [here](https://github.com/faical-allou/flocals) if you want to run your own instance.
 Otherwise, you can also use the current herokuapp running here: 'https://flocals.herokuapp.com' with the caveat that it is not maintained, goes to sleep after 30min of inactivity, is load restricted and could be terminated anytime.
